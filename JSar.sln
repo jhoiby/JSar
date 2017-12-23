@@ -1,9 +1,9 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSar.Web.Mvc", "JSar.Web.Mvc\JSar.Web.Mvc.csproj", "{CDEF19A5-27EF-49E0-8595-C4589E33F221}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSar.Web.UI", "JSar.Web.UI\JSar.Web.UI.csproj", "{CDEF19A5-27EF-49E0-8595-C4589E33F221}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSar.Membership.Domain", "JSar.Membership.Domain\JSar.Membership.Domain.csproj", "{E70E25CA-EE8A-4291-AC8D-B69C55D1D9F1}"
 EndProject
@@ -22,6 +22,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Features.txt = Features.txt
 		Master TODO List.txt = Master TODO List.txt
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DE7D8280-3DE6-4423-B8AE-D178450EEB42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSar.Membership.Tests.UnitTests", "JSar.Membership.Tests.UnitTests\JSar.Membership.Tests.UnitTests.csproj", "{8FF17633-6B9A-47F3-B273-345ACDE648E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,9 +61,16 @@ Global
 		{21EDC60E-B1CD-4343-B17E-40F608BEE589}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21EDC60E-B1CD-4343-B17E-40F608BEE589}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21EDC60E-B1CD-4343-B17E-40F608BEE589}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FF17633-6B9A-47F3-B273-345ACDE648E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FF17633-6B9A-47F3-B273-345ACDE648E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FF17633-6B9A-47F3-B273-345ACDE648E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FF17633-6B9A-47F3-B273-345ACDE648E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8FF17633-6B9A-47F3-B273-345ACDE648E4} = {DE7D8280-3DE6-4423-B8AE-D178450EEB42}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B7F04C35-627C-44CB-9293-7271D418145F}
