@@ -9,6 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Serilog;
+using MediatR;
+using JSar.Membership.Services.CommandHandlers;
+using JSar.Membership.Messages.Commands;
+using JSar.Membership.Messages;
 
 namespace JSar.Web.Mvc
 {
@@ -24,7 +28,15 @@ namespace JSar.Web.Mvc
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(); ;
+
+            // Mediator pipeline - Discover and register command/query/event handlers in the
+            // ObApp.Services and other projects/assemblies. Need to specify a concrete type, then
+            // MediatR will scan the entire assembly it's contained in for additional handlers.
+            services.AddMediatR(
+                typeof(CommandHandler<WriteLogMessage, CommonResult>).Assembly);
+                // typeof(CommandHandler<WriteLogMessage, CommonResult>).Assembly, 
+                // typeof(QueryHandler<UsersViewQuery, CommonResult>).Assembly);
 
             //
             // AUTOFAC DI/IOC CONFIGURATION

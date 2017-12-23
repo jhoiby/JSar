@@ -9,6 +9,7 @@ namespace JSar.Membership.Messages
         Success = 0,
         MessageValidationFailure = 1,
         DomainValidationFailure = 2,
-        QueryExecutionFailure = 3
+        QueryExecutionFailure = 3,
+        ExceptionCaught = 9
     }
 }

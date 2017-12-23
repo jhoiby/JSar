@@ -18,12 +18,23 @@ namespace JSar.Membership.Messages
         public CommonResult(ResultStatus status, string flashMessage)
         {
             _status = status;
+            TotalResults = 0;
             FlashMessage = flashMessage;
+            Data = default(string);
+        }
+
+        public CommonResult(ResultStatus status, string flashMessage, dynamic data)
+        {
+            _status = status;
+            FlashMessage = "";
+            TotalResults = 1;
+            Data = data;
         }
 
         public CommonResult(ResultStatus status, int totalResults, dynamic data)
         {
             _status = status;
+            FlashMessage = "";
             TotalResults = totalResults;
             Data = data;
         }
@@ -42,14 +53,7 @@ namespace JSar.Membership.Messages
 
         public string FlashMessage { get; }
 
-        public bool Success
-        {
-            get
-            {
-                try { return Status == ResultStatus.Success; }
-                catch { return false; }
-            }
-        }
+        public bool Success { get { return Status == ResultStatus.Success; }  }
 
         public ResultStatus Status { get { return _status; } }
 

@@ -6,20 +6,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using JSar.Web.Mvc.Models;
 using Serilog;
+using MediatR;
+using JSar.Membership.Messages.Commands;
 
 namespace JSar.Web.Mvc.Controllers
 {
     public class HomeController : Controller
     {
-        Serilog.ILogger _logger;
+        private readonly Serilog.ILogger _logger;
+        private readonly IMediator _mediator;
 
-        public HomeController(ILogger logger)
+        public HomeController(ILogger logger, IMediator mediator)
         {
             _logger = logger ?? throw new ArgumentNullException();
+            _mediator = mediator ?? throw new ArgumentNullException();
         }
         public IActionResult Index()
         {
             _logger.Debug("HTTP-GET:/");
+            _mediator.Send(new WriteLogMessage("***** COMMAND HANDLER TEST *****"));
             return View();
         }
 

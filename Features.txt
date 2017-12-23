@@ -1,1 +1,4 @@
 Dependency injection via Autofac.
+CQRS structure.
+Messages (commands, queries, internal events) handled by MediatR.
+
