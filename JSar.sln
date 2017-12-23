@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSar.Membership.Infrastruct
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSar.Membership.Messages", "JSar.Membership.Messages\JSar.Membership.Messages.csproj", "{642C2370-8759-4DBF-9FD0-BDCDBB86601B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSar.Membership.AzureAdAdapter", "JSar.Membership.AzureAdAdapter\JSar.Membership.AzureAdAdapter.csproj", "{21EDC60E-B1CD-4343-B17E-40F608BEE589}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{642C2370-8759-4DBF-9FD0-BDCDBB86601B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{642C2370-8759-4DBF-9FD0-BDCDBB86601B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{642C2370-8759-4DBF-9FD0-BDCDBB86601B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21EDC60E-B1CD-4343-B17E-40F608BEE589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21EDC60E-B1CD-4343-B17E-40F608BEE589}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21EDC60E-B1CD-4343-B17E-40F608BEE589}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21EDC60E-B1CD-4343-B17E-40F608BEE589}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
