@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Serilog;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JSar.Web.Mvc.Controllers
 {
@@ -19,7 +20,9 @@ namespace JSar.Web.Mvc.Controllers
             _mediator = mediator ?? throw new ArgumentNullException();
         }
         
-        public async Task<IActionResult> Register(string returnUrl = null)
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             return View();
