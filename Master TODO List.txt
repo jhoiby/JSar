@@ -1,1 +1,7 @@
+Next up: Accounts.
+- Local registration and login.
+- Azure AD OIDC registration and login.
+- Azure AD claims persistence.
+- MS Graph access test.
+
 Copy other documentation files from ObApp5.
