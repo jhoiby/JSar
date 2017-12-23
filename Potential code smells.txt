@@ -1,0 +1,9 @@
+POTENTIAL CODE SMELLS
+
+Identity and Login in the services/domain layers:
+	- Is using a command to handle user login a bad idea? How much identity should really be in the
+	services and domain layers? Is a reference to Domain.AppUser in the UI bad? 
+	- SOLUTION: Since this is a monolithic application for the Membership bounded context and the
+	UI layer it's OK for now. If the project gets refactored into separate solutions or
+	microservices where the UI stands on its own and uses an API to communciate with the membership
+	context then the removal of the login will come naturally.
