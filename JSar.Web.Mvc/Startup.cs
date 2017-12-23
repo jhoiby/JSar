@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Serilog;
 
 namespace JSar.Web.Mvc
 {
@@ -35,6 +36,14 @@ namespace JSar.Web.Mvc
 
             // Copies existing dependencies from IServiceCollection
             builder.Populate(services);
+
+            // Serilog
+            builder.Register<Serilog.ILogger>((c, p) =>
+            {
+                return new LoggerConfiguration()
+                  .ReadFrom.Configuration(Configuration)
+                  .CreateLogger();
+            }).SingleInstance();
 
             // Add additional registrations here. Examples:
             // 
