@@ -13,6 +13,10 @@ using MediatR;
 using JSar.Membership.Services.CommandHandlers;
 using JSar.Membership.Messages.Commands;
 using JSar.Membership.Messages;
+using JSar.Membership.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using JSar.Membership.Domain.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace JSar.Web.Mvc
 {
@@ -28,6 +32,19 @@ namespace JSar.Web.Mvc
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            //
+            // DATA SERVICES
+
+            // Domain (command) database context.
+            services.AddDbContext<MembershipDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("JSar.MembershipDb")));
+
+            // .Net Core Identity configuration, with extended User and Role classes.
+            services.AddIdentity<AppUser, AppRole>()
+           .AddEntityFrameworkStores<MembershipDbContext>()
+           .AddDefaultTokenProviders();
+
+
             services.AddMvc(); ;
 
             // Mediator pipeline - Discover and register command/query/event handlers in the
@@ -35,8 +52,7 @@ namespace JSar.Web.Mvc
             // MediatR will scan the entire assembly it's contained in for additional handlers.
             services.AddMediatR(
                 typeof(CommandHandler<WriteLogMessage, CommonResult>).Assembly);
-                // typeof(CommandHandler<WriteLogMessage, CommonResult>).Assembly, 
-                // typeof(QueryHandler<UsersViewQuery, CommonResult>).Assembly);
+                // typeof(QueryHandler<UsersViewQuery, CommonResult>).Assembly);    // To be added when query stack built
 
             //
             // AUTOFAC DI/IOC CONFIGURATION
