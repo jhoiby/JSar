@@ -3,19 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSar.Web.Mvc", "JSar.Web.Mvc\JSar.Web.Mvc.csproj", "{CDEF19A5-27EF-49E0-8595-C4589E33F221}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSar.Web.Mvc", "JSar.Web.Mvc\JSar.Web.Mvc.csproj", "{CDEF19A5-27EF-49E0-8595-C4589E33F221}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSar.Membership.Domain", "JSar.Membership.Domain\JSar.Membership.Domain.csproj", "{E70E25CA-EE8A-4291-AC8D-B69C55D1D9F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSar.Membership.Domain", "JSar.Membership.Domain\JSar.Membership.Domain.csproj", "{E70E25CA-EE8A-4291-AC8D-B69C55D1D9F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSar.Membership.Services", "JSar.Membership.Services\JSar.Membership.Services.csproj", "{0B5718EB-EFE9-4A4C-AF83-4401CD329EC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSar.Membership.Services", "JSar.Membership.Services\JSar.Membership.Services.csproj", "{0B5718EB-EFE9-4A4C-AF83-4401CD329EC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSar.Membership.Services.Query", "JSar.Membership.Services.Query\JSar.Membership.Services.Query.csproj", "{FC9FA8EB-28E8-4FF1-A439-C535A0729CC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSar.Membership.Services.Query", "JSar.Membership.Services.Query\JSar.Membership.Services.Query.csproj", "{FC9FA8EB-28E8-4FF1-A439-C535A0729CC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSar.Membership.Infrastructure", "JSar.Membership.Infrastructure\JSar.Membership.Infrastructure.csproj", "{E08C8C08-1F6F-48D9-B0FA-B6B60F909EB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSar.Membership.Infrastructure", "JSar.Membership.Infrastructure\JSar.Membership.Infrastructure.csproj", "{E08C8C08-1F6F-48D9-B0FA-B6B60F909EB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSar.Membership.Messages", "JSar.Membership.Messages\JSar.Membership.Messages.csproj", "{642C2370-8759-4DBF-9FD0-BDCDBB86601B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSar.Membership.Messages", "JSar.Membership.Messages\JSar.Membership.Messages.csproj", "{642C2370-8759-4DBF-9FD0-BDCDBB86601B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSar.Membership.AzureAdAdapter", "JSar.Membership.AzureAdAdapter\JSar.Membership.AzureAdAdapter.csproj", "{21EDC60E-B1CD-4343-B17E-40F608BEE589}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSar.Membership.AzureAdAdapter", "JSar.Membership.AzureAdAdapter\JSar.Membership.AzureAdAdapter.csproj", "{21EDC60E-B1CD-4343-B17E-40F608BEE589}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{44800E28-00E4-480F-96EC-E7F3FB668B3B}"
+	ProjectSection(SolutionItems) = preProject
+		Features.txt = Features.txt
+		Master TODO List.txt = Master TODO List.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
