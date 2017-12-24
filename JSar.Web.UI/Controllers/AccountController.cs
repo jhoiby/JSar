@@ -10,6 +10,7 @@ using JSar.Web.UI.Models.AccountViewModels;
 using JSar.Membership.Messages;
 using JSar.Membership.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
+using JSar.Membership.Messages.Commands;
 
 namespace JSar.Web.Mvc.Controllers
 {
@@ -43,37 +44,48 @@ namespace JSar.Web.Mvc.Controllers
             // See: AzureTest1 project for sample implementation.
 
             // Create User
-            CommonResult userResult = _mediator.Send(
-                new RegisterLocalUser(
-                    model.FirstName,
-                    model.LastName,
-                    model.PrimaryPhone,
-                    model.Email,
-                    model.Password));
+            CommonResult userResult = await _mediator.Send(
+                new RegisterLocalUser(model.FirstName, model.LastName, 
+                    model.PrimaryPhone, model.Email, model.Password));
 
             if (!userResult)
             {
                 // Collect user-creation errors and redisplay registration page.
+                throw new NotImplementedException("User creation error handler not yet implemented.");
             }
 
-            IdentityUser user = userResult.Data as IdentityUser; // Verify this casting works!
 
-            // Login User
+            // TODO: Add support for redirection to original page that triggered authentication.
 
-            // TODO: Figure out what kind of user object to use. AppUser? Or can we avoid
-            // explicit reference to the domain objects and use a more generic user type?
-            // Thought: Should I be handling the identity user solely in the presentation layer?
+            return RedirectToAction("Account", "Login", new { email = model.Email, password = model.Password, rememberMe = model.RememberMe );
+        }
 
-            // Should this really be a command? Is this a concern anywhere outside 
-            // the presentation layer?
+        [HttpPost]
+        public async Task<IActionResult> Login(string email, string password, bool rememberMe)
+        {
+            // Get user
+            var getUserResult = await _mediator.Send(
+                new GetUserByPassword(password));
 
-            CommonResult loginResult = _mediator.Send(
-                new LoginUser(user
-                    ));
+            // Return error if user not found
+            if (!getUserResult.Success)
+            {
+                throw new NotImplementedException("Failed to find user. Error handling not yet implemented.");
+            }
 
-            // Redirect to home page or original page that triggered the login/registration.
+            // Attempt login
+            var signInResult = await _mediator.Send(
+                new SignInByPassword(User, password, isPersisten: rememberMe, lockoutOnFailure: false));
 
+            // Return error if login failed
+            if (! signInResult.Success)
+            {
+                throw new NotImplementedException("Incorrect password. Error handling not yet implemented.");
+            }
+
+            // Success. Redirect to home.
             return RedirectToAction("Index", "Home");
+
         }
 
     }

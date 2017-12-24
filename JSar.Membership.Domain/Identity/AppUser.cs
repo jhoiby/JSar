@@ -10,13 +10,22 @@ namespace JSar.Membership.Domain.Identity
     // Add profile data for application users by adding properties to the AppUser class
     public class AppUser : IdentityUser<Guid>, IAggregateRoot
     {
+        // Paramaterless constructor required for Entity Framework
+        protected AppUser() { }
+
+        public AppUser(string email, string firstName, string lastName, string primaryPhone)
+        {
+            base.Email = email;
+            base.PhoneNumber = primaryPhone;
+            base.UserName = email;
+            FirstName = firstName;
+            LastName = lastName;
+        }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string WorkPhone { get; set; }
-        public string MobilePhone { get; set; }
-        public string OtherPhone { get; set; }
-        public bool RequirePasswordChange { get; set; }
-        public string ManagersNotes { get; set; }
+        public string FullName {
+            get { return FirstName + " " + LastName; }
+        }
 
     }
 }

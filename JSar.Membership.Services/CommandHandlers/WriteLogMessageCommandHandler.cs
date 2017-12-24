@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace JSar.Membership.Services.CommandHandlers
 {
-    public class WriteLogMessageHandler : CommandHandler<WriteLogMessage, CommonResult>
+    public class WriteLogMessageCommandHandler : CommandHandler<WriteLogMessage, CommonResult>
     {
-        public WriteLogMessageHandler(ILogger logger) : base(logger)
+        public WriteLogMessageCommandHandler(ILogger logger) : base(logger)
         {
         }
 

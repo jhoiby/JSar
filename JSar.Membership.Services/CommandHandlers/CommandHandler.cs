@@ -18,6 +18,7 @@ namespace JSar.Membership.Services.CommandHandlers
         {
             _logger = logger;
         }
+
         public async Task<TResponse> Handle(TCommand command, CancellationToken cancellationToken)
         {
             _logger.Debug("Executing command: " + command.GetType().ToString() );

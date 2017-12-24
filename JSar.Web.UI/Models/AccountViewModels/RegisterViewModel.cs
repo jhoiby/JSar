@@ -38,6 +38,9 @@ namespace JSar.Web.UI.Models.AccountViewModels
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        [Display(Name = "Remember me")]
+        public bool RememberMe { get; set; }
+
         // TODO: Add recaptcha
     }
 }
