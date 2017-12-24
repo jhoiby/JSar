@@ -12,6 +12,7 @@ using JSar.Membership.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using JSar.Membership.Messages.Commands;
 using JSar.Membership.Messages.Queries;
+using JSar.Web.UI.Extensions;
 
 namespace JSar.Web.Mvc.Controllers
 {
@@ -44,46 +45,54 @@ namespace JSar.Web.Mvc.Controllers
             // type is OIDC and modify registration accordingly. Cache and preserve claims for  
             // login. See: AzureTest1 project for sample implementation.
 
-            // Create User
+            if (!ModelState.IsValid) return View(model);
+            
             CommonResult userResult = await _mediator.Send(
-                new RegisterLocalUser(model.FirstName, model.LastName, 
-                    model.PrimaryPhone, model.Email, model.Password));
+                new RegisterLocalUser(
+                    model.FirstName, 
+                    model.LastName, 
+                    model.PrimaryPhone, 
+                    model.Email, 
+                    model.Password));
 
-            if (!userResult)
+            if (! userResult)
             {
-                // Collect user-creation errors and redisplay registration page.
-                throw new NotImplementedException("User creation error handler not yet implemented.");
+                ModelState.AddErrorsFromCommonResult(userResult);
+                return View(model);
             }
 
-
-            // TODO: Add support for redirection to original page that triggered authentication.
-
-            return RedirectToAction("Account", "Login", new { email = model.Email, password = model.Password, rememberMe = model.RememberMe } );
+            return RedirectToAction(
+                "Account", 
+                "Login", 
+                new { email = model.Email, password = model.Password, rememberMe = model.RememberMe } );
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string email, string password, bool rememberMe)
         {
-            // Get user
-            var getUserResult = await _mediator.Send(
-                new GetUserByEmail(password));
+            // Get user.
 
-            // Return error if user not found
-            if (!getUserResult.Success)
+            var getUserResult = await _mediator.Send(
+                new GetUserByEmail(email));
+            
+            if (! getUserResult.Success)
             {
-                throw new NotImplementedException("Failed to find user. Error handling not yet implemented.");
+                ModelState.AddErrorsFromCommonResult(getUserResult);
+                return View();
             }
 
-            // Attempt login
+            // Auto-login to create app cookie.
+
             var signInResult = await _mediator.Send(
                 new SignInByPassword(getUserResult.Data, password, rememberMe, false));
-
-            // Return error if login failed
+            
             if (! signInResult.Success)
             {
-                throw new NotImplementedException("Incorrect password. Error handling not yet implemented.");
+                ModelState.AddErrorsFromCommonResult(getUserResult);
+                return View();
             }
-            // Success. Redirect to home.
+            
             return RedirectToAction("Index", "Home");
 
         }

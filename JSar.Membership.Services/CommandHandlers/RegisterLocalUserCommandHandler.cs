@@ -38,7 +38,7 @@ namespace JSar.Membership.Services.CommandHandlers
 
         private CommonResult AddUserErrorResult(IdentityResult addUserResult)
         {
-            _logger.Error("Add local user command execution failed");
+            _logger.Error("Register local user command execution failed");
 
             List<string> errorMessages = new List<string>();
 
@@ -50,7 +50,7 @@ namespace JSar.Membership.Services.CommandHandlers
 
             CommonResult result = new CommonResult(
                 status: ResultStatus.ExecutionFailure,
-                flashMessage: "AddLocalUser command execution failed.",
+                flashMessage: "RegisterLocalUser command execution failed.",
                 totalResults: 0,
                 data: errorMessages
                 );

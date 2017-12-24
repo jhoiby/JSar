@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace JSar.Web.UI.Helpers
+namespace JSar.Web.UI.Extensions
 {
-    public static class AddModelErrors
+    public static class AddModelErrorsExtension
     {
         
         public static void AddErrorsFromCommonResult(this ModelStateDictionary modelState, CommonResult result)
