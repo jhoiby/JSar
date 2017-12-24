@@ -6,7 +6,8 @@ using System.Text;
 namespace JSar.Membership.Messages.Commands
 {
     /// <summary>
-    /// Sign in a local user by password. If successful the returned CommonResult.Data 
+    /// Sign in a local user by password. I.e. checks for a valid account by username and password.
+    /// If successful it creates an application cookie and the returned CommonResult.Data 
     /// contains a single SignInResult object. On failure CommonResult.Data contains an
     /// error message string and FlashMessage contains a general error notice string.
     /// </summary>
