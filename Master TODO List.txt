@@ -1,3 +1,11 @@
+
+
+OOPS: Last couple of commands I added returned data!
+- How to get user back?
+- Fire "User logged in" event that contains the user?
+
+Look at the RegisterUser and LoginUser commands.  
+
 Next up: Accounts.
 - Local registration and login.
 - Azure AD OIDC registration and login.

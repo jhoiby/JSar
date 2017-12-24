@@ -21,10 +21,17 @@ namespace JSar.Membership.Services.CommandHandlers
             try
             {
                 _logger.Debug(command.Message);
-                return new CommonResult(ResultStatus.Success);
+
+                return new CommonResult(
+                    status: ResultStatus.Success);
+
             } catch (Exception ex)
             {
-                return new CommonResult(ResultStatus.ExceptionCaught, ex.Message, ex);
+                return new CommonResult(
+                    status: ResultStatus.ExceptionCaught, 
+                    flashMessage: ex.Message, 
+                    totalResults: 0,
+                    data: ex);
             }
         }
     }

@@ -11,6 +11,7 @@ using JSar.Membership.Messages;
 using JSar.Membership.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using JSar.Membership.Messages.Commands;
+using JSar.Membership.Messages.Queries;
 
 namespace JSar.Web.Mvc.Controllers
 {
@@ -39,9 +40,9 @@ namespace JSar.Web.Mvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            // TODO: When adding Azure AD authentication, detect if authentication type is OIDC 
-            // and modify registration accordingly. Cache and preserve claims for login. 
-            // See: AzureTest1 project for sample implementation.
+            // TODO: When adding Azure AD authentication capability, detect if authentication 
+            // type is OIDC and modify registration accordingly. Cache and preserve claims for  
+            // login. See: AzureTest1 project for sample implementation.
 
             // Create User
             CommonResult userResult = await _mediator.Send(
@@ -57,7 +58,7 @@ namespace JSar.Web.Mvc.Controllers
 
             // TODO: Add support for redirection to original page that triggered authentication.
 
-            return RedirectToAction("Account", "Login", new { email = model.Email, password = model.Password, rememberMe = model.RememberMe );
+            return RedirectToAction("Account", "Login", new { email = model.Email, password = model.Password, rememberMe = model.RememberMe } );
         }
 
         [HttpPost]
@@ -65,7 +66,7 @@ namespace JSar.Web.Mvc.Controllers
         {
             // Get user
             var getUserResult = await _mediator.Send(
-                new GetUserByPassword(password));
+                new GetUserByEmail(password));
 
             // Return error if user not found
             if (!getUserResult.Success)
@@ -75,7 +76,7 @@ namespace JSar.Web.Mvc.Controllers
 
             // Attempt login
             var signInResult = await _mediator.Send(
-                new SignInByPassword(User, password, isPersisten: rememberMe, lockoutOnFailure: false));
+                new SignInByPassword(getUserResult.Data, password, rememberMe, false));
 
             // Return error if login failed
             if (! signInResult.Success)

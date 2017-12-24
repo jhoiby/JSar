@@ -11,4 +11,9 @@
     <PackageReference Include="Serilog" Version="2.6.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\JSar.Membership.Domain\JSar.Membership.Domain.csproj" />
+    <ProjectReference Include="..\JSar.Membership.Messages\JSar.Membership.Messages.csproj" />
+  </ItemGroup>
+
 </Project>
