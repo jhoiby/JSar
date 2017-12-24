@@ -83,7 +83,6 @@ namespace JSar.Web.Mvc.Controllers
             {
                 throw new NotImplementedException("Incorrect password. Error handling not yet implemented.");
             }
-
             // Success. Redirect to home.
             return RedirectToAction("Index", "Home");
 
