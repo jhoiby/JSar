@@ -17,6 +17,9 @@ using JSar.Membership.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using JSar.Membership.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
+using JSar.Membership.Services.Query.QueryHandlers;
+using JSar.Membership.Messages.Queries;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace JSar.Web.Mvc
 {
@@ -44,6 +47,19 @@ namespace JSar.Web.Mvc
            .AddEntityFrameworkStores<MembershipDbContext>()
            .AddDefaultTokenProviders();
 
+            // 
+            // AUTHENTICATION
+
+            // Add cookie authentication
+            services.AddAuthentication(sharedOptions =>
+            {
+                sharedOptions.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                sharedOptions.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                // sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            });
+
+            //
+            // MVC OPTIONS
 
             services.AddMvc(); ;
 
@@ -51,8 +67,8 @@ namespace JSar.Web.Mvc
             // ObApp.Services and other projects/assemblies. Need to specify a concrete type, then
             // MediatR will scan the entire assembly it's contained in for additional handlers.
             services.AddMediatR(
-                typeof(CommandHandler<WriteLogMessage, CommonResult>).Assembly);
-                // typeof(QueryHandler<UsersViewQuery, CommonResult>).Assembly);    // To be added when query stack built
+                typeof(CommandHandler<WriteLogMessage, CommonResult>).Assembly,
+                typeof(QueryHandler<GetUserByEmail, CommonResult>).Assembly);
 
             //
             // AUTOFAC DI/IOC CONFIGURATION
