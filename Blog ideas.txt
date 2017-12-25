@@ -1,0 +1,8 @@
+Extending Jimmy Bogard's (?) CommonResult object.
+- Include a simple sample CQRS app.
+
+TagHelper for formfield.
+
+Using AzureAD and MS Graph with Identity Storage.
+- Extend it with a second article: 
+	- A multi-project CQRS+Azure AD OIDC+MS Graph solution.

@@ -61,10 +61,9 @@ namespace JSar.Web.Mvc.Controllers
                 return View(model);
             }
 
-            return RedirectToAction(
-                "Account", 
-                "Login", 
-                new { email = model.Email, password = model.Password, rememberMe = model.RememberMe } );
+            // Log the user in.
+
+            return await Login(model.Email, model.Password, model.RememberMe);
         }
 
         [HttpPost]
