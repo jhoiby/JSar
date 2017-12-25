@@ -1,7 +1,15 @@
+MASTER TO-DO LIST
 
+Registration and Signin pages WORKING.
+
+*** - Need to get default authorization login/out routes working, with proper parameters.
 
 Finish Registration/Login
 - NEED LOTS OF TESTING. I've somewhat lost track of where I was.
+- Need logout page.
+- Need to get default authorization login/out routes working, with proper parameters.
+
+Change "" in CommonResult constructors to string.Empty.
 
 Add Unit Tests as needed.
 
