@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace JSar.Membership.Services.CommandHandlers
 {
-    class SignInByPasswordCommandHandler : CommandHandler<SignInByPassword, CommonResult>
+    public class SignInByPasswordCommandHandler : CommandHandler<SignInByPassword, CommonResult>
     {
         private readonly SignInManager<AppUser> _signInManager;
 

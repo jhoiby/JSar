@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using JSar.Membership.Messages.Commands;
 using JSar.Membership.Messages.Queries;
 using JSar.Web.UI.Extensions;
+using Microsoft.AspNetCore.Authentication;
 
 namespace JSar.Web.Mvc.Controllers
 {
@@ -20,11 +21,13 @@ namespace JSar.Web.Mvc.Controllers
     {
         private readonly Serilog.ILogger _logger;
         private readonly IMediator _mediator;
+        private readonly SignInManager<AppUser> _signInManager;
 
-        public AccountController(ILogger logger, IMediator mediator)
+        public AccountController(ILogger logger, IMediator mediator, SignInManager<AppUser> signInManager)
         {
-            _logger = logger ?? throw new ArgumentNullException();
-            _mediator = mediator ?? throw new ArgumentNullException();
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
         }
         
         [HttpGet]
@@ -59,22 +62,36 @@ namespace JSar.Web.Mvc.Controllers
             {
                 ModelState.AddErrorsFromCommonResult(userResult);
                 return View(model);
-            }
+            } 
 
-            return RedirectToAction(
-                "Account", 
-                "Login", 
-                new { email = model.Email, password = model.Password, rememberMe = model.RememberMe } );
+            // Log the user in.
+
+            return await SignIn(  new SignInViewModel()
+            {
+                UserName = model.Email,
+                Password = model.Password,
+                RememberMe = model.RememberMe
+            } );
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SignIn()
+        {
+            // Clear the existing external cookie to ensure a clean login process
+            // (Add in after adding external authentication schemes)
+            //await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(string email, string password, bool rememberMe)
+        public async Task<IActionResult> SignIn(SignInViewModel model)
         {
             // Get user.
 
             var getUserResult = await _mediator.Send(
-                new GetUserByEmail(email));
+                new GetUserByEmail(model.UserName));
             
             if (! getUserResult.Success)
             {
@@ -84,15 +101,39 @@ namespace JSar.Web.Mvc.Controllers
 
             // Auto-login to create app cookie.
 
-            var signInResult = await _mediator.Send(
-                new SignInByPassword(getUserResult.Data, password, rememberMe, false));
-            
-            if (! signInResult.Success)
+            //var signInResult = await _mediator.Send(
+            //    new SignInByPassword(getUserResult.Data, model.Password, model.RememberMe, false));
+
+
+
+
+
+            // TODO: Take this back out, replace with above command. Also fix if-then below.
+
+            var result = await _signInManager.PasswordSignInAsync(
+                model.UserName,
+                model.Password,
+                false,
+                false);
+
+
+
+
+
+
+
+            if (! result.Succeeded)
+            //if (! signInResult.Success)
             {
                 ModelState.AddErrorsFromCommonResult(getUserResult);
                 return View();
             }
-            
+
+            // Debug access point
+            bool isSignedIn = _signInManager.IsSignedIn(User);
+
+
+
             return RedirectToAction("Index", "Home");
 
         }
