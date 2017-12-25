@@ -31,18 +31,15 @@ namespace JSar.Web.Mvc.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            // Debug access point
-            var user = User;
-            bool isSignedIn = _signInManager.IsSignedIn(User);
+            _logger.Verbose("MVC request: HTTP-GET:/");
 
-            _logger.Debug("MVC request: HTTP-GET:/");
-            _mediator.Send(new WriteLogMessage("***** COMMAND HANDLER TEST *****"));
             return View();
         }
 
         public IActionResult About()
         {
-            _logger.Debug("MVC request: HTTP-GET:/About");
+            _logger.Verbose("MVC request: HTTP-GET:/About");
+
             ViewData["Message"] = "Your application description page.";
 
             return View();
@@ -51,7 +48,8 @@ namespace JSar.Web.Mvc.Controllers
         [Authorize]
         public IActionResult Contact()
         {
-            _logger.Debug("MVC request: HTTP-GET:/Contact");
+            _logger.Verbose("MVC request: HTTP-GET:/Contact");
+
             ViewData["Message"] = "Your contact page.";
 
             return View();
@@ -59,7 +57,8 @@ namespace JSar.Web.Mvc.Controllers
 
         public IActionResult Error()
         {
-            _logger.Debug("MVC request: HTTP-GET:/Error");
+            _logger.Verbose("MVC request: HTTP-GET:/Error");
+
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }

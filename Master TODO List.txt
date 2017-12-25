@@ -1,6 +1,11 @@
 MASTER TO-DO LIST
 
-Registration and Signin pages WORKING.
+Display "Login failed" on login page
+
+Continue from Login action. 
+- Add RedirectURL passthrough.
+
+Add Microsoft logger messages into Serilog context.
 
 *** - Need to get default authorization login/out routes working, with proper parameters.
 

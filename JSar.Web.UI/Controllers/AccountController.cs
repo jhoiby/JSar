@@ -14,6 +14,7 @@ using JSar.Membership.Messages.Commands;
 using JSar.Membership.Messages.Queries;
 using JSar.Web.UI.Extensions;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace JSar.Web.Mvc.Controllers
 {
@@ -30,20 +31,30 @@ namespace JSar.Web.Mvc.Controllers
             _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
         }
         
+        // 
+        // HTTP-GET: /Account/Register
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register()
         {
+            _logger.Verbose("MVC request: HTTP-GET:/Account/Register");
+
             // TODO: Handle return URLs Register(string returnUrl = null)
 
             return View();
         }
+
+        //
+        // HTTP-POST: /Account/Register
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            _logger.Verbose("MVC request: HTTP-POST:/Account/Register");
+
             // TODO: When adding Azure AD authentication capability, detect if authentication 
             // type is OIDC and modify registration accordingly. Cache and preserve claims for  
             // login. See: AzureTest1 project for sample implementation.
@@ -74,20 +85,34 @@ namespace JSar.Web.Mvc.Controllers
             } );
         }
 
+        // 
+        // HTTP-GET: /Account/SignIn(?ReturnUrl=...)
+
         [HttpGet]
-        public async Task<IActionResult> SignIn()
+        public async Task<IActionResult> SignIn(string ReturnUrl = null)
         {
+            _logger.Verbose("MVC request: HTTP-GET:/Account/SignIn(?ReturnUrl...)");
+
             // Clear the existing external cookie to ensure a clean login process
-            // (Add in after adding external authentication schemes)
-            //await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            // Use this one after setting up Azure AD signin.
+            // await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            
+            // TODO: Resume work here, pass along ReturnUrl through the chain.
 
             return View();
         }
+
+        //
+        // HTTP-POST: /Account/SignIn
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignIn(SignInViewModel model)
         {
+            _logger.Verbose("MVC request: HTTP-POST:/Account/SignIn");
+
             // Get user.
 
             var getUserResult = await _mediator.Send(
@@ -111,13 +136,17 @@ namespace JSar.Web.Mvc.Controllers
             }
 
             return RedirectToAction("Index", "Home");
-
         }
+
+        //
+        // HTTP-POST: /Account/SignOut
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignOut()
         {
+            _logger.Verbose("MVC request: HTTP-POST:/Account/SignOut");
+
             string name = User.Identity.Name;
 
             await _signInManager.SignOutAsync();
