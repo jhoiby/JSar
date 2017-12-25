@@ -13,6 +13,7 @@ namespace JSar.Membership.Messages
         public CommonResult(ResultStatus status)
         {
             _status = status;
+            Data = default(string);
         }
 
         public CommonResult(ResultStatus status, string flashMessage)
@@ -29,6 +30,15 @@ namespace JSar.Membership.Messages
             FlashMessage = flashMessage;
             Errors = errors;
             TotalResults = errors.Count;
+            Data = default(string);
+        }
+
+        public CommonResult(ResultStatus status, dynamic data)
+        {
+            _status = status;
+            FlashMessage = "";
+            TotalResults = 1;
+            Data = data;
         }
 
         public CommonResult(ResultStatus status, string flashMessage, dynamic data)

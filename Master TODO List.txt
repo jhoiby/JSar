@@ -1,4 +1,4 @@
-
+FIX REDIRECTTOACTION in account register controller, it shows password in query!
 
 Finish Registration/Login
 - NEED LOTS OF TESTING. I've somewhat lost track of where I was.
