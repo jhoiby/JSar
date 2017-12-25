@@ -131,8 +131,8 @@ namespace JSar.Web.Mvc.Controllers
             
             if (! signInResult.Success)
             {
-                ModelState.AddErrorsFromCommonResult(getUserResult);
-                return View();
+                ModelState.AddErrorsFromCommonResult(signInResult);
+                return View(model);
             }
 
             return RedirectToAction("Index", "Home");

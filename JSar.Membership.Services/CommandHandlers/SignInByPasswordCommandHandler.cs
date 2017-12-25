@@ -31,8 +31,7 @@ namespace JSar.Membership.Services.CommandHandlers
             if (!result.Succeeded)
                 return new CommonResult(
                     status: ResultStatus.ExecutionFailure,
-                    flashMessage: "Login failed.",
-                    errors: new ResultErrorCollection("", "Login failed."));
+                    flashMessage: "Invalid login. Please check your username and password.");
 
             return new CommonResult(
                 status: ResultStatus.Success, 

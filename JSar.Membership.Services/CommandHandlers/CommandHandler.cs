@@ -21,7 +21,7 @@ namespace JSar.Membership.Services.CommandHandlers
 
         public async Task<TResponse> Handle(TCommand command, CancellationToken cancellationToken)
         {
-            _logger.Debug("Executing command: " + command.GetType().ToString() );
+            _logger.Debug("Executing command: " + nameof(command) );
 
             TResponse result = await HandleImplAsync(command, cancellationToken);
 
