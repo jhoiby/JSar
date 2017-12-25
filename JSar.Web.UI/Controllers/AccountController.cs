@@ -59,7 +59,7 @@ namespace JSar.Web.Mvc.Controllers
             {
                 ModelState.AddErrorsFromCommonResult(userResult);
                 return View(model);
-            }
+            } 
 
             // Log the user in.
 
