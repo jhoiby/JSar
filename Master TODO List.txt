@@ -1,6 +1,7 @@
-UPDATE AddModelErrorsExtension and remaining commands/queries for the new CommonResult.Errors.
+
 
 Finish Registration/Login
+- NEED LOTS OF TESTING. I've somewhat lost track of where I was.
 
 Add Unit Tests as needed.
 
