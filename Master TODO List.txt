@@ -1,3 +1,11 @@
+UPDATE AddModelErrorsExtension and remaining commands/queries for the new CommonResult.Errors.
+
+Finish Registration/Login
+
+Add Unit Tests as needed.
+
+Add Fluent Validation of commands/queries.
+
 Add validation to commonresult
 - Require error message of some sort if not Status = Success
 

@@ -1,6 +1,7 @@
 Dependency injection via Autofac.
 Logging via Serilog.
 CQRS structure.
+Command/Query results/errors returned by a CommonResult object.
 Messages (commands, queries, internal events) handled by MediatR.
 .Net Core Identity
 

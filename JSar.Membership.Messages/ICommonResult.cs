@@ -5,21 +5,32 @@ using System.Text;
 namespace JSar.Membership.Messages
 {
     /// <summary>
-    /// Provides a common method for returning results of commands and queries. Can be
-    /// used by commands to return success results and error details, and by queries
-    /// to return a result set. 
+    /// Provides a common method for returning results of commands and queries. Used to return
+    /// command and query execution status (see ResultStatus) and, from queries, the resulting
+    /// data.
     /// </summary>
     public interface ICommonResult
     {
         /// <summary>
-        /// Objects resulting from a query, or error messages from a command. If command error
-        /// result, will contain a List<string> object with one or more error messages. If query
-        /// result, object types contained will vary based on query.
+        /// Objects returned from a query, with the object type varying based on the query.
+        /// The type of the Data object returned is defined in the query comments. 
+        /// 
+        /// In rare circumstances a command may return additional result data. For example an
+        /// Asp.Net Identity SignInByPassword will return a SignInResult object. 
+        /// 
+        /// To maintain CQRS principles it is recommended to not return entities or other
+        /// command-generated artifacts that should instead be returned with a query.
         /// </summary>
         dynamic Data { get; }
 
         /// <summary>
-        /// A count of the objects contained in Data
+        /// Returns a ResultErrorDictionary with the list of errors.
+        /// </summary>
+        ResultErrorCollection Errors { get; }
+
+        /// <summary>
+        /// A count of results or, if Status != Success, a count of errors in the
+        /// ResultErrorCollection
         /// </summary>
         int TotalResults { get; }
 

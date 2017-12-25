@@ -30,10 +30,9 @@ namespace JSar.Membership.Services.CommandHandlers
 
             if (!result.Succeeded)
                 return new CommonResult(
-                    status: ResultStatus.ExecutionFailure, 
-                    flashMessage: "Login failed.", 
-                    totalResults: 1, 
-                    data: "Login failed.");
+                    status: ResultStatus.ExecutionFailure,
+                    flashMessage: "Login failed.",
+                    errors: new ResultErrorCollection("", "Login failed."));
 
             return new CommonResult(
                 status: ResultStatus.Success, 

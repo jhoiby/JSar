@@ -1,0 +1,67 @@
+COMMONRESULT USAGE GUIDELINES
+
+Below are examples for use of the CommonResult object to return info from
+commands and queries.
+
+----------
+EXAMPLE: Command AddUser succeeds.
+
+	return new CommonResult(
+		status: ResultStatus.Success);
+
+----------
+EXAMPLE: Query FindUserByEmail succeeds.
+
+	return new CommonResult(
+		status: ResultStatus.Success,
+		totalResults: 1,
+		data: user);
+
+----------
+EXAMPLE: Query GetAllGroupMembersByGroupName("SARAMembers") succeeds.
+
+	return new CommonResult(
+		status: ResultStatus.Success,
+		totalResults: groupMembers.Count,
+		data: groupMembers);		// List<AppUsers>
+
+----------
+EXAMPLE: Command RegisterLocalUser(...) FAILS because it is the password is too short, the
+password has no special characters, and the username is already taken. In this case the
+IdentityResult will contain an IEnumerable with a list of errors and their associated parameter
+names (called "codes").
+
+	(pseudocode)
+	foreach (error in IdentityResult)
+		resultErrorCollection.Add(error.code, error.description)
+
+	return new CommonResult(
+		status: ResultStatus.ExecutionFailure
+		flashMessage: "User registration failed",
+		errors: resultErrorCollection
+	)
+
+The MVC controller would then take the CommonResult and use the AddModelErrorsExtension
+to transfer the error messages to the ModelState.
+
+	ModelState.AddModerErrors(CommonResult)
+
+----------
+EXAMPLE: Command or query fails Fluent Validation of the command parameters.
+
+	resultErrorCollection = FluentValidationErrors.ToResultErrorCollection();
+
+	return new CommonResult(
+		status: ResultStatus.MessageValidationFailure
+		flashMessage: "A command parameter failed validation.",
+		errors: errorResultCollection)
+
+----------
+EXAMPLE: An exception is caught in a command or query.
+
+	return new CommonResult(
+		status: ResultStatus.ExceptionCaught,
+		flashMessage: theExceptionObject.Message,
+		errors: new ResultErrorCollection("", ex.Message)
+		totalResults: 1,
+		data: theExceptionObject);

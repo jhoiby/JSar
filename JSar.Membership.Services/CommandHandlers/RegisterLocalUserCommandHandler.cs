@@ -40,19 +40,18 @@ namespace JSar.Membership.Services.CommandHandlers
         {
             _logger.Error("Register local user command execution failed");
 
-            List<string> errorMessages = new List<string>();
+            var errors = new ResultErrorCollection();
 
             foreach (IdentityError error in addUserResult.Errors)
             {
-                _logger.Error("  - " + error.Description);
-                errorMessages.Add(error.Description);
+                _logger.Error("  - " + error.Code + " : " + error.Description);
+                errors.Add(error.Code, error.Description);
             }
 
             CommonResult result = new CommonResult(
                 status: ResultStatus.ExecutionFailure,
                 flashMessage: "RegisterLocalUser command execution failed.",
-                totalResults: 0,
-                data: errorMessages
+                errors: errors
                 );
 
             return result;

@@ -28,9 +28,10 @@ namespace JSar.Membership.Services.CommandHandlers
             } catch (Exception ex)
             {
                 return new CommonResult(
-                    status: ResultStatus.ExceptionCaught, 
-                    flashMessage: ex.Message, 
-                    totalResults: 0,
+                    status: ResultStatus.ExceptionCaught,
+                    flashMessage: ex.Message,
+                    errors: new ResultErrorCollection("", ex.Message),
+                    totalResults: 1,
                     data: ex);
             }
         }

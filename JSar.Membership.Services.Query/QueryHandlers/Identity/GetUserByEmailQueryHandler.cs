@@ -25,9 +25,14 @@ namespace JSar.Membership.Services.Query.QueryHandlers.Identity
             AppUser user = await _userManager.FindByEmailAsync(query.Email);
 
             if (user == null)
-                return new CommonResult(ResultStatus.ExecutionFailure, "Invalid login.", 1, "Invalid login.");
+                return new CommonResult(
+                    status: ResultStatus.ExecutionFailure, 
+                    flashMessage: "Invalid login. Please check your username and password.");
 
-            return new CommonResult(ResultStatus.Success, 1, user);
+            return new CommonResult(
+                status: ResultStatus.Success,
+                totalResults: 1,
+                data: user);
         }
     }
 }
