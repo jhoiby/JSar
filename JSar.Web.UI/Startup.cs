@@ -44,8 +44,8 @@ namespace JSar.Web.Mvc
 
             // .Net Core Identity configuration, with extended User and Role classes.
             services.AddIdentity<AppUser, AppRole>()
-           .AddEntityFrameworkStores<MembershipDbContext>()
-           .AddDefaultTokenProviders();
+               .AddEntityFrameworkStores<MembershipDbContext>()
+               .AddDefaultTokenProviders();
 
             // 
             // AUTHENTICATION
@@ -57,6 +57,13 @@ namespace JSar.Web.Mvc
             //    sharedOptions.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             //    // sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
             //});
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Account/SignIn";
+                    options.LogoutPath = "/Account/SignOut";
+                });
 
             //
             // MVC OPTIONS

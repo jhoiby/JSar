@@ -99,43 +99,32 @@ namespace JSar.Web.Mvc.Controllers
                 return View();
             }
 
-            // Auto-login to create app cookie.
+            // Login user to create app cookie, which is used for authentication on next request.
 
-            //var signInResult = await _mediator.Send(
-            //    new SignInByPassword(getUserResult.Data, model.Password, model.RememberMe, false));
-
-
-
-
-
-            // TODO: Take this back out, replace with above command. Also fix if-then below.
-
-            var result = await _signInManager.PasswordSignInAsync(
-                model.UserName,
-                model.Password,
-                false,
-                false);
-
-
-
-
-
-
-
-            if (! result.Succeeded)
-            //if (! signInResult.Success)
+            var signInResult = await _mediator.Send(
+                new SignInByPassword(getUserResult.Data, model.Password, model.RememberMe, false));
+            
+            if (! signInResult.Success)
             {
                 ModelState.AddErrorsFromCommonResult(getUserResult);
                 return View();
             }
 
-            // Debug access point
-            bool isSignedIn = _signInManager.IsSignedIn(User);
-
-
-
             return RedirectToAction("Index", "Home");
 
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SignOut()
+        {
+            string name = User.Identity.Name;
+
+            await _signInManager.SignOutAsync();
+
+            _logger.Information(string.Format("User {0} logged out.", name));
+
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
     }

@@ -48,6 +48,7 @@ namespace JSar.Web.Mvc.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Contact()
         {
             _logger.Debug("MVC request: HTTP-GET:/Contact");

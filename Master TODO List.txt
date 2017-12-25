@@ -4,6 +4,8 @@ Registration and Signin pages WORKING.
 
 *** - Need to get default authorization login/out routes working, with proper parameters.
 
+Fix default string values in CommonResult to string.Empty
+
 Finish Registration/Login
 - NEED LOTS OF TESTING. I've somewhat lost track of where I was.
 - Need logout page.
