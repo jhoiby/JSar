@@ -1,5 +1,7 @@
 MASTER TO-DO LIST
 
+IF TOKEN CACHE NOT WORKING - Look at session token cache line 19.
+
 Add Forgot Password page Action - ForgotPassword.cshtml
 
 Add Microsoft logger messages into Serilog context.
@@ -33,6 +35,8 @@ Next up: Accounts.
 - Azure AD OIDC registration and login.
 - Azure AD claims persistence.
 - MS Graph access test.
+
+SPLIT IDENTITY DATABASE FROM MEMBERSHIP CONTEXT
 
 Copy other documentation files from ObApp5.
 

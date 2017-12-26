@@ -20,6 +20,8 @@ using Microsoft.AspNetCore.Identity;
 using JSar.Membership.Services.Query.QueryHandlers;
 using JSar.Membership.Messages.Queries;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using JSar.Membership.AzureAdAdapter.Extensions;
 
 namespace JSar.Web.Mvc
 {
@@ -31,6 +33,10 @@ namespace JSar.Web.Mvc
         }
 
         public IConfiguration Configuration { get; }
+
+        // Azure AD URIs
+        public const string ObjectIdentifierType = "http://schemas.microsoft.com/identity/claims/objectidentifier";
+        public const string TenantIdType = "http://schemas.microsoft.com/identity/claims/tenantid";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -50,17 +56,28 @@ namespace JSar.Web.Mvc
             // 
             // AUTHENTICATION
 
-            services.ConfigureApplicationCookie(options =>
+            // Add Azure AD authentication option for Office 365 integration
+            services.AddAuthentication(sharedOptions =>
             {
-                options.LoginPath = "/Account/SignIn";
-            });
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.LoginPath = "/Account/SignIn";
-                    options.LogoutPath = "/Account/SignOut";
-                });
+                sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+            .AddAzureAd(options => Configuration.Bind("AzureAd", options))
+            .AddCookie();
+
+            // OLD: For cookie sign-in, pre-AAD
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.LoginPath = "/Account/SignIn";
+            //});
+            //
+            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //    .AddCookie(options =>                               // TRY ADDING THIS LATER AFTER AddAzureAd if needed.
+            //    {
+            //        options.LoginPath = "/Account/SignIn";
+            //        options.LogoutPath = "/Account/SignOut";
+            //    });
             
             // From test app, working with AAD. To be used later.
             // Add cookie authentication

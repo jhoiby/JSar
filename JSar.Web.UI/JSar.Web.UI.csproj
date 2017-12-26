@@ -32,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\JSar.Membership.AzureAdAdapter\JSar.Membership.AzureAdAdapter.csproj" />
     <ProjectReference Include="..\JSar.Membership.Infrastructure\JSar.Membership.Infrastructure.csproj" />
     <ProjectReference Include="..\JSar.Membership.Services.Query\JSar.Membership.Services.Query.csproj" />
     <ProjectReference Include="..\JSar.Membership.Services\JSar.Membership.Services.csproj" />
