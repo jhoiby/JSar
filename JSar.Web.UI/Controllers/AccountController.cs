@@ -36,12 +36,11 @@ namespace JSar.Web.Mvc.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Register()
+        public IActionResult Register(string returnUrl = null)
         {
             _logger.Verbose("MVC request: HTTP-GET:/Account/Register");
 
-            // TODO: Handle return URLs Register(string returnUrl = null)
-
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
@@ -51,7 +50,7 @@ namespace JSar.Web.Mvc.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl)
         {
             _logger.Verbose("MVC request: HTTP-POST:/Account/Register");
 
@@ -73,34 +72,34 @@ namespace JSar.Web.Mvc.Controllers
             {
                 ModelState.AddErrorsFromCommonResult(userResult);
                 return View(model);
-            } 
+            }
 
             // Log the user in.
 
-            return await SignIn(  new SignInViewModel()
-            {
-                UserName = model.Email,
-                Password = model.Password,
-                RememberMe = model.RememberMe
-            } );
+            return await SignIn(new SignInViewModel()
+                {
+                    UserName = model.Email,
+                    Password = model.Password,
+                    RememberMe = model.RememberMe
+                },
+                returnUrl);
         }
 
         // 
         // HTTP-GET: /Account/SignIn(?ReturnUrl=...)
 
         [HttpGet]
-        public async Task<IActionResult> SignIn(string ReturnUrl = null)
+        public async Task<IActionResult> SignIn(string returnUrl = null)
         {
             _logger.Verbose("MVC request: HTTP-GET:/Account/SignIn(?ReturnUrl...)");
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            // await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);  -- Use this one after Azure AD setup
 
-            // Use this one after setting up Azure AD signin.
-            // await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-            
             // TODO: Resume work here, pass along ReturnUrl through the chain.
-
+            
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
@@ -109,7 +108,7 @@ namespace JSar.Web.Mvc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SignIn(SignInViewModel model)
+        public async Task<IActionResult> SignIn(SignInViewModel model, string returnUrl = null)
         {
             _logger.Verbose("MVC request: HTTP-POST:/Account/SignIn");
 
@@ -135,7 +134,9 @@ namespace JSar.Web.Mvc.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index", "Home");
+            // TODO: Add return URL handling
+
+            return RedirectToLocal(returnUrl);
         }
 
         //
@@ -156,5 +157,18 @@ namespace JSar.Web.Mvc.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
+        #region helpers
+        private IActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+        }
+        #endregion 
     }
 }

@@ -50,13 +50,10 @@ namespace JSar.Web.Mvc
             // 
             // AUTHENTICATION
 
-            // Add cookie authentication
-            //services.AddAuthentication(sharedOptions =>
-            //{
-            //    sharedOptions.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //    sharedOptions.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //    // sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-            //});
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/SignIn";
+            });
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
@@ -64,6 +61,15 @@ namespace JSar.Web.Mvc
                     options.LoginPath = "/Account/SignIn";
                     options.LogoutPath = "/Account/SignOut";
                 });
+            
+            // From test app, working with AAD. To be used later.
+            // Add cookie authentication
+            //services.AddAuthentication(sharedOptions =>
+            //{
+            //    sharedOptions.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //    sharedOptions.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //    // sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;  // Azure AD
+            //});
 
             //
             // MVC OPTIONS

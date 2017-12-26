@@ -1,6 +1,6 @@
 MASTER TO-DO LIST
 
-Display "Login failed" on login page
+Add Forgot Password page Action - ForgotPassword.cshtml
 
 Fix Contact page auth redirect.
 
