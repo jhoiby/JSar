@@ -22,6 +22,8 @@ using JSar.Membership.Messages.Queries;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using JSar.Membership.AzureAdAdapter.Extensions;
+using JSar.Membership.AzureAdAdapter.Helpers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace JSar.Web.Mvc
 {
@@ -91,7 +93,20 @@ namespace JSar.Web.Mvc
             //
             // MVC OPTIONS
 
-            services.AddMvc(); ;
+            services.AddMvc();
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
+
+            //
+            // APPLICATION SERVICES
 
             // Mediator pipeline - Discover and register command/query/event handlers in the
             // ObApp.Services and other projects/assemblies. Need to specify a concrete type, then
@@ -99,6 +114,11 @@ namespace JSar.Web.Mvc
             services.AddMediatR(
                 typeof(CommandHandler<WriteLogMessage, CommonResult>).Assembly,
                 typeof(QueryHandler<GetUserByEmail, CommonResult>).Assembly);
+
+            // Azure support
+            services.AddSingleton<IClaimsCache, ClaimsCache>();
+            services.AddSingleton<IGraphAuthProvider, GraphAuthProvider>();
+            services.AddTransient<IGraphSdkHelper, GraphSdkHelper>();
 
             //
             // AUTOFAC DI/IOC CONFIGURATION

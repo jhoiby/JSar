@@ -13,6 +13,12 @@ namespace JSar.Membership.Domain.Identity
         // Paramaterless constructor required for Entity Framework
         protected AppUser() { }
 
+        public AppUser(string email)
+        {
+            base.Email = email;
+            base.UserName = email;
+        }
+
         public AppUser(string email, string firstName, string lastName, string primaryPhone)
         {
             base.Email = email;

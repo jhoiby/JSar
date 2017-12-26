@@ -1,7 +1,5 @@
 MASTER TO-DO LIST
 
-IF TOKEN CACHE NOT WORKING - Look at session token cache line 19.
-
 Add Forgot Password page Action - ForgotPassword.cshtml
 
 Add Microsoft logger messages into Serilog context.
