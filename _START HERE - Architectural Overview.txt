@@ -58,5 +58,6 @@ Event subscribers are responsible for checking the idempotent ID of the event to
 
 
 VIEW UDI DAHAN'S INFO:
+Reliable Messaging Without Distributed Transactions: https://vimeo.com/111998645
 Blog on event reliability: http://udidahan.com/2012/12/31/life-without-distributed-transactions/
 Commands, queries and consistency: https://vimeo.com/43612850

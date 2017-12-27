@@ -1,10 +1,25 @@
 MASTER TO-DO LIST
 
+
+------------
+PRIORITY GUIDE:
+1. Finish clean-up/refactor of the account management code.
+	- Refactor to CQRS
+2. Implement UI
+- Admin panel
+3. More account management
+- Email validation
+- Registration captcha
+- Admin can create accounts
+- Roles management/assignment
+
+
+------------
+TO-DO:
+
 Add Forgot Password page Action - ForgotPassword.cshtml
 
 Add Microsoft logger messages into Serilog context.
-
-*** - Need to get default authorization login/out routes working, with proper parameters.
 
 Fix default string values in CommonResult to string.Empty
 
