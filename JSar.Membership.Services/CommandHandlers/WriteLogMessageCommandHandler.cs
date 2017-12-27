@@ -23,12 +23,12 @@ namespace JSar.Membership.Services.CommandHandlers
                 _logger.Debug(command.Message);
 
                 return new CommonResult(
-                    outcome: ResultOutcome.Succeeded);
+                    outcome: Outcome.Succeeded);
 
             } catch (Exception ex)
             {
                 return new CommonResult(
-                    outcome: ResultOutcome.ExceptionCaught,
+                    outcome: Outcome.ExceptionCaught,
                     flashMessage: ex.Message,
                     errors: new ResultErrorCollection("", ex.Message),
                     totalResults: 1,

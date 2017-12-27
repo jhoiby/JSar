@@ -4,7 +4,7 @@ using System.Text;
 
 namespace JSar.Membership.Messages
 {
-    public enum ResultOutcome
+    public enum Outcome
     {
         Succeeded = 0,
         MessageValidationFailure = 1,

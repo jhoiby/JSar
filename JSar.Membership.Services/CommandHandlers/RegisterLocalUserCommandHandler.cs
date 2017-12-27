@@ -33,7 +33,7 @@ namespace JSar.Membership.Services.CommandHandlers
             if (!_addUserResult.Succeeded)
                 return AddUserErrorResult(_addUserResult);
 
-            return new CommonResult(ResultOutcome.Succeeded);
+            return new CommonResult(Outcome.Succeeded);
         }
 
         private CommonResult AddUserErrorResult(IdentityResult addUserResult)
@@ -49,7 +49,7 @@ namespace JSar.Membership.Services.CommandHandlers
             }
 
             CommonResult result = new CommonResult(
-                outcome: ResultOutcome.ExecutionFailure,
+                outcome: Outcome.ExecutionFailure,
                 flashMessage: "RegisterLocalUser command execution failed.",
                 errors: errors
                 );

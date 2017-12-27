@@ -39,7 +39,7 @@ namespace JSar.Membership.Messages
         /// </summary>
         string FlashMessage { get; }
         
-        ResultOutcome Outcome { get; }
+        Outcome Outcome { get; }
 
         /// <summary>
         /// True if command/query completed without error (ResultOutcome.Succeeded). The
