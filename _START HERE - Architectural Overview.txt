@@ -1,0 +1,62 @@
+ARCHITECTURAL OVERVIEW
+
+Document not yet generated. Below is just some notes for the future document.
+
+--------
+
+Overacrhing principles are DDD, CQRS and separation of concerns.
+
+Membership system uses events but NOT event sourcing. 
+- May use event sourcing for the Activities bounded context. It's a natural fit.
+
+Aggregate root state is maintained using an Entity Framework/SQL repository, but events are also published for use
+by other components such as email senders and notifications to users. 
+- For example, a records administrator can subscribe to "A Member's Field Qualification Expired" events so in the UI they
+	will see these notices in their notifications list.
+
+Domain aggregate state persistence and event publishing are handled by the application services layer.
+- A command is triggered and a command handler in the application services layer takes over execution. 
+- The command handler calls aggregate (aggregate root) methods as appropriate.
+- When a method on a domain aggregate is called it does it mutates its state.
+- As the aggregate works, events are generated and cached internally in a List<event> (actual type TBD).
+- When the aggregates operation is complete it returns control to the calling command handler.
+- The command handler starts a transaction which:
+	- Persists the aggregate root states.
+	- Writes events with an idempotent ID to a PERSISTENT event queue, but doesn't publish them
+		directly. (More about this later.)
+	- Closes the transaction.
+
+More about the PERSISTENT EVENT QUEUE.
+
+(This is all up in the air right now as I think through the issues of event reliablity and data
+consistency, especially when publishing asynchronous external events such as credit card processing and 
+messging services.)
+
+Why save messages in a persistent event queue from the command handler's transaction? It's so they
+are guaranteed to be saved as part of the transaction, and will be available for replay if the system
+crashes right after the transaction is complete but before the event subscribers have a chance to handle the
+events.
+
+The persistent event queue:
+- Assignes an idempotent ID to each event as it is stored (if it wasn't already assigned earlier, that's TBD).
+- Saves them in a persistent store as part of the command handler's transaction, so the command handler is confident
+	the events are safe and it can close the transaction.
+- Publishes the events.
+
+If the system crashes before the events are published. They can be replayed internally and
+	re-published on the external event bus.
+- This is a "Publish one or more times" guarantee.
+
+Event subscribers are responsible for checking the idempotent ID of the event to make sure they are not
+	handling the same event more than once.
+- HOW? This is my current sticking point. A database read and write per event handled is expensive so I will 
+	need to load the recent event history from a DB and maintain an in-memory cache?
+- Need to research this more.
+- Event handlers will also need to handle the case where they handled an event but then crashed before
+	recording that they handled the event.
+- Hmmm... Going to take some thought on this.
+
+
+VIEW UDI DAHAN'S INFO:
+Blog on event reliability: http://udidahan.com/2012/12/31/life-without-distributed-transactions/
+Commands, queries and consistency: https://vimeo.com/43612850
