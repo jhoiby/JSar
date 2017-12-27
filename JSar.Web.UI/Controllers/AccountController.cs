@@ -130,7 +130,7 @@ namespace JSar.Web.Mvc.Controllers
             var getUserResult = await _mediator.Send(
                 new GetUserByEmail(model.UserName));
             
-            if (! getUserResult.Success)
+            if (! getUserResult.Succeeded)
             {
                 ModelState.AddErrorsFromCommonResult(getUserResult);
                 return View();
@@ -141,7 +141,7 @@ namespace JSar.Web.Mvc.Controllers
             var signInResult = await _mediator.Send(
                 new SignInByPassword(getUserResult.Data, model.Password, model.RememberMe, false));
             
-            if (! signInResult.Success)
+            if (! signInResult.Succeeded)
             {
                 ModelState.AddErrorsFromCommonResult(signInResult);
                 return View(model);

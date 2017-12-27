@@ -23,9 +23,9 @@ namespace JSar.Membership.Services.CommandHandlers
         protected override async Task<CommonResult> HandleImplAsync(RegisterLocalUser command, CancellationToken cancellationToken)
         {
             AppUser user = new AppUser(
-                command.Email, 
-                command.FirstName, 
-                command.LastName, 
+                command.Email,
+                command.FirstName,
+                command.LastName,
                 command.PrimaryPhone);
 
             _addUserResult = await _userManager.CreateAsync(user, command.Password);
@@ -33,7 +33,7 @@ namespace JSar.Membership.Services.CommandHandlers
             if (!_addUserResult.Succeeded)
                 return AddUserErrorResult(_addUserResult);
 
-            return new CommonResult(ResultStatus.Success);
+            return new CommonResult(ResultOutcome.Succeeded);
         }
 
         private CommonResult AddUserErrorResult(IdentityResult addUserResult)
@@ -49,7 +49,7 @@ namespace JSar.Membership.Services.CommandHandlers
             }
 
             CommonResult result = new CommonResult(
-                status: ResultStatus.ExecutionFailure,
+                outcome: ResultOutcome.ExecutionFailure,
                 flashMessage: "RegisterLocalUser command execution failed.",
                 errors: errors
                 );

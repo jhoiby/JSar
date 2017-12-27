@@ -30,11 +30,11 @@ namespace JSar.Membership.Services.CommandHandlers
 
             if (!result.Succeeded)
                 return new CommonResult(
-                    status: ResultStatus.ExecutionFailure,
+                    outcome: ResultOutcome.ExecutionFailure,
                     flashMessage: "Invalid login. Please check your username and password.");
 
             return new CommonResult(
-                status: ResultStatus.Success, 
+                outcome: ResultOutcome.Succeeded, 
                 totalResults: 1, 
                 data: result);
         }

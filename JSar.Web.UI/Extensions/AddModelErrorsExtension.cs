@@ -20,7 +20,7 @@ namespace JSar.Web.UI.Extensions
             if (result == null)
                 throw new ArgumentNullException(nameof(modelState));
 
-            if (result.Status == ResultStatus.Success)
+            if (result.Outcome == ResultOutcome.Succeeded)
                 return; // Nothing to see here, move along.
 
             if (result.Errors != null)

@@ -26,11 +26,11 @@ namespace JSar.Membership.Services.Query.QueryHandlers.Identity
 
             if (user == null)
                 return new CommonResult(
-                    status: ResultStatus.ExecutionFailure, 
+                    outcome: ResultOutcome.ExecutionFailure, 
                     flashMessage: "Invalid login. Please check your username and password.");
 
             return new CommonResult(
-                status: ResultStatus.Success,
+                outcome: ResultOutcome.Succeeded,
                 totalResults: 1,
                 data: user);
         }

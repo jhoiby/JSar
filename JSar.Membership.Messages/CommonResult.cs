@@ -8,66 +8,66 @@ namespace JSar.Membership.Messages
     /// <inheritdoc />
     public class CommonResult : ICommonResult
     {
-        ResultStatus _status;
+        ResultOutcome _outcome;
 
-        public CommonResult(ResultStatus status)
+        public CommonResult(ResultOutcome outcome)
         {
-            _status = status;
+            _outcome = outcome;
             Data = default(string);
         }
 
-        public CommonResult(ResultStatus status, string flashMessage)
+        public CommonResult(ResultOutcome outcome, string flashMessage)
         {
-            _status = status;
+            _outcome = outcome;
             TotalResults = 0;
             FlashMessage = flashMessage;
             Data = default(string);
         }
         
-        public CommonResult(ResultStatus status, string flashMessage, ResultErrorCollection errors)
+        public CommonResult(ResultOutcome outcome, string flashMessage, ResultErrorCollection errors)
         {
-            _status = status;
+            _outcome = outcome;
             FlashMessage = flashMessage;
             Errors = errors;
             TotalResults = errors.Count;
             Data = default(string);
         }
 
-        public CommonResult(ResultStatus status, dynamic data)
+        public CommonResult(ResultOutcome outcome, dynamic data)
         {
-            _status = status;
+            _outcome = outcome;
             FlashMessage = "";
             TotalResults = 1;
             Data = data;
         }
 
-        public CommonResult(ResultStatus status, string flashMessage, dynamic data)
+        public CommonResult(ResultOutcome outcome, string flashMessage, dynamic data)
         {
-            _status = status;
+            _outcome = outcome;
             FlashMessage = flashMessage;
             TotalResults = 1;
             Data = data;
         }
 
-        public CommonResult(ResultStatus status, int totalResults, dynamic data)
+        public CommonResult(ResultOutcome outcome, int totalResults, dynamic data)
         {
-            _status = status;
+            _outcome = outcome;
             FlashMessage = "";
             TotalResults = totalResults;
             Data = data;
         }
 
-        public CommonResult(ResultStatus status, string flashMessage, int totalResults, dynamic data)
+        public CommonResult(ResultOutcome outcome, string flashMessage, int totalResults, dynamic data)
         {
-            _status = status;
+            _outcome = outcome;
             FlashMessage = flashMessage;
             TotalResults = totalResults;
             Data = data;
         }
 
-        public CommonResult(ResultStatus status, string flashMessage, int totalResults, ResultErrorCollection errors, dynamic data)
+        public CommonResult(ResultOutcome outcome, string flashMessage, int totalResults, ResultErrorCollection errors, dynamic data)
         {
-            _status = status;
+            _outcome = outcome;
             FlashMessage = flashMessage;
             TotalResults = totalResults;
             Errors = errors;
@@ -87,14 +87,14 @@ namespace JSar.Membership.Messages
         public string FlashMessage { get; }
 
         /// <inheritdoc />
-        public bool Success { get { return Status == ResultStatus.Success; }  }
+        public bool Succeeded { get { return Outcome == ResultOutcome.Succeeded; }  }
 
         /// <inheritdoc />
-        public ResultStatus Status { get { return _status; } }
+        public ResultOutcome Outcome { get { return _outcome; } }
         
         public static implicit operator bool(CommonResult result)
         {
-                try { return result.Status == ResultStatus.Success; }
+                try { return result.Outcome == ResultOutcome.Succeeded; }
                 catch { return false; }
         }
     }

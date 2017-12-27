@@ -39,12 +39,14 @@ namespace JSar.Membership.Messages
         /// </summary>
         string FlashMessage { get; }
         
-        ResultStatus Status { get; }
+        ResultOutcome Outcome { get; }
 
         /// <summary>
-        /// True if command/query completed without error. (ResultStatus.Succeeded)
+        /// True if command/query completed without error (ResultOutcome.Succeeded). The
+        /// should also be returned as an implicit bool operation on ICommonResult, although
+        /// this cannot be required by the interface.
         /// </summary>
-        bool Success { get; }
+        bool Succeeded { get; }
     }
 }
 

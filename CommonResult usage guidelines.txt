@@ -7,13 +7,13 @@ commands and queries.
 EXAMPLE: Command AddUser succeeds.
 
 	return new CommonResult(
-		status: ResultStatus.Success);
+		status: ResultOutcome.Succeeded);
 
 ----------
 EXAMPLE: Query FindUserByEmail succeeds.
 
 	return new CommonResult(
-		status: ResultStatus.Success,
+		status: ResultOutcome.Succeeded,
 		totalResults: 1,
 		data: user);
 
@@ -21,7 +21,7 @@ EXAMPLE: Query FindUserByEmail succeeds.
 EXAMPLE: Query GetAllGroupMembersByGroupName("SARAMembers") succeeds.
 
 	return new CommonResult(
-		status: ResultStatus.Success,
+		status: ResultOutcome.Succeeded,
 		totalResults: groupMembers.Count,
 		data: groupMembers);		// List<AppUsers>
 
@@ -36,7 +36,7 @@ names (called "codes").
 		resultErrorCollection.Add(error.code, error.description)
 
 	return new CommonResult(
-		status: ResultStatus.ExecutionFailure
+		status: ResultOutcome.ExecutionFailure
 		flashMessage: "User registration failed",
 		errors: resultErrorCollection
 	)
@@ -52,7 +52,7 @@ EXAMPLE: Command or query fails Fluent Validation of the command parameters.
 	resultErrorCollection = FluentValidationErrors.ToResultErrorCollection();
 
 	return new CommonResult(
-		status: ResultStatus.MessageValidationFailure
+		status: ResultOutcome.MessageValidationFailure
 		flashMessage: "A command parameter failed validation.",
 		errors: errorResultCollection)
 
@@ -60,7 +60,7 @@ EXAMPLE: Command or query fails Fluent Validation of the command parameters.
 EXAMPLE: An exception is caught in a command or query.
 
 	return new CommonResult(
-		status: ResultStatus.ExceptionCaught,
+		status: ResultOutcome.ExceptionCaught,
 		flashMessage: theExceptionObject.Message,
 		errors: new ResultErrorCollection("", ex.Message)
 		totalResults: 1,

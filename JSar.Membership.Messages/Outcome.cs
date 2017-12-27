@@ -4,9 +4,9 @@ using System.Text;
 
 namespace JSar.Membership.Messages
 {
-    public enum ResultStatus
+    public enum ResultOutcome
     {
-        Success = 0,
+        Succeeded = 0,
         MessageValidationFailure = 1,
         DomainValidationFailure = 2,
         ExecutionFailure = 3,
