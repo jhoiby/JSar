@@ -1,6 +1,10 @@
 MASTER TO-DO LIST
 
 
+NO MORE WORK UNTIL SATURDAY.
+
+
+
 ------------
 PRIORITY GUIDE:
 1. Finish clean-up/refactor of the account management code.
