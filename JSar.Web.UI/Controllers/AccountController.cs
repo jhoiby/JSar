@@ -59,6 +59,7 @@ namespace JSar.Web.Mvc.Controllers
 
         //
         // HTTP-POST: /Account/Register
+        // Post-back for LOCAL registration.
 
         [HttpPost]
         [AllowAnonymous]
@@ -66,10 +67,6 @@ namespace JSar.Web.Mvc.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl)
         {
             _logger.Verbose("MVC request: HTTP-POST:/Account/Register");
-
-            // TODO: When adding Azure AD authentication capability, detect if authentication 
-            // type is OIDC and modify registration accordingly. Cache and preserve claims for  
-            // login. See: AzureTest1 project for sample implementation.
 
             if (!ModelState.IsValid) return View(model);
             
@@ -108,7 +105,7 @@ namespace JSar.Web.Mvc.Controllers
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            // await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);  -- Use this one after Azure AD setup
+            // await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);  // Use this one after Azure AD setup
 
             // TODO: Resume work here, pass along ReturnUrl through the chain.
             
@@ -193,7 +190,7 @@ namespace JSar.Web.Mvc.Controllers
                 return RedirectToAction(nameof(SignIn));
             }
 
-            _claimsCache.Add("signin", info.Principal.Claims);
+            // _claimsCache.Add("signin", info.Principal.Claims);
 
 
             // Sign in the user with this external login provider if the user already has a login.
@@ -237,7 +234,7 @@ namespace JSar.Web.Mvc.Controllers
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
 
-                User.Claims.Concat(_claimsCache.Get("signin"));
+                // User.Claims.Concat(_claimsCache.Get("signin"));
 
                 var user = new AppUser(model.Email);
 
@@ -253,7 +250,8 @@ namespace JSar.Web.Mvc.Controllers
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
-                        await _userManager.AddClaimsAsync(user, _claimsCache.Get("signin"));
+                        // await _userManager.AddClaimsAsync(user, _claimsCache.Get("signin"));
+                        await _userManager.AddClaimsAsync(user, info.Principal.Claims);
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         var userTest = User;
                         _logger.Information("User created an account using {Name} provider.", info.LoginProvider);

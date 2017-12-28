@@ -61,12 +61,17 @@ namespace JSar.Web.Mvc
             // Add Azure AD authentication option for Office 365 integration
             services.AddAuthentication(sharedOptions =>
             {
-
                 sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                // sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                sharedOptions.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
-            .AddAzureAd(options => Configuration.Bind("AzureAd", options))
-            .AddCookie();
+            .AddAzureAd(options => 
+                Configuration.Bind("AzureAd", options))
+            .AddCookie(options =>                               
+            {
+                options.LoginPath = "/Account/SignIn";
+                options.LogoutPath = "/Account/SignOut";
+            });
 
             // OLD: For cookie sign-in, pre-AAD
             //services.ConfigureApplicationCookie(options =>
@@ -80,7 +85,7 @@ namespace JSar.Web.Mvc
             //        options.LoginPath = "/Account/SignIn";
             //        options.LogoutPath = "/Account/SignOut";
             //    });
-            
+
             // From test app, working with AAD. To be used later.
             // Add cookie authentication
             //services.AddAuthentication(sharedOptions =>
