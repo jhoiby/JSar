@@ -22,13 +22,15 @@ namespace JSar.Membership.Services.CommandHandlers
         }
         protected override async Task<CommonResult> HandleImplAsync(RegisterLocalUser command, CancellationToken cancellationToken)
         {
-            AppUser user = new AppUser(
-                command.Email,
-                command.FirstName,
-                command.LastName,
-                command.PrimaryPhone);
 
-            _addUserResult = await _userManager.CreateAsync(user, command.Password);
+            if (command.Password == null)
+            {
+                _addUserResult = await _userManager.CreateAsync(command.User);
+            }
+            else
+            {
+                _addUserResult = await _userManager.CreateAsync(command.User, command.Password);
+            }
 
             if (!_addUserResult.Succeeded)
                 return AddUserErrorResult(_addUserResult);

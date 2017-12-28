@@ -69,22 +69,25 @@ namespace JSar.Web.Mvc.Controllers
             _logger.Verbose("MVC request: HTTP-POST:/Account/Register");
 
             if (!ModelState.IsValid) return View(model);
+
+            AppUser user = new AppUser(
+                    model.Email,
+                    model.FirstName,
+                    model.LastName,
+                    model.PrimaryPhone);
             
-            CommonResult userResult = await _mediator.Send(
+            CommonResult registerUserResult = await _mediator.Send(
                 new RegisterLocalUser(
-                    model.FirstName, 
-                    model.LastName, 
-                    model.PrimaryPhone, 
-                    model.Email, 
+                    user,
                     model.Password));
 
-            if (! userResult)
+            if (! registerUserResult)
             {
-                ModelState.AddErrorsFromCommonResult(userResult);
+                ModelState.AddErrorsFromCommonResult(registerUserResult);
                 return View(model);
             }
 
-            // Log the user in.
+            // Log the user in by passing execution to the SignIn action.
 
             return await SignIn(new SignInViewModel()
                 {
@@ -96,18 +99,15 @@ namespace JSar.Web.Mvc.Controllers
         }
 
         // 
-        // HTTP-GET: /Account/SignIn(?ReturnUrl=...)
+        // HTTP-GET: /Account/SignIn
 
         [HttpGet]
         public async Task<IActionResult> SignIn(string returnUrl = null)
         {
             _logger.Verbose("MVC request: HTTP-GET:/Account/SignIn(?ReturnUrl...)");
 
-            // Clear the existing external cookie to ensure a clean login process
+            // Delete existing cookie to ensure proper login process.
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            // await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);  // Use this one after Azure AD setup
-
-            // TODO: Resume work here, pass along ReturnUrl through the chain.
             
             ViewData["ReturnUrl"] = returnUrl;
             return View();
@@ -123,7 +123,6 @@ namespace JSar.Web.Mvc.Controllers
             _logger.Verbose("MVC request: HTTP-POST:/Account/SignIn");
 
             // Get user.
-
             var getUserResult = await _mediator.Send(
                 new GetUserByEmail(model.UserName));
             
@@ -134,7 +133,6 @@ namespace JSar.Web.Mvc.Controllers
             }
 
             // Login user to create app cookie, which is used for authentication on next request.
-
             var signInResult = await _mediator.Send(
                 new SignInByPassword(getUserResult.Data, model.Password, model.RememberMe, false));
             
@@ -144,13 +142,11 @@ namespace JSar.Web.Mvc.Controllers
                 return View(model);
             }
 
-            // TODO: Add return URL handling
-
             return RedirectToLocal(returnUrl);
         }
 
-        
-        /// ////////////////////////////////////////////
+        //
+        // HTTP-POST: /Account/ExternalLogin
 
 
         [HttpPost]
@@ -161,64 +157,66 @@ namespace JSar.Web.Mvc.Controllers
             // Request a redirect to the external login provider.
             var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { returnUrl });
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
-            return Challenge(properties, provider);
+            return Challenge(properties, provider); // Sends 302 redirect to authenication provider back to web browser.
         }
 
+        //
+        // HTTP-GET: /Account/ExternalLoginCallback
 
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
         {
-            // Debug access point
-            var test = HttpContext.User;
-            var test2 = User;
-
-            // HAVE NO CLAIMS AT THIS POINT
-
             if (remoteError != null)
             {
                 ErrorMessage = $"Error from external provider: {remoteError}";
                 return RedirectToAction(nameof(SignIn));
             }
-            var info = await _signInManager.GetExternalLoginInfoAsync();
 
-            // INFO HAS 7 CLAIMS AT THIS POINT !!!
-            // It gets pared down to 4 by the time the home page is displayed.
+            // Get the information about the user from the external login provider
+            CommonResult getInfoResult = await _mediator.Send(
+                new GetExternalLoginInfo());
 
-            if (info == null)
+            if (! getInfoResult.Succeeded)
             {
                 return RedirectToAction(nameof(SignIn));
             }
 
-            // _claimsCache.Add("signin", info.Principal.Claims);
-
-
-            // Sign in the user with this external login provider if the user already has a login.
-            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
-
-
-            if (result.Succeeded)
+            // Sign in the user with info from external login provider (if the user already has an associated local login).
+            CommonResult signInResult = await _mediator.Send(
+                new ExternalLoginSignIn(
+                    getInfoResult.Data.LoginProvider,
+                    getInfoResult.Data.ProviderKey,
+                    isPersistent: false,
+                    bypassTwoFactor: true ));
+            
+            if (signInResult.Succeeded)
             {
-
-                // Debug access point
-                var test3 = HttpContext.User;
-
-                _logger.Information("User logged in with {Name} provider.", info.LoginProvider);
+                _logger.Information("User logged in with {Name} provider.", getInfoResult.Data.LoginProvider);
                 return RedirectToLocal(returnUrl);
             }
-            //if (result.IsLockedOut)
-            //{
-            //    return RedirectToAction(nameof(Lockout));
-            //}
+
+            
+            if (signInResult.Data.IsLockedOut)
+            {
+                throw new NotImplementedException("Account is locked. Handler for locked accounts not yet implemented.");
+                // return RedirectToAction(nameof(Lockout));  // Uncomment after implementing view
+            }
+
             else
             {
-                // If the user does not have an account, then ask the user to create an account.
+                // User does not have a local account, display page the user to enter required account info.
                 ViewData["ReturnUrl"] = returnUrl;
-                ViewData["LoginProvider"] = info.LoginProvider;
-                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+                ViewData["LoginProvider"] = getInfoResult.Data.LoginProvider;
+                var email = getInfoResult.Data.Principal.FindFirstValue(ClaimTypes.Email);
                 return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
             }
         }
+
+
+
+        /// //////////////////////////////////////////// Below needs refactor to CQRS
+
 
         [HttpPost]
         [AllowAnonymous]
@@ -227,34 +225,43 @@ namespace JSar.Web.Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Get the information about the user from the external login provider
-                var info = await _signInManager.GetExternalLoginInfoAsync();
+                // Get the information about the user from the external login provider.
+                CommonResult getInfoResult = await _mediator.Send(
+                    new GetExternalLoginInfo());
+                ExternalLoginInfo info = getInfoResult.Data;
+
                 if (info == null)
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
 
-                // User.Claims.Concat(_claimsCache.Get("signin"));
+                // Create the new user in the system.
+                AppUser user = new AppUser(model.Email);
 
-                var user = new AppUser(model.Email);
-
-                // Debug access point
-                var testCache = _claimsCache;
-
-
-                // I HAVE THE EXTRA CLAIMS IN THE CACHE, NOW WHAT?
-
-                var result = await _userManager.CreateAsync(user);
+                CommonResult createUserResult = await _mediator.Send(
+                    new RegisterLocalUser(
+                        user));
+                IdentityResult result = createUserResult.Data;
+                
                 if (result.Succeeded)
                 {
-                    result = await _userManager.AddLoginAsync(user, info);
-                    if (result.Succeeded)
+                    // Add a login for the user. This requires manual handling for external login users.
+                    CommonResult addLoginResult = await _mediator.Send(
+                        new AddExternalLogin(
+                            user,
+                            info));
+                    
+                    if (addLoginResult.Succeeded)
                     {
-                        // await _userManager.AddClaimsAsync(user, _claimsCache.Get("signin"));
+                        // Add external claims to to the user.
                         await _userManager.AddClaimsAsync(user, info.Principal.Claims);
+
+                        // Finally, sign in the user. Puts a cookie in the "queue" to be returned
+                        // to the user's browser.
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        var userTest = User;
-                        _logger.Information("User created an account using {Name} provider.", info.LoginProvider);
+
+                        _logger.Information("User {0} created an account using {0} provider.", user.Email, info.LoginProvider);
+
                         return RedirectToLocal(returnUrl);
                     }
                 }

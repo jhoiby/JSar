@@ -17,6 +17,16 @@ PRIORITY GUIDE:
 ------------
 TO-DO:
 
+Resume: Account controller lines 257 and 261, replace with commands.
+
+Rename RegisterLocalUser command to CreateLocalUser.
+
+Group commands/handlers into folders
+
+Reformat complex return statements.
+
+Fix ArgumentNullExceptions with literal string parameters.
+
 Add Forgot Password page Action - ForgotPassword.cshtml
 
 Add Microsoft logger messages into Serilog context.

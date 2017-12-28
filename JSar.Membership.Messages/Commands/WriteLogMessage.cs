@@ -16,6 +16,6 @@ namespace JSar.Membership.Messages.Commands
         {
             Message = message;
         }
-        public string Message { get; private set; }
+        public string Message { get; }
     }
 }

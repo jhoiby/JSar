@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JSar.Membership.Domain.Identity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,26 +12,19 @@ namespace JSar.Membership.Messages.Commands
     /// </summary>
     public class RegisterLocalUser : Command<CommonResult>
     {
-        public RegisterLocalUser(
-            string FirstName, 
-            string LastName, 
-            string PrimaryPhone, 
-            string Email, 
-            string Password, 
-            Guid messageId = default(Guid)) 
-            : base (messageId)
+        public RegisterLocalUser(AppUser user, Guid messageId = default(Guid)) 
+            : base(messageId)
         {
-            this.FirstName = FirstName;
-            this.LastName = LastName;
-            this.PrimaryPhone = PrimaryPhone;
-            this.Email = Email;
-            this.Password = Password;
+            User = user;
         }
 
-        public string FirstName { get; }
-        public string LastName { get; }
-        public string PrimaryPhone { get; }
-        public string Email { get; }
+        public RegisterLocalUser( AppUser user, string password, Guid messageId = default(Guid))
+            : this(user, messageId)
+        {
+            Password = password;
+        }
+
+        public AppUser User { get; }
         public string Password { get; }
     }
 }

@@ -75,6 +75,10 @@ namespace JSar.Membership.Messages
             Data = data;
         }
 
+        public CommonResult()
+        {
+        }
+
         /// <inheritdoc />
         public dynamic Data { get; }
 
