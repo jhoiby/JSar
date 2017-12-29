@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace JSar.Membership.Services.CommandHandlers.Identity
 {
-    public class AddExternalLoginCommandHandler : CommandHandler<AddExternalLogin, CommonResult>
+    public class AddExternalLoginToUserCommandHandler : CommandHandler<AddExternalLoginToUser, CommonResult>
     {
         private readonly UserManager<AppUser> _userManager;
 
-        public AddExternalLoginCommandHandler(UserManager<AppUser> userManager, ILogger logger) : base(logger)
+        public AddExternalLoginToUserCommandHandler(UserManager<AppUser> userManager, ILogger logger) : base(logger)
         {
             _userManager = userManager ?? throw new NotImplementedException(nameof(userManager));
         }
 
-        protected override async Task<CommonResult> HandleImplAsync(AddExternalLogin command, CancellationToken cancellationToken)
+        protected override async Task<CommonResult> HandleImplAsync(AddExternalLoginToUser command, CancellationToken cancellationToken)
         {
             IdentityResult result = await _userManager.AddLoginAsync(command.User, command.LoginInfo);
 

@@ -247,7 +247,7 @@ namespace JSar.Web.Mvc.Controllers
                 {
                     // Add a login for the user. This requires manual handling for external login users.
                     CommonResult addLoginResult = await _mediator.Send(
-                        new AddExternalLogin(
+                        new AddExternalLoginToUser(
                             user,
                             info));
                     

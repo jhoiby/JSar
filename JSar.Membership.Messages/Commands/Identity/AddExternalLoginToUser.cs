@@ -6,9 +6,9 @@ using System.Text;
 
 namespace JSar.Membership.Messages.Commands.Identity
 {
-    public class AddExternalLogin : Command<CommonResult>
+    public class AddExternalLoginToUser : Command<CommonResult>
     {
-        public AddExternalLogin(AppUser user, ExternalLoginInfo info, Guid messageId = default(Guid)) : base(messageId)
+        public AddExternalLoginToUser(AppUser user, ExternalLoginInfo info, Guid messageId = default(Guid)) : base(messageId)
         {
         }
 
