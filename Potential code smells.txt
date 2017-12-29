@@ -2,8 +2,20 @@ POTENTIAL CODE SMELLS
 
 Identity and Login in the services/domain layers:
 	- Is using a command to handle user login a bad idea? How much identity should really be in the
-	services and domain layers? Is a reference to Domain.AppUser in the UI bad? 
-	- SOLUTION: Since this is a monolithic application for the Membership bounded context and the
+	services and domain layers? 
+	- Is a reference to Domain.AppUser in the UI bad? 
+	- MY SOLUTION: Since this is a monolithic application for the Membership bounded context and the
 	UI layer it's OK for now. If the project gets refactored into separate solutions or
 	microservices where the UI stands on its own and uses an API to communciate with the membership
-	context then the removal of the login will come naturally.
+	context then I'll revisit some of the through-project vertical references as DTOs get
+	implemented.
+
+Commands in the UI.AccountController are prolific and very EF Identity centric.
+	- This was done initially for expediency. I'm still learning the authentication flow for 
+	AAD OIDC + .Net Identity and just needed something that worked.
+	- Look into refactoring the multiple commands per "script" into more cohesive single commands.
+	I.e. move the script/multiple commands orchestrating the user login into the application
+	service layer, keeping with the idea of thin controllers.
+
+
+

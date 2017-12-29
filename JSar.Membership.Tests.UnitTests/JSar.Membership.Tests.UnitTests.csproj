@@ -9,4 +9,8 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\JSar.Membership.Domain\JSar.Membership.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
