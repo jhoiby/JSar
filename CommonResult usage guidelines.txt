@@ -14,8 +14,9 @@ Properties:
 			No errors were encountered on execution. Does not mean data was found. A query
 			that finds zero results but otherwise succeeds should return Outcome.Succeeded.
 
-        Outcome.MessageValidationFailure: Basic validation (string length, etc.) failed. This is
-			typically caught by FluentValidation.
+        Outcome.MessageValidationFailure: 
+			Basic validation (string length, etc.) failed. This is typically caught by
+			FluentValidation.
 
         Outcome.DomainValidationFailure: 
 			Execution of the command would break a domain invariant or place the domain in an
