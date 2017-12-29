@@ -1,67 +1,159 @@
 COMMONRESULT USAGE GUIDELINES
 
-Below are examples for use of the CommonResult object to return info from
-commands and queries.
+DESCRIPTION
+
+The CommonResult object is used for both commands and queries, and is intended to
+allow for the return of execution result (status), error details, and a dynamically-typed data
+payload. 
+
+Properties:
+
+	Status: Contains an enumerable, Outcome, for simple outcome tests. Possible values are:
+
+		Outcome.Succeeded:
+			No errors were encountered on execution. Does not mean data was found. A query
+			that finds zero results but otherwise succeeds should return Outcome.Succeeded.
+
+        Outcome.MessageValidationFailure: Basic validation (string length, etc.) failed. This is
+			typically caught by FluentValidation.
+
+        Outcome.DomainValidationFailure: 
+			Execution of the command would break a domain invariant or place the domain in an
+			otherwise invalid state. Typically caught by the command handler or aggregate
+			root's validation.
+
+        Outcome.ExecutionFailure: 
+			Some other failure of execution. NOT the same as an empty result such as "user 
+			not found".
+
+        Outcome.ExceptionCaught:
+			Execution of the command or query threw an exception that was caught. Best practice
+			is to return the exception message in FlashMessage and Errors, and return the 
+			exception object in the dynamic Data property.
+
+	FlashMessage: 
+		A simple way to return an important message regarding the outcome as a single
+		string. NOT for query data return.
+
+	Errors: 
+		Returns a ResultErrorCollection, an IEnumerable<string,string> that contains detailed
+		error strings and the name of the property or item that triggered the error.
+
+	TotalResults: 
+		Int with count of results being returned from a query. Not used for commands.
+
+	Data: 
+		A dynamic object that contains the query results or an exception object.
+
+	Succeeded: 
+		Bool, returns true if Status == Outcome.Succeeded.
+
+
+USAGE GUIDELINES
+
+Per CQRS norms, commands should not return any information other than success/fail and execution
+metadata such as error messages or exception objects.
+
+Query object definititions MUST contain XML style summary commments (/// <Summary>...) that
+describes the type of data returned by the COMMAND HANDLER in CommonResult.Data. Otherwise a programmer does not have
+an idea of the return type due to the dynamic typing.
+
+An example of a command definition with the appropriate comments:
+
+	/// <summary>
+	/// Gets an appliction user from the identity system. If successful, Handler Data returns an AppUser
+	/// on success, null on failure.
+	/// </summary>
+		public class GetUserByEmail : Query<CommonResult>
+		{
+			...
+		}
+
+
+EXAMPLES
 
 ----------
 EXAMPLE: Command AddUser succeeds.
 
+In this case there is no additional data to return other that "succeeded".
+
 	return new CommonResult(
-		status: ResultOutcome.Succeeded);
+		status: Outcome.Succeeded);
+
 
 ----------
 EXAMPLE: Query FindUserByEmail succeeds.
 
+A single user object is returned.
+
 	return new CommonResult(
-		status: ResultOutcome.Succeeded,
+		status: Outcome.Succeeded,
 		totalResults: 1,
 		data: user);
+
 
 ----------
 EXAMPLE: Query GetAllGroupMembersByGroupName("SARAMembers") succeeds.
 
+Returns multiple AppUsers, so CommonResult.Data will contain a List<AppUsers> object.
+
 	return new CommonResult(
-		status: ResultOutcome.Succeeded,
+		status: Outcome.Succeeded,
 		totalResults: groupMembers.Count,
 		data: groupMembers);		// List<AppUsers>
+		
 
 ----------
 EXAMPLE: Command RegisterLocalUser(...) FAILS because it is the password is too short, the
-password has no special characters, and the username is already taken. In this case the
-IdentityResult will contain an IEnumerable with a list of errors and their associated parameter
-names (called "codes").
+password has no special characters, and the username is already taken. 
+
+In this case the IdentityResult.Errors from the RegisterUser Identity method will contain an 
+IEnumerable<string,string> with a list of errors and their associated parameter names (called 
+"codes" by MVC). We can save those errors so the user can see why their login failed.
 
 	(pseudocode)
-	foreach (error in IdentityResult)
+	foreach (IdentityError error in IdentityResult.Errors)
 		resultErrorCollection.Add(error.code, error.description)
 
 	return new CommonResult(
-		status: ResultOutcome.ExecutionFailure
-		flashMessage: "User registration failed",
-		errors: resultErrorCollection
+		status: Outcome.ExecutionFailure
+		flashMessage: "User registration failed",   // A basic error summary
+		errors: resultErrorCollection				// The detailed error list
 	)
 
-The MVC controller would then take the CommonResult and use the AddModelErrorsExtension
+The MVC controller can then take the CommonResult and use the AddModelErrorsExtension method
 to transfer the error messages to the ModelState.
 
 	ModelState.AddModerErrors(CommonResult)
 
+
 ----------
 EXAMPLE: Command or query fails Fluent Validation of the command parameters.
+
+The list of error caught by Fluent Validation can be saved and returned for display on the UI.
 
 	resultErrorCollection = FluentValidationErrors.ToResultErrorCollection();
 
 	return new CommonResult(
-		status: ResultOutcome.MessageValidationFailure
-		flashMessage: "A command parameter failed validation.",
+		status: Outcome.MessageValidationFailure
+		flashMessage: "Your Foo submission makes me sad.",
 		errors: errorResultCollection)
+
 
 ----------
 EXAMPLE: An exception is caught in a command or query.
 
+The caller will know an exception resulted from the command when they see 
+Status == Outcome.ExceptionCaught. The caller can then use the error data or rethrow the exception
+that was referenced in CommonResult.Data.
+
 	return new CommonResult(
-		status: ResultOutcome.ExceptionCaught,
+		status: Outcome.ExceptionCaught,
 		flashMessage: theExceptionObject.Message,
 		errors: new ResultErrorCollection("", ex.Message)
 		totalResults: 1,
 		data: theExceptionObject);
+
+
+// TODO: The above assumes I can/will be configuring FluentValidation to return its errors in
+// a CommonResult object. This has not yet been implemented as of 12/29/2017.
