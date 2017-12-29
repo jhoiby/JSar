@@ -1,6 +1,7 @@
 ﻿using JSar.Membership.Domain.Identity;
 using JSar.Membership.Messages;
 using JSar.Membership.Messages.Queries;
+using JSar.Membership.Messages.Queries.Identity;
 using Microsoft.AspNetCore.Identity;
 using Serilog;
 using System;

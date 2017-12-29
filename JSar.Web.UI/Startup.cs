@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using JSar.Membership.AzureAdAdapter.Extensions;
 using JSar.Membership.AzureAdAdapter.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using JSar.Membership.Messages.Queries.Identity;
 
 namespace JSar.Web.Mvc
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace JSar.Membership.Messages.Commands
+namespace JSar.Membership.Messages.Commands.Identity
 {
     public class ExternalLoginSignIn : Command<CommonResult>
     {

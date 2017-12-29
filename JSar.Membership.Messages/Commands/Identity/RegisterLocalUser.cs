@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace JSar.Membership.Messages.Commands
+namespace JSar.Membership.Messages.Commands.Identity
 {
     /// <summary>
     /// Register a local user with the Identity system. If successful the returned CommonResult.Data 

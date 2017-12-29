@@ -1,6 +1,6 @@
 ﻿using JSar.Membership.Domain.Identity;
 using JSar.Membership.Messages;
-using JSar.Membership.Messages.Commands;
+using JSar.Membership.Messages.Commands.Identity;
 using Microsoft.AspNetCore.Identity;
 using Serilog;
 using System;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JSar.Membership.Services.CommandHandlers
+namespace JSar.Membership.Services.CommandHandlers.Identity
 {
     public class AddExternalLoginCommandHandler : CommandHandler<AddExternalLogin, CommonResult>
     {

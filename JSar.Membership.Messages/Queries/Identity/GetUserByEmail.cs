@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace JSar.Membership.Messages.Queries
+namespace JSar.Membership.Messages.Queries.Identity
 {/// <summary>
 /// Gets an appliction user from the identity system.
 /// </summary>

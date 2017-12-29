@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace JSar.Membership.Messages.Commands
+namespace JSar.Membership.Messages.Commands.Identity
 {
     /// <summary>
     /// Sign in a local user by password. I.e. checks for a valid account by username and password.
