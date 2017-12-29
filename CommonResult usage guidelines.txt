@@ -61,8 +61,8 @@ an idea of the return type due to the dynamic typing.
 An example of a command definition with the appropriate comments:
 
 	/// <summary>
-	/// Gets an appliction user from the identity system. If successful, Handler Data returns an AppUser
-	/// on success, null on failure.
+	/// Query to find an identity user based on their unique email address. Query handler 
+	/// returns a single AppUser on success, null on failure.
 	/// </summary>
 		public class GetUserByEmail : Query<CommonResult>
 		{
@@ -104,14 +104,13 @@ Returns multiple AppUsers, so CommonResult.Data will contain a List<AppUsers> ob
 		
 
 ----------
-EXAMPLE: Command RegisterLocalUser(...) FAILS because it is the password is too short, the
-password has no special characters, and the username is already taken. 
+EXAMPLE: Command RegisterLocalUser(...) FAILS because the password is too short, the password
+has no special characters, and the username is already taken. 
 
 In this case the IdentityResult.Errors from the RegisterUser Identity method will contain an 
 IEnumerable<string,string> with a list of errors and their associated parameter names (called 
 "codes" by MVC). We can save those errors so the user can see why their login failed.
 
-	(pseudocode)
 	foreach (IdentityError error in IdentityResult.Errors)
 		resultErrorCollection.Add(error.code, error.description)
 
@@ -126,6 +125,9 @@ to transfer the error messages to the ModelState.
 
 	ModelState.AddModerErrors(CommonResult)
 
+When the view is redisplayed the parameter name originally in error.code (for example "Password")
+can be used by ASP.net validation to display each error message next to the correct field on the form.
+
 
 ----------
 EXAMPLE: Command or query fails Fluent Validation of the command parameters.
@@ -137,7 +139,7 @@ The list of error caught by Fluent Validation can be saved and returned for disp
 	return new CommonResult(
 		status: Outcome.MessageValidationFailure
 		flashMessage: "Your Foo submission makes me sad.",
-		errors: errorResultCollection)
+		errors: resultErrorCollection)
 
 
 ----------
