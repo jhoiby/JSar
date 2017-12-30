@@ -48,13 +48,19 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
         [Theory]
         [InlineData(" Acme Rockets")]
         [InlineData("Acme Rockets \n")]
-        public void NewOrganization_ConstructedWithPaddedNames_ReturnsValid(string name)
+        public void NewOrganization_ConstructedWithPaddedName_ReturnsValid(string name)
         {
             Organization org = new Organization(name);
 
             Assert.Equal(_expectedName, org.Name);
         }
 
-
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void NewOrganization_MissingNameParameter_ThrowsException(string name)
+        {
+            Assert.Throws<ArgumentOutOfRangeException>( () => new Organization(name) );
+        }
     }
 }

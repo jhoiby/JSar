@@ -17,7 +17,7 @@ namespace JSar.Membership.Domain.Aggregates
         public Organization(string name, Guid id = default(Guid)) : base(id)
         {
             _name = name.IsNullOrWhiteSpace()
-                ? throw new ArgumentNullException(nameof(name), "An organization requires a name.")
+                ? throw new ArgumentOutOfRangeException(nameof(name), "An organization requires a name.")
                 : name.Trim();
         }
 
