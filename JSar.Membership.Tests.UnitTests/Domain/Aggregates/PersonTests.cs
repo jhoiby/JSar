@@ -61,5 +61,15 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
             Assert.Equal(_expectedLastName, person.LastName);
             Assert.Equal(_expectedFullName, person.FullName);
         }
+
+        [Theory]
+        [InlineData("Bob", null)]
+        [InlineData("Bob", "\n")]
+        [InlineData(null, "Stevens")]
+        [InlineData("", "Stevens")]
+        public void NewPerson_InvalidParameter_ThrowsException(string firstName, string lastName)
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Person(firstName,lastName));
+        }
     }
 }
