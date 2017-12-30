@@ -68,3 +68,14 @@ SPLIT IDENTITY DATABASE FROM MEMBERSHIP CONTEXT
 Copy other documentation files from ObApp5.
 
 Update formfield tag helper to properly handle passing-in of invalid field names.
+
+SETUP HOSTNAME MY.SARCI.ORG!!!!
+
+--------------
+MINIMUM VIABLE RELEASE
+
+Import users.
+Let them log in.
+See documents as currently given, filtered by sarci unit.
+Deb can edit one page for each group.
+How to stage?

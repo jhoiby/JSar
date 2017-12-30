@@ -11,6 +11,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JSar.Membership.Domain\JSar.Membership.Domain.csproj" />
+    <ProjectReference Include="..\JSar.Tools\JSar.Tools.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Domain\Aggregates\" />
   </ItemGroup>
 
 </Project>

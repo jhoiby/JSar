@@ -30,6 +30,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DE7D8280
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSar.Membership.Tests.UnitTests", "JSar.Membership.Tests.UnitTests\JSar.Membership.Tests.UnitTests.csproj", "{8FF17633-6B9A-47F3-B273-345ACDE648E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSar.Tools", "JSar.Tools\JSar.Tools.csproj", "{F544F6D9-3975-4D6E-B2BD-2F99EE74CAAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{8FF17633-6B9A-47F3-B273-345ACDE648E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FF17633-6B9A-47F3-B273-345ACDE648E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FF17633-6B9A-47F3-B273-345ACDE648E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F544F6D9-3975-4D6E-B2BD-2F99EE74CAAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F544F6D9-3975-4D6E-B2BD-2F99EE74CAAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F544F6D9-3975-4D6E-B2BD-2F99EE74CAAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F544F6D9-3975-4D6E-B2BD-2F99EE74CAAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
