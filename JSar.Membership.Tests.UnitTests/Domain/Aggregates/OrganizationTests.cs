@@ -12,15 +12,6 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
         private readonly string _expectedName = "Acme Rockets";
 
         [Fact]
-        public void NewOrganization_ConstructedWithNoId_ReturnsValidId()
-        {
-            Organization org = new Organization("Acme Anvils");
-
-            Assert.IsType<Guid>(org.Id);
-            Assert.NotEqual(default(Guid),org.Id);
-        }
-
-        [Fact]
         public void NewOrganization_ConstructedWithId_ReturnsId()
         {
             Organization org = new Organization("Acme Anvils", _expectedId);
@@ -29,18 +20,15 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
         }
 
         [Fact]
-        public void NewOrganization_ConstructedWithDefaultGuid_ReturnsValidId()
+        public void NewOrganization_ConstructedWithDefaultGuid_ThrowsException()
         {
-            Organization org = new Organization("Acme Anvils", default(Guid));
-
-            Assert.IsType<Guid>(org.Id);
-            Assert.NotEqual(default(Guid),org.Id);
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Organization("Acme Anvils", default(Guid)));
         }
 
         [Fact]
         public void NewOrganization_ConstructedWithCorrectName_ReturnsValid()
         {
-            Organization org = new Organization(_expectedName);
+            Organization org = new Organization(_expectedName, Guid.NewGuid());
 
             Assert.Equal(_expectedName, org.Name);
         }
@@ -50,7 +38,7 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
         [InlineData("Acme Rockets \n")]
         public void NewOrganization_ConstructedWithPaddedName_ReturnsValid(string name)
         {
-            Organization org = new Organization(name);
+            Organization org = new Organization(name, Guid.NewGuid());
 
             Assert.Equal(_expectedName, org.Name);
         }
@@ -58,9 +46,9 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
         [Theory]
         [InlineData("")]
         [InlineData(null)]
-        public void NewOrganization_MissingNameParameter_ThrowsException(string name)
+        public void NewOrganization_EmptyNameParameter_ThrowsException(string name)
         {
-            Assert.Throws<ArgumentOutOfRangeException>( () => new Organization(name) );
+            Assert.Throws<ArgumentException>( () => new Organization(name, Guid.NewGuid()) );
         }
     }
 }

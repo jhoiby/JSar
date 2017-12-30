@@ -16,7 +16,7 @@ namespace JSar.Membership.Domain.Aggregates
         public AggregateRoot(Guid id)
         {
             if (id == default(Guid))
-                id = Guid.NewGuid();
+                throw new ArgumentOutOfRangeException(nameof(id), "AggregateRoot.Id cannot be a default guid. EID: F77C98E7.");
 
             _id = id;
         }

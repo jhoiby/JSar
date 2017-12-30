@@ -53,7 +53,11 @@ Add validation to commonresult
 
 - Fire "User logged in" event that contains the user?
 
-Look at the RegisterUser and LoginUser commands.  
+Consider correlation IDs:
+- Session correlation IDs in logging messages.
+	- Inject with logger. Use session ID from cookie? See: 
+		http://www.longest.io/2015/02/14/logging-correlation-ids-mvc.html
+- Code location IDs in exceptions.
 
 Fix string manipulations in Serilog calls.
 
@@ -70,6 +74,11 @@ Copy other documentation files from ObApp5.
 Update formfield tag helper to properly handle passing-in of invalid field names.
 
 SETUP HOSTNAME MY.SARCI.ORG!!!!
+
+-------------
+RESOURCES
+
+Look into session correlation IDs: http://www.longest.io/2015/02/14/logging-correlation-ids-mvc.html 
 
 --------------
 MINIMUM VIABLE RELEASE

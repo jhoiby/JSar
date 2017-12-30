@@ -15,14 +15,14 @@ namespace JSar.Membership.Domain.Aggregates
             // Parameterless constructor required for Entity Framework
         }
 
-        public Person(string firstName, string lastName, Guid id = default(Guid)) : base(id)
+        public Person(string firstName, string lastName, Guid id) : base(id)
         {
             _firstName = firstName.IsNullOrWhiteSpace()
-                ? throw new ArgumentOutOfRangeException(nameof(FirstName), "A person requires a first name.")
+                ? throw new ArgumentException("Person.FirstName cannot be null or white space. EID: CD250A91.", nameof(FirstName))
                 : firstName.Trim();
 
             _lastName = lastName.IsNullOrWhiteSpace()
-                ? throw new ArgumentOutOfRangeException(nameof(lastName), "A person requires a last name.")
+                ? throw new ArgumentException("Person.LastName cannot be null or white space. EID: 514FF925", nameof(FirstName))
                 : lastName.Trim();
         }
 

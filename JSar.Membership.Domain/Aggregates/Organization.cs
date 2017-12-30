@@ -14,10 +14,10 @@ namespace JSar.Membership.Domain.Aggregates
             // Parameterless constructor required for Entity Framework
         }
 
-        public Organization(string name, Guid id = default(Guid)) : base(id)
+        public Organization(string name, Guid id) : base(id)
         {
             _name = name.IsNullOrWhiteSpace()
-                ? throw new ArgumentOutOfRangeException(nameof(name), "An organization requires a name.")
+                ? throw new ArgumentException("Organization.Name cannot be null or white space. EID: E55D185B.", nameof(name))
                 : name.Trim();
         }
 

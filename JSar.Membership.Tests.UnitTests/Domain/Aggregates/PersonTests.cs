@@ -14,15 +14,6 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
         private readonly Guid _expectedGuid = Guid.NewGuid();
 
         [Fact]
-        public void NewPerson_ConstructedWithNoId_ReturnsValidId()
-        {
-            Person person = new Person("Bob", "Steven");
-
-            Assert.IsType<Guid>(person.Id);
-            Assert.NotEqual(default(Guid),person.Id);
-        }
-
-        [Fact]
         public void NewPerson_ConstructedWithId_ReturnsId()
         {
             Person person = new Person("Bob", "Steven", _expectedGuid);
@@ -31,19 +22,16 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
         }
 
         [Fact]
-        public void NewPerson_ConstructedWithDefaultGuid_ReturnsValidId()
+        public void NewPerson_ConstructedWithDefaultGuid_ThrowsException()
         {
-            Person person = new Person("Bob", "Steven", default(Guid));
-
-            Assert.NotEqual(default(Guid), person.Id);
-            Assert.IsType<Guid>(person.Id);
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Person("Bob", "Steven", default(Guid)));
         }
 
 
         [Fact]
         public void NewPerson_ConstructedWithCorrectNames_ReturnsValid()
         {
-            Person person = new Person("Bob", "Stevens");
+            Person person = new Person("Bob", "Stevens", Guid.NewGuid());
 
             Assert.Equal(_expectedFirstName, person.FirstName);
             Assert.Equal(_expectedLastName, person.LastName);
@@ -55,7 +43,7 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
         [InlineData("Bob","Stevens ")]
         public void NewPerson_ConstructedWithPaddedNames_ReturnsValid(string firstName, string lastName)
         {
-            Person person = new Person(firstName, lastName);
+            Person person = new Person(firstName, lastName, Guid.NewGuid());
             
             Assert.Equal(_expectedFirstName, person.FirstName);
             Assert.Equal(_expectedLastName, person.LastName);
@@ -67,9 +55,9 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
         [InlineData("Bob", "\n")]
         [InlineData(null, "Stevens")]
         [InlineData("", "Stevens")]
-        public void NewPerson_InvalidParameter_ThrowsException(string firstName, string lastName)
+        public void NewPerson_EmptyNameParameter_ThrowsException(string firstName, string lastName)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new Person(firstName,lastName));
+            Assert.Throws<ArgumentException>(() => new Person(firstName,lastName, Guid.NewGuid()));
         }
     }
 }
