@@ -16,7 +16,7 @@ namespace JSar.Membership.Domain.Aggregates
         public AggregateRoot(Guid id)
         {
             if (id == default(Guid))
-                id = new Guid();
+                id = Guid.NewGuid();
 
             _id = id;
         }

@@ -11,6 +11,34 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
         private string expectedFirstName = "Bob";
         private string expectedLastName = "Stevens";
         private string expectedFullName = "Bob Stevens";
+        private Guid expectedGuid = Guid.NewGuid();
+
+        [Fact]
+        public void NewPerson_ConstructedWithNoId_ReturnsValidId()
+        {
+            Person person = new Person("Bob", "Steven");
+
+            Assert.IsType<Guid>(person.Id);
+            Assert.NotEqual(default(Guid),person.Id);
+        }
+
+        [Fact]
+        public void NewPerson_ConstructedWithId_ReturnsId()
+        {
+            Person person = new Person("Bob", "Steven", expectedGuid);
+
+            Assert.Equal(expectedGuid, person.Id);
+        }
+
+        [Fact]
+        public void NewPerson_ConstructedDefaultGuid_ReturnsValidId()
+        {
+            Person person = new Person("Bob", "Steven", default(Guid));
+
+            Assert.NotEqual(default(Guid), person.Id);
+            Assert.IsType<Guid>(person.Id);
+        }
+
 
         [Fact]
         public void NewPerson_GivenCorrectNames_ReturnsCorrectNames()
