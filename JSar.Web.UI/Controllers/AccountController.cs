@@ -174,30 +174,34 @@ namespace JSar.Web.Mvc.Controllers
             }
 
             // Get the information about the user from the external login provider
-            CommonResult getInfoResult = await _mediator.Send(
+            CommonResult getInfoCommandResult = await _mediator.Send(
                 new GetExternalLoginInfo());
+            ExternalLoginInfo info = (ExternalLoginInfo)getInfoCommandResult.Data;
 
-            if (! getInfoResult.Succeeded)
+            if (! getInfoCommandResult.Succeeded)
             {
                 return RedirectToAction(nameof(SignIn));
             }
 
             // Sign in the user with info from external login provider (if the user already has an associated local login).
-            CommonResult signInResult = await _mediator.Send(
+            var signInCommandResult = await _mediator.Send(
                 new ExternalLoginSignIn(
-                    getInfoResult.Data.LoginProvider,
-                    getInfoResult.Data.ProviderKey,
+                    info.LoginProvider,
+                    info.ProviderKey,
                     isPersistent: false,
                     bypassTwoFactor: true ));
+            var signInResult = (Microsoft.AspNetCore.Identity.SignInResult) signInCommandResult.Data;
             
-            if (signInResult.Succeeded)
+            if (signInCommandResult.Succeeded)
             {
-                _logger.Information("User logged in with {Name} provider.", getInfoResult.Data.LoginProvider);
+                _logger.Information("User {Name} logged in with {Provider} provider.",
+                    info.Principal.Claims.Where(c => c.Type == "preferred_username").Select(c => c.Value).SingleOrDefault(),
+                    info.LoginProvider);
+
                 return RedirectToLocal(returnUrl);
             }
-
             
-            if (signInResult.Data.IsLockedOut)
+            if (signInResult.IsLockedOut)
             {
                 throw new NotImplementedException("Account is locked. Handler for locked accounts not yet implemented.");
                 // return RedirectToAction(nameof(Lockout));  // Uncomment after implementing view
@@ -207,8 +211,8 @@ namespace JSar.Web.Mvc.Controllers
             {
                 // User does not have a local account, display page the user to enter required account info.
                 ViewData["ReturnUrl"] = returnUrl;
-                ViewData["LoginProvider"] = getInfoResult.Data.LoginProvider;
-                var email = getInfoResult.Data.Principal.FindFirstValue(ClaimTypes.Email);
+                ViewData["LoginProvider"] = info.LoginProvider;
+                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
                 return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
             }
         }
@@ -260,7 +264,7 @@ namespace JSar.Web.Mvc.Controllers
                         // to the user's browser.
                         await _signInManager.SignInAsync(user, isPersistent: false);
 
-                        _logger.Information("User {0} created an account using {0} provider.", user.Email, info.LoginProvider);
+                        _logger.Information("User {0} created an account using {1} provider.", user.Email, info.LoginProvider);
 
                         return RedirectToLocal(returnUrl);
                     }
@@ -297,7 +301,7 @@ namespace JSar.Web.Mvc.Controllers
 
             await _signInManager.SignOutAsync();
 
-            _logger.Information(string.Format("User {0} logged out.", name));
+            _logger.Information("User {0} logged out.", name);
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
