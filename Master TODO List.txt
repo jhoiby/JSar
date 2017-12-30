@@ -1,10 +1,6 @@
 MASTER TO-DO LIST
 
 
-NO MORE WORK UNTIL SATURDAY.
-
-
-
 ------------
 PRIORITY GUIDE:
 1. Finish clean-up/refactor of the account management code.
@@ -21,7 +17,7 @@ PRIORITY GUIDE:
 ------------
 TO-DO:
 
-Resume: Account controller lines 257 and 261, replace with commands.
+Adding FluentValidation
 
 Rename RegisterLocalUser command to CreateLocalUser.
 
@@ -66,6 +62,8 @@ Next up: Accounts.
 - Azure AD OIDC registration and login.
 - Azure AD claims persistence.
 - MS Graph access test.
+
+Resume: Account controller lines 257 and 261, replace with commands.
 
 SPLIT IDENTITY DATABASE FROM MEMBERSHIP CONTEXT
 
