@@ -20,7 +20,6 @@ PRIORITY GUIDE:
 
 ------------
 TO-DO:
-Consider not auto-generating guids for Aggregates.
 
 Resume: Account controller lines 257 and 261, replace with commands.
 
