@@ -8,10 +8,10 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
 {
     public class PersonTests
     {
-        private string expectedFirstName = "Bob";
-        private string expectedLastName = "Stevens";
-        private string expectedFullName = "Bob Stevens";
-        private Guid expectedGuid = Guid.NewGuid();
+        private readonly string _expectedFirstName = "Bob";
+        private readonly string _expectedLastName = "Stevens";
+        private readonly string _expectedFullName = "Bob Stevens";
+        private readonly Guid _expectedGuid = Guid.NewGuid();
 
         [Fact]
         public void NewPerson_ConstructedWithNoId_ReturnsValidId()
@@ -25,13 +25,13 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
         [Fact]
         public void NewPerson_ConstructedWithId_ReturnsId()
         {
-            Person person = new Person("Bob", "Steven", expectedGuid);
+            Person person = new Person("Bob", "Steven", _expectedGuid);
 
-            Assert.Equal(expectedGuid, person.Id);
+            Assert.Equal(_expectedGuid, person.Id);
         }
 
         [Fact]
-        public void NewPerson_ConstructedDefaultGuid_ReturnsValidId()
+        public void NewPerson_ConstructedWithDefaultGuid_ReturnsValidId()
         {
             Person person = new Person("Bob", "Steven", default(Guid));
 
@@ -41,25 +41,25 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
 
 
         [Fact]
-        public void NewPerson_GivenCorrectNames_ReturnsCorrectNames()
+        public void NewPerson_ConstructedWithCorrectNames_ReturnsValid()
         {
             Person person = new Person("Bob", "Stevens");
 
-            Assert.Equal(expectedFirstName, person.FirstName);
-            Assert.Equal(expectedLastName, person.LastName);
-            Assert.Equal(expectedFullName, person.FullName);
+            Assert.Equal(_expectedFirstName, person.FirstName);
+            Assert.Equal(_expectedLastName, person.LastName);
+            Assert.Equal(_expectedFullName, person.FullName);
         }
         
         [Theory]
         [InlineData(" Bob","Stevens")]
         [InlineData("Bob","Stevens ")]
-        public void NewPerson_GivenPaddedNames_ReturnsCorrectNames(string firstName, string lastName)
+        public void NewPerson_ConstructedWithPaddedNames_ReturnsValid(string firstName, string lastName)
         {
             Person person = new Person(firstName, lastName);
             
-            Assert.Equal(expectedFirstName, person.FirstName);
-            Assert.Equal(expectedLastName, person.LastName);
-            Assert.Equal(expectedFullName, person.FullName);
+            Assert.Equal(_expectedFirstName, person.FirstName);
+            Assert.Equal(_expectedLastName, person.LastName);
+            Assert.Equal(_expectedFullName, person.FullName);
         }
     }
 }
