@@ -5,12 +5,17 @@ using System.Text;
 
 namespace JSar.Membership.Domain.Aggregates
 {
-    public class Person : IAggregateRoot
+    public class Person : AggregateRoot
     {
         private string _firstName;
         private string _lastName;
 
-        public Person(string firstName, string lastName, Guid id)
+        private Person()
+        {
+            // Parameterless constructor required for Entity Framework
+        }
+
+        public Person(string firstName, string lastName, Guid id = default(Guid)) : base(id)
         {
             _firstName = firstName.IsNullOrWhiteSpace()
                 ? throw new ArgumentOutOfRangeException(nameof(FirstName), "A person requires a first name.")
@@ -21,11 +26,20 @@ namespace JSar.Membership.Domain.Aggregates
                 : lastName.Trim();
         }
 
-        public string FirstName { get { return _firstName; } }
+        public string FirstName
+        {
+            get { return _firstName; }
+        }
 
-        public string LastName { get { return _lastName; } }
+        public string LastName
+        {
+            get { return _lastName; }
+        }
 
-        public string FullName { get { return _firstName + " " + _lastName; } }
+        public string FullName
+        {
+            get { return _firstName + " " + _lastName; }
+        }
 
     }
 }

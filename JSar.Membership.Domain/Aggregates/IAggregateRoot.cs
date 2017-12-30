@@ -6,5 +6,6 @@ namespace JSar.Membership.Domain.Aggregates
 {
     public interface IAggregateRoot
     {
+        Guid Id { get; }
     }
 }

@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using JSar.Tools;
 
 namespace JSar.Membership.Domain.Aggregates
 {
-    public class Organization : IAggregateRoot
+    public class Organization : AggregateRoot
     {
         private string _name;
 
-        public Organization(string name)
+        private Organization()
         {
-            if (name?.Length < 1)
-            {
-                throw new ArgumentOutOfRangeException(nameof(name), "An organization requires a name.");
-            }
+            // Parameterless constructor required for Entity Framework
+        }
 
-            _name = name;
+        public Organization(string name, Guid id = default(Guid)) : base(id)
+        {
+            _name = name.IsNullOrWhiteSpace()
+                ? throw new ArgumentNullException(nameof(name), "An organization requires a name.")
+                : name.Trim();
         }
 
         public string Name {  get { return _name;  } }
