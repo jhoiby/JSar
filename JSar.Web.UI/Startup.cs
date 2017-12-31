@@ -30,9 +30,11 @@ using Microsoft.WindowsAzure.Storage.Table.Protocol;
 using Autofac.Features.Variance;
 using Autofac.Core;
 using System.Reflection;
+using JSar.Membership.Messages.Commands.Identity;
 using JSar.Membership.Services.Query.QueryHandlers.Identity;
 using Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.Internal;
 using MediatR.Pipeline;
+using JSar.Web.UI.Helpers;
 
 namespace JSar.Web.Mvc
 {
@@ -155,12 +157,23 @@ namespace JSar.Web.Mvc
             }
 
             // Pipeline pre/post processors
-            // These are processed by Autofac in reverse order
-            //builder.RegisterGeneric(typeof(RequestPostProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
-            //builder.RegisterGeneric(typeof(RequestPreProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
-            //builder.RegisterGeneric(typeof(GenericRequestPreProcessor<>)).As(typeof(IRequestPreProcessor<>));
+            // These are processed by Autofac in reverse order (? verify)
+            builder.RegisterGeneric(typeof(RequestPostProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+            builder.RegisterGeneric(typeof(RequestPreProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+            builder.RegisterGeneric(typeof(GenericRequestPreProcessor<>)).As(typeof(IRequestPreProcessor<>)); // Works for all requests
+            builder.RegisterType<CommandPreProcessor<ExternalLoginSignIn>>().As<IRequestPreProcessor<ExternalLoginSignIn>>(); // works for specific command
             //builder.RegisterGeneric(typeof(GenericRequestPostProcessor<,>)).As(typeof(IRequestPostProcessor<,>));
             //builder.RegisterGeneric(typeof(GenericPipelineBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+
+            // Examples that work:
+            // builder.RegisterType<CommandPreProcessor<ExternalLoginSignIn>>().As<IRequestPreProcessor<ExternalLoginSignIn>>(); 
+
+            // TRIED:
+            // builder.RegisterType(typeof(CommandPreProcessor<>)).As<IRequestPreProcessor<ExternalLoginSignIn>>();     // Not assignable
+            //
+            //
+            //
+
 
             builder.Register<SingleInstanceFactory>(ctx =>
             {
