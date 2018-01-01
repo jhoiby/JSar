@@ -17,9 +17,13 @@ PRIORITY GUIDE:
 ------------
 TO-DO:
 
-Adding FluentValidation
+Move on beyond CommandPreProcessors for a while.
+
+Adding FluentValidation via pipeline
 
 Rename RegisterLocalUser command to CreateLocalUser.
+
+Rename CommonResult to CommonResponse?
 
 Group commands/handlers into folders
 

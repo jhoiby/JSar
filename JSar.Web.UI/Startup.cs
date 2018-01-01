@@ -25,6 +25,9 @@ using JSar.Membership.AzureAdAdapter.Extensions;
 using JSar.Membership.AzureAdAdapter.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using JSar.Membership.Messages.Queries.Identity;
+using System.Reflection;
+using JSar.Membership.Services.Query.QueryHandlers.Identity;
+using MediatR.Pipeline;
 
 namespace JSar.Web.Mvc
 {
@@ -63,7 +66,6 @@ namespace JSar.Web.Mvc
             services.AddAuthentication(sharedOptions =>
             {
                 sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                // sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
                 sharedOptions.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
             .AddAzureAd(options => 
@@ -73,28 +75,6 @@ namespace JSar.Web.Mvc
                 options.LoginPath = "/Account/SignIn";
                 options.LogoutPath = "/Account/SignOut";
             });
-
-            // OLD: For cookie sign-in, pre-AAD
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.LoginPath = "/Account/SignIn";
-            //});
-            //
-            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //    .AddCookie(options =>                               // TRY ADDING THIS LATER AFTER AddAzureAd if needed.
-            //    {
-            //        options.LoginPath = "/Account/SignIn";
-            //        options.LogoutPath = "/Account/SignOut";
-            //    });
-
-            // From test app, working with AAD. To be used later.
-            // Add cookie authentication
-            //services.AddAuthentication(sharedOptions =>
-            //{
-            //    sharedOptions.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //    sharedOptions.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //    // sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;  // Azure AD
-            //});
 
             //
             // MVC OPTIONS
@@ -114,13 +94,6 @@ namespace JSar.Web.Mvc
             //
             // APPLICATION SERVICES
 
-            // Mediator pipeline - Discover and register command/query/event handlers in the
-            // ObApp.Services and other projects/assemblies. Need to specify a concrete type, then
-            // MediatR will scan the entire assembly it's contained in for additional handlers.
-            services.AddMediatR(
-                typeof(CommandHandler<WriteLogMessage, CommonResult>).Assembly,
-                typeof(QueryHandler<GetUserByEmail, CommonResult>).Assembly);
-
             // Azure support
             services.AddSingleton<IClaimsCache, ClaimsCache>();
             services.AddSingleton<IGraphAuthProvider, GraphAuthProvider>();
@@ -128,16 +101,16 @@ namespace JSar.Web.Mvc
 
             //
             // AUTOFAC DI/IOC CONFIGURATION
-
-            // Installed for ability to add decorators required for MediatR pipeline.
-            // Injections are slowly being migrated here from the .Net DI configuration above.
+            
 
             var builder = new ContainerBuilder();
 
-            // Copies existing dependencies from IServiceCollection
+            // Copies existing config from .Net Core IServiceCollection to Autofac
+            // Services are slowly being migrated to Autofac from above.
             builder.Populate(services);
 
-            // Serilog
+            // AUTOFAC SERILOG CONFIG
+
             builder.Register<Serilog.ILogger>((c, p) =>
             {
                 return new LoggerConfiguration()
@@ -145,11 +118,53 @@ namespace JSar.Web.Mvc
                   .CreateLogger();
             }).SingleInstance();
 
-            // Add additional registrations here. Examples:
-            // 
-            // builder.RegisterType<PostRepository>().As<IPostRepository>();
-            // builder.RegisterType<SiteAnalyticsServices>();
+            // AUTOFAC MEDIATR CONFIG
 
+            // Register MediatR as IMediator for injection
+            builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly).AsImplementedInterfaces();
+
+            // Register the main handlers
+            var mediatrOpenTypes = new[]
+            {
+                typeof(IRequestHandler<,>),
+                typeof(IRequestHandler<>),
+                typeof(INotificationHandler<>)
+            };
+
+            foreach (var mediatrOpenType in mediatrOpenTypes)
+            {
+                // Register all command handler in the same assembly as WriteLogMessageCommandHandler
+                builder
+                    .RegisterAssemblyTypes(typeof(WriteLogMessageCommandHandler).GetTypeInfo().Assembly)
+                    .AsClosedTypesOf(mediatrOpenType)
+                    .AsImplementedInterfaces();
+
+                // Register all QueryHandlers in the same assembly as GetExternalLoginQueryHandler
+                builder
+                    .RegisterAssemblyTypes(typeof(GetUserByEmailQueryHandler).GetTypeInfo().Assembly)
+                    .AsClosedTypesOf(mediatrOpenType)
+                    .AsImplementedInterfaces();
+            }
+
+            // Pipeline pre/post processors - Not yet implemented
+            //builder.RegisterGeneric(typeof(RequestPostProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+            //builder.RegisterGeneric(typeof(RequestPreProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+            //builder.RegisterGeneric(typeof(GenericRequestPreProcessor<>)).As(typeof(IRequestPreProcessor<>));
+            //builder.RegisterGeneric(typeof(MyCommandPreProcessor<>)).As(typeof(IRequestPreProcessor<>));
+            // // builder.RegisterGeneric(typeof(GenericRequestPostProcessor<,>)).As(typeof(IRequestPostProcessor<,>));
+            // // builder.RegisterGeneric(typeof(GenericPipelineBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+
+            builder.Register<SingleInstanceFactory>(ctx =>
+            {
+                var c = ctx.Resolve<IComponentContext>();
+                return t => c.Resolve(t);
+            });
+
+            builder.Register<MultiInstanceFactory>(ctx =>
+            {
+                var c = ctx.Resolve<IComponentContext>();
+                return t => (IEnumerable<object>)c.Resolve(typeof(IEnumerable<>).MakeGenericType(t));
+            });
             // Finalize
             var container = builder.Build();
 
