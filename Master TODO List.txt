@@ -17,16 +17,10 @@ PRIORITY GUIDE:
 ------------
 TO-DO:
 
-VALIDATION FINISH-UP:
-- Go through and clean up crap, including abandoned extension classes.
-- Move CommonResult stuff to a folder.
-- Add LoggingPipelineBehavior with requests>debug and validation>verbose.
-- Make a document called "Technical Debt".
-  - Unit tests
-  - Unbuild validators
-  - Coupling of UI layer with rest of system
-- Add MessageId to CommonResult object, including mandatory in constructor.
-- Have default error page display correlationId/messageId.
+Make a document called "Technical Debt".
+- Unit tests
+- Unbuild validators
+- Coupling of UI layer with rest of system
 
 
 Add .Guard(obj, message) extension. See FluentValidation.Internal.Extensions
