@@ -26,6 +26,9 @@ namespace JSar.Membership.Messages.Validators
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
+
+            _logger.Verbose("Validating message {0}, {1}", ((IMessage)request).MessageId, typeof(TRequest));
+
             var failures = _validators
                 .Select(v => v.Validate(request))
                 .SelectMany(result => result.Errors)
