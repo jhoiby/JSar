@@ -21,8 +21,6 @@ namespace JSar.Membership.Services.Query.QueryHandlers
   
         public async Task<TResponse> Handle(TQuery query, CancellationToken cancellationToken)
         {
-            _logger.Debug("Handling query: " + query.GetType().ToString());
-
             TResponse result = await HandleImplAsync(query, cancellationToken);
 
             return result;
