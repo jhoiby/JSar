@@ -199,8 +199,8 @@ namespace JSar.Web.Mvc.Controllers
                 return RedirectToAction("Error", "Home",
                     new RouteValueDictionary
                     {
-                        {"message", signInCommandResult.FlashMessage}
-                        // , {"cid", signInCommandResult.MessageId}  - Not yet implemented.
+                        {"message", signInCommandResult.FlashMessage},
+                        { "cid", signInCommandResult.MessageId.ToString().Substring(0,8)}
                     });
             }
 

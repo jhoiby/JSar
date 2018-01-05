@@ -32,10 +32,12 @@ namespace JSar.Membership.Services.CommandHandlers.Identity
 
             if (!result.Succeeded)
                 return new CommonResult(
+                    messageId: command.MessageId,
                     outcome: Outcome.ExecutionFailure,
                     flashMessage: "Invalid login. Please check your username and password.");
 
             return new CommonResult(
+                messageId: command.MessageId,
                 outcome: Outcome.Succeeded, 
                 totalResults: 1, 
                 data: result);

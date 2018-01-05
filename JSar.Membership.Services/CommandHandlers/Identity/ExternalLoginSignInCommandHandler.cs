@@ -30,12 +30,14 @@ namespace JSar.Membership.Services.CommandHandlers.Identity
             {
                 return
                     new CommonResult(
+                        messageId: command.MessageId,
                         outcome: Outcome.ExecutionFailure,
                         flashMessage: "Invalid login. There was a problem associating the external authentication with an account.");
             }
 
             return
                 new CommonResult(
+                    messageId: command.MessageId,
                     outcome: Outcome.Succeeded,
                     totalResults: 1,
                     data: result);

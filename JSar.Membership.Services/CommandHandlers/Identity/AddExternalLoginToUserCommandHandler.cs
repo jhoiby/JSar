@@ -29,6 +29,7 @@ namespace JSar.Membership.Services.CommandHandlers.Identity
             {
                 return
                     new CommonResult(
+                        messageId: command.MessageId,
                         outcome: Outcome.ExecutionFailure,
                         flashMessage: "Unable to add external login for user in AddExternalLoginCommandHandler.",
                         totalResults: 1,
@@ -37,6 +38,7 @@ namespace JSar.Membership.Services.CommandHandlers.Identity
 
             return
                 new CommonResult(
+                    messageId: command.MessageId,
                     outcome: Outcome.Succeeded,
                     totalResults: 1,
                     data: result);

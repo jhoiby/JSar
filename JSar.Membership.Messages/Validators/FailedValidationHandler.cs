@@ -10,12 +10,15 @@ using Microsoft.WindowsAzure.Storage.Table.Protocol;
 
 namespace JSar.Membership.Messages.Validators
 {
+    // TODO: Remove this class! It should be unused.
+
     public class FailedValidationHandler : IRequestHandler<IRequest<CommonResult>, CommonResult>
     {
         public Task<CommonResult> Handle(IRequest<CommonResult> request, CancellationToken cancellationToken)
         {
-            Debug.WriteLine("******* VALIDATION FAILURE HANDLER CALLED *******");
-            return new Task<CommonResult>(() => new CommonResult(Outcome.MessageValidationFailure));
+            return new Task<CommonResult>(() => new CommonResult(
+                messageId: ((IMessage)request).MessageId, 
+                outcome: Outcome.MessageValidationFailure));
         }
     }
 }

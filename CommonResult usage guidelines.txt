@@ -79,6 +79,7 @@ EXAMPLE: Command AddUser succeeds.
 In this case there is no additional data to return other that "succeeded".
 
 	return new CommonResult(
+	    messageId: command.MessageId,
 		status: Outcome.Succeeded);
 
 
@@ -88,6 +89,7 @@ EXAMPLE: Query FindUserByEmail succeeds.
 A single user object is returned.
 
 	return new CommonResult(
+	    messageId: query.MessageId,
 		status: Outcome.Succeeded,
 		totalResults: 1,
 		data: user);
@@ -99,6 +101,7 @@ EXAMPLE: Query GetAllGroupMembersByGroupName("SARAMembers") succeeds.
 Returns multiple AppUsers, so CommonResult.Data will contain a List<AppUsers> object.
 
 	return new CommonResult(
+	    messageId: query.MessageId,
 		status: Outcome.Succeeded,
 		totalResults: groupMembers.Count,
 		data: groupMembers);		// List<AppUsers>
@@ -116,6 +119,7 @@ IEnumerable<string,string> with a list of errors and their associated parameter 
 		resultErrorCollection.Add(error.code, error.description)
 
 	return new CommonResult(
+	    messageId: command.MessageId,
 		status: Outcome.ExecutionFailure
 		flashMessage: "User registration failed",   // A basic error summary
 		errors: resultErrorCollection				// The detailed error list
@@ -138,6 +142,7 @@ The list of error caught by Fluent Validation can be saved and returned for disp
 	resultErrorCollection = FluentValidationErrors.ToResultErrorCollection();
 
 	return new CommonResult(
+	    messageId: command.MessageId,
 		status: Outcome.MessageValidationFailure
 		flashMessage: "Your Foo submission makes me sad.",
 		errors: resultErrorCollection)
@@ -151,6 +156,7 @@ Status == Outcome.ExceptionCaught. The caller can then use the error data or ret
 that was referenced in CommonResult.Data.
 
 	return new CommonResult(
+	    messageId: ((IMessage)message.MessageId,
 		status: Outcome.ExceptionCaught,
 		flashMessage: theExceptionObject.Message,
 		errors: new ResultErrorCollection("", ex.Message)
@@ -158,5 +164,9 @@ that was referenced in CommonResult.Data.
 		data: theExceptionObject);
 
 
-// TODO: The above assumes I can/will be configuring FluentValidation to return its errors in
-// a CommonResult object. This has not yet been implemented as of 12/29/2017.
+
+----------
+ADDITIONAL NOTES:
+
+As of 2017-01-05 a new class called CommonResultExtensions has been created. Examine that class
+for potentially useful extension methods.

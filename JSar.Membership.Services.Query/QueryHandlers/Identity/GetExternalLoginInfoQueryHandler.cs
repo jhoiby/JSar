@@ -30,12 +30,14 @@ namespace JSar.Membership.Services.Query.QueryHandlers.Identity
             {
                 return
                     new CommonResult(
+                        messageId: query.MessageId,
                         outcome: Outcome.ExecutionFailure,
                         flashMessage: "External sign-in manager failed to retrieve sign-in data in query GetExternalLoginInfo.");
             }
 
             return
                 new CommonResult(
+                    messageId: query.MessageId,
                     outcome: Outcome.Succeeded,
                     totalResults: 1,
                     data: info);

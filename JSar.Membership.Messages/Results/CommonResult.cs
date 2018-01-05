@@ -13,12 +13,14 @@ namespace JSar.Membership.Messages.Results
 
         public CommonResult(Guid messageId, Outcome outcome)
         {
+            MessageId = messageId;
             _outcome = outcome;
             Data = default(string);
         }
 
         public CommonResult(Guid messageId, Outcome outcome, string flashMessage)
         {
+            MessageId = messageId;
             _outcome = outcome;
             TotalResults = 0;
             FlashMessage = flashMessage;
@@ -27,6 +29,7 @@ namespace JSar.Membership.Messages.Results
         
         public CommonResult(Guid messageId, Outcome outcome, string flashMessage, ResultErrorCollection errors)
         {
+            MessageId = messageId;
             _outcome = outcome;
             FlashMessage = flashMessage;
             Errors = errors;
@@ -36,6 +39,7 @@ namespace JSar.Membership.Messages.Results
 
         public CommonResult(Guid messageId, Outcome outcome, dynamic data)
         {
+            MessageId = messageId;
             _outcome = outcome;
             FlashMessage = "";
             TotalResults = 1;
@@ -44,6 +48,7 @@ namespace JSar.Membership.Messages.Results
 
         public CommonResult(Guid messageId, Outcome outcome, string flashMessage, dynamic data)
         {
+            MessageId = messageId;
             _outcome = outcome;
             FlashMessage = flashMessage;
             TotalResults = 1;
@@ -52,6 +57,7 @@ namespace JSar.Membership.Messages.Results
 
         public CommonResult(Guid messageId, Outcome outcome, int totalResults, dynamic data)
         {
+            MessageId = messageId;
             _outcome = outcome;
             FlashMessage = "";
             TotalResults = totalResults;
@@ -60,6 +66,7 @@ namespace JSar.Membership.Messages.Results
 
         public CommonResult(Guid messageId, Outcome outcome, string flashMessage, int totalResults, dynamic data)
         {
+            MessageId = messageId;
             _outcome = outcome;
             FlashMessage = flashMessage;
             TotalResults = totalResults;
@@ -77,9 +84,9 @@ namespace JSar.Membership.Messages.Results
         }
 
         // TODO: Why is this empty constructor here?
-        public CommonResult()
-        {
-        }
+        //public CommonResult()
+        //{
+        //}
 
         public Guid MessageId { get; }
 
