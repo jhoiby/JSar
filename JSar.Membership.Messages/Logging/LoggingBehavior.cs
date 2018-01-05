@@ -29,11 +29,11 @@ namespace JSar.Membership.Messages.Validators
             if (typeof(TRequest).ToString().Contains("Command"))
             {
 
-                messageType = "COMMAND";
+                messageType = "COMMAND message";
             }
             else if (typeof(TRequest).ToString().Contains("Quer"))
             {
-                messageType = "QUERY";
+                messageType = "QUERY message";
             }
             else
             {
