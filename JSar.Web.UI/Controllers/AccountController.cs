@@ -55,11 +55,10 @@ namespace JSar.Web.Mvc.Controllers
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
-            _logger.Verbose("MVC request: HTTP-GET:/Account/Register");
-
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
+
 
         //
         // HTTP-POST: /Account/Register
@@ -70,8 +69,6 @@ namespace JSar.Web.Mvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl)
         {
-            _logger.Verbose("MVC request: HTTP-POST:/Account/Register"); // REPLACE WITH ACTION LOGGING DECORATOR
-
             if (!ModelState.IsValid) return View(model);
 
             AppUser user = new AppUser(
@@ -91,7 +88,7 @@ namespace JSar.Web.Mvc.Controllers
                 return View(model);
             }
 
-            // Log the user in by passing execution to the SignIn action.
+            // Automatically log the user in by passing execution to the SignIn action.
 
             return await SignIn(new SignInViewModel()
                 {
@@ -102,20 +99,20 @@ namespace JSar.Web.Mvc.Controllers
                 returnUrl);
         }
 
+
         // 
         // HTTP-GET: /Account/SignIn
 
         [HttpGet]
         public async Task<IActionResult> SignIn(string returnUrl = null)
         {
-            _logger.Verbose("MVC request: HTTP-GET:/Account/SignIn(?ReturnUrl...)");
-
             // Delete existing cookie to ensure proper login process.
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
+
 
         //
         // HTTP-POST: /Account/SignIn
@@ -124,9 +121,7 @@ namespace JSar.Web.Mvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignIn(SignInViewModel model, string returnUrl = null)
         {
-            _logger.Verbose("MVC request: HTTP-POST:/Account/SignIn");
-
-            // Get user.
+            // Get user from database.
             var getUserResult = await _mediator.Send(
                 new GetUserByEmail(model.UserName));
             
@@ -146,13 +141,14 @@ namespace JSar.Web.Mvc.Controllers
                 return View(model);
             }
 
+            // Send user to the page they were requesting when the SignIn was triggered, or home.
             return RedirectToLocal(returnUrl);
         }
 
+
         //
         // HTTP-POST: /Account/ExternalLogin
-
-
+        
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -161,8 +157,11 @@ namespace JSar.Web.Mvc.Controllers
             // Request a redirect to the external login provider.
             var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { returnUrl });
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
-            return Challenge(properties, provider); // Sends 302 redirect to authenication provider back to web browser.
+
+            // Send HTTP 302 redirect-to-authenication-provider back to user's browser.
+            return Challenge(properties, provider);
         }
+
 
         //
         // HTTP-GET: /Account/ExternalLoginCallback
@@ -184,6 +183,7 @@ namespace JSar.Web.Mvc.Controllers
 
             if (! getInfoCommandResult.Succeeded)
             {
+                // TODO: Send user to error page?
                 return RedirectToAction(nameof(SignIn));
             }
 
@@ -229,7 +229,7 @@ namespace JSar.Web.Mvc.Controllers
 
 
 
-        /// //////////////////////////////////////////// Below needs refactor to CQRS
+        /// //////////////////////////////////////////// Below needs refactor to CQRS and cleanup
 
 
         [HttpPost]
@@ -242,14 +242,13 @@ namespace JSar.Web.Mvc.Controllers
                 // Get the information about the user from the external login provider.
                 CommonResult getInfoResult = await _mediator.Send(
                     new GetExternalLoginInfo());
+
+                if (!getInfoResult.Succeeded)
+                    return RedirectToErrorView(getInfoResult);
+                
                 ExternalLoginInfo info = getInfoResult.Data;
-
-                if (info == null)
-                {
-                    throw new ApplicationException("Error loading external login information during confirmation.");
-                }
-
-                // Create the new user in the system.
+                
+                // Create the new user and store in database.
                 AppUser user = new AppUser(model.Email);
 
                 CommonResult createUserResult = await _mediator.Send(
@@ -270,7 +269,7 @@ namespace JSar.Web.Mvc.Controllers
                         // Add external claims to to the user.
                         await _userManager.AddClaimsAsync(user, info.Principal.Claims);
 
-                        // Finally, sign in the user. Puts a cookie in the "queue" to be returned
+                        // Finally, sign in the user. Puts a cookie in the "result queue" to be returned
                         // to the user's browser.
                         await _signInManager.SignInAsync(user, isPersistent: false);
 
@@ -286,18 +285,10 @@ namespace JSar.Web.Mvc.Controllers
             return View(nameof(ExternalLogin), model);
         }
 
-
-
-
-        /// <summary>
-        /// ////////////////////////////////////////////////////////////////
-        /// </summary>
-        /// <returns></returns>
-
-
-
-
-
+        
+        /// ////////////////////////////// END SECTION REQUIRING REFACTOR //////////////////////////////////
+        
+            
         //
         // HTTP-POST: /Account/SignOut
 
