@@ -9,7 +9,7 @@ namespace JSar.Membership.Messages.Validators
     {
         public ExternalLoginSignInValidator()
         {
-            RuleFor(command => command.LoginProvider).NotEmpty();
+            RuleFor(command => command.LoginProvider).Empty();
             RuleFor(command => command.ProviderKey).NotEmpty();
         }
     }

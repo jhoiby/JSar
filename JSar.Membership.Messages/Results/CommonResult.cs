@@ -11,13 +11,13 @@ namespace JSar.Membership.Messages.Results
 
         Outcome _outcome;
 
-        public CommonResult(Outcome outcome)
+        public CommonResult(Guid messageId, Outcome outcome)
         {
             _outcome = outcome;
             Data = default(string);
         }
 
-        public CommonResult(Outcome outcome, string flashMessage)
+        public CommonResult(Guid messageId, Outcome outcome, string flashMessage)
         {
             _outcome = outcome;
             TotalResults = 0;
@@ -25,7 +25,7 @@ namespace JSar.Membership.Messages.Results
             Data = default(string);
         }
         
-        public CommonResult(Outcome outcome, string flashMessage, ResultErrorCollection errors)
+        public CommonResult(Guid messageId, Outcome outcome, string flashMessage, ResultErrorCollection errors)
         {
             _outcome = outcome;
             FlashMessage = flashMessage;
@@ -34,7 +34,7 @@ namespace JSar.Membership.Messages.Results
             Data = default(string);
         }
 
-        public CommonResult(Outcome outcome, dynamic data)
+        public CommonResult(Guid messageId, Outcome outcome, dynamic data)
         {
             _outcome = outcome;
             FlashMessage = "";
@@ -42,7 +42,7 @@ namespace JSar.Membership.Messages.Results
             Data = data;
         }
 
-        public CommonResult(Outcome outcome, string flashMessage, dynamic data)
+        public CommonResult(Guid messageId, Outcome outcome, string flashMessage, dynamic data)
         {
             _outcome = outcome;
             FlashMessage = flashMessage;
@@ -50,7 +50,7 @@ namespace JSar.Membership.Messages.Results
             Data = data;
         }
 
-        public CommonResult(Outcome outcome, int totalResults, dynamic data)
+        public CommonResult(Guid messageId, Outcome outcome, int totalResults, dynamic data)
         {
             _outcome = outcome;
             FlashMessage = "";
@@ -58,7 +58,7 @@ namespace JSar.Membership.Messages.Results
             Data = data;
         }
 
-        public CommonResult(Outcome outcome, string flashMessage, int totalResults, dynamic data)
+        public CommonResult(Guid messageId, Outcome outcome, string flashMessage, int totalResults, dynamic data)
         {
             _outcome = outcome;
             FlashMessage = flashMessage;
@@ -66,8 +66,9 @@ namespace JSar.Membership.Messages.Results
             Data = data;
         }
 
-        public CommonResult(Outcome outcome, string flashMessage, int totalResults, ResultErrorCollection errors, dynamic data)
+        public CommonResult(Guid messageId, Outcome outcome, string flashMessage, int totalResults, ResultErrorCollection errors, dynamic data)
         {
+            MessageId = messageId;
             _outcome = outcome;
             FlashMessage = flashMessage;
             TotalResults = totalResults;
@@ -75,9 +76,12 @@ namespace JSar.Membership.Messages.Results
             Data = data;
         }
 
+        // TODO: Why is this empty constructor here?
         public CommonResult()
         {
         }
+
+        public Guid MessageId { get; }
 
         /// <inheritdoc />
         public dynamic Data { get; }

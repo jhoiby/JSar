@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using JSar.Membership.Messages.Results;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.Twitter;
 using Serilog;
 using static JSar.Membership.Messages.Results.CommonResultExtensions;
 
@@ -38,11 +39,12 @@ namespace JSar.Membership.Messages.Validators
             if (failures.Count != 0)
             {
                 CommonResult validationResult = new CommonResult(
+                    messageId: ((IMessage)request).MessageId,
                     outcome: Outcome.MessageValidationFailure,
                     flashMessage: "A validation error occured in request " + typeof(TRequest),
                     errors: failures.ToResultErrorCollection() );
 
-                validationResult.LogErrors(typeof(TRequest), CorrelationId, _logger);
+                validationResult.LogErrors(typeof(TRequest), _logger);
 
                 return Task.FromResult(validationResult as TResponse);
             }
