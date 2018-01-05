@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using JSar.Web.Mvc.Models;
+using JSar.Web.UI.Models;
 using Serilog;
 using MediatR;
 using JSar.Membership.Messages.Commands;
@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using JSar.Membership.Domain.Identity;
 using System.Security.Claims;
 using JSar.Membership.AzureAdAdapter.Helpers;
+using JSar.Membership.Messages;
 
 namespace JSar.Web.Mvc.Controllers
 {
@@ -89,11 +90,16 @@ namespace JSar.Web.Mvc.Controllers
 
         }
 
-        public IActionResult Error()
+        public IActionResult Error(string message = "", string cid = "")
         {
             _logger.Verbose("MVC request: HTTP-GET:/Error");
 
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel
+            {
+                // RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+                CorrelationId = cid,
+                Message = message
+            });
         }
 
         //

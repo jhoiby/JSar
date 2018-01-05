@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using JSar.Membership.AzureAdAdapter.Helpers;
 using System.Security.Claims;
+using JSar.Web.UI.Models;
+using Microsoft.AspNetCore.Routing;
 
 namespace JSar.Web.Mvc.Controllers
 {
@@ -190,6 +192,17 @@ namespace JSar.Web.Mvc.Controllers
                     info.ProviderKey,
                     isPersistent: false,
                     bypassTwoFactor: true ));
+
+            if (!signInCommandResult.Succeeded)
+            {
+                return RedirectToAction("Error", "Home",
+                    new RouteValueDictionary
+                    {
+                        {"message", signInCommandResult.FlashMessage}
+                        // , {"cid", signInCommandResult.MessageId}  - Not yet implemented.
+                    });
+            }
+
             var signInResult = (Microsoft.AspNetCore.Identity.SignInResult) signInCommandResult.Data;
             
             if (signInCommandResult.Succeeded)

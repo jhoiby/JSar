@@ -1,11 +1,15 @@
 using System;
 
-namespace JSar.Web.Mvc.Models
+namespace JSar.Web.UI.Models
 {
     public class ErrorViewModel
     {
-        public string RequestId { get; set; }
+        public string CorrelationId { get; set; }
 
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+        public bool ShowCorrelationId => !string.IsNullOrEmpty(CorrelationId);
+
+        public string Message { get; set; }
+
+        public bool ShowMessage => !string.IsNullOrEmpty(Message);
     }
 }

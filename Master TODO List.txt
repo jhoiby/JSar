@@ -75,6 +75,10 @@ Next up: Accounts.
 
 Resume: Account controller lines 257 and 261, replace with commands.
 
+Obscure error handling:
+- Add support contact info in configuration file, error view model and error view.
+- Add message ID info in CommonResult and display as a correlation id with errors?
+
 SPLIT IDENTITY DATABASE FROM MEMBERSHIP CONTEXT
 
 Copy other documentation files from ObApp5.

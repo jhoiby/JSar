@@ -1,0 +1,30 @@
+﻿@model JSar.Web.UI.Models.ErrorViewModel;
+
+@{
+    ViewData["Title"] = "Error";
+}
+<h2>Oops! An Error Occurred!</h2>
+
+@if (Model.ShowMessage || Model.ShowCorrelationId)
+{
+    <h3>Please note the details below and contact support if the issue continues:</h3>
+
+    if (Model.ShowMessage)
+    {
+        <p>Error Message: @Model.Message</p>
+    }
+
+    if (Model.ShowCorrelationId)
+    { <p>Correlation ID: @Model.CorrelationId</p>}
+}
+else
+{
+    <h3>No additional information is availble</h3>
+
+    <p>Yes, we know this is annyoing!</p>
+
+    <p>If you continue to have this issue please make detailed notes of your last action and
+        the EXACT time (your cell phone should be accurate, seconds can help) so we can check
+        the logs, then contact support.</p>
+}
+
