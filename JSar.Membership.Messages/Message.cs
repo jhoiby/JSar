@@ -8,8 +8,11 @@ namespace JSar.Membership.Messages
     {
         public Message(Guid messageId)
         {
-            if (MessageId == default(Guid))
-                MessageId = Guid.NewGuid();
+            // Clients are allowed to construct a message without passing 
+            // in an ID, so create one if needed.
+
+            if (messageId == default(Guid))
+                messageId = Guid.NewGuid();
 
             MessageId = messageId;
         }
