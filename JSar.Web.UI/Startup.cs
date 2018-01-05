@@ -26,8 +26,10 @@ using JSar.Membership.AzureAdAdapter.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using JSar.Membership.Messages.Queries.Identity;
 using System.Reflection;
+using FluentValidation;
 using JSar.Membership.Services.Query.QueryHandlers.Identity;
 using MediatR.Pipeline;
+using JSar.Membership.Messages.Validators;
 
 namespace JSar.Web.Mvc
 {
@@ -146,11 +148,19 @@ namespace JSar.Web.Mvc
                     .AsImplementedInterfaces();
             }
 
-            // Pipeline pre/post processors - Not yet implemented
-            //builder.RegisterGeneric(typeof(RequestPostProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
-            //builder.RegisterGeneric(typeof(RequestPreProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
-            //builder.RegisterGeneric(typeof(GenericRequestPreProcessor<>)).As(typeof(IRequestPreProcessor<>));
-            //builder.RegisterGeneric(typeof(MyCommandPreProcessor<>)).As(typeof(IRequestPreProcessor<>));
+            // Register Message(Command/ Query) Validators
+            builder.RegisterAssemblyTypes(typeof(ExternalLoginSignInValidator).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IValidator<>))
+                .AsImplementedInterfaces();
+
+            // Pipeline pre/post processors
+            builder.RegisterGeneric(typeof(RequestPostProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+            builder.RegisterGeneric(typeof(RequestPreProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+            builder.RegisterGeneric(typeof(ValidationBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+
+            // More samples
+            // builder.RegisterGeneric(typeof(GenericRequestPreProcessor<>)).As(typeof(IRequestPreProcessor<>));
+            // builder.RegisterGeneric(typeof(MyCommandPreProcessor<>)).As(typeof(IRequestPreProcessor<>));
             // // builder.RegisterGeneric(typeof(GenericRequestPostProcessor<,>)).As(typeof(IRequestPostProcessor<,>));
             // // builder.RegisterGeneric(typeof(GenericPipelineBehavior<,>)).As(typeof(IPipelineBehavior<,>));
 

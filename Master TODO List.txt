@@ -17,6 +17,12 @@ PRIORITY GUIDE:
 ------------
 TO-DO:
 
+Resume: ValidationBehavior line 33
+
+Add .Guard(obj, message) extension. See FluentValidation.Internal.Extensions
+
+Consider adding "Internal" project for ... ?
+
 Move on beyond CommandPreProcessors for a while.
 
 Adding FluentValidation via pipeline
