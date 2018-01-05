@@ -14,10 +14,11 @@ using JSar.Membership.Domain.Identity;
 using System.Security.Claims;
 using JSar.Membership.AzureAdAdapter.Helpers;
 using JSar.Membership.Messages;
+using JSar.Web.UI.Controllers;
 
 namespace JSar.Web.Mvc.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : AppControllerBase
     {
         private readonly Serilog.ILogger _logger;
         private readonly IMediator _mediator;

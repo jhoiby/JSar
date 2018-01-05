@@ -18,12 +18,13 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using JSar.Membership.AzureAdAdapter.Helpers;
 using System.Security.Claims;
 using JSar.Membership.Messages.Results;
+using JSar.Web.UI.Controllers;
 using JSar.Web.UI.Models;
 using Microsoft.AspNetCore.Routing;
 
 namespace JSar.Web.Mvc.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : AppControllerBase
     {
         private readonly IClaimsCache _claimsCache;
         private readonly Serilog.ILogger _logger;
@@ -196,12 +197,7 @@ namespace JSar.Web.Mvc.Controllers
 
             if (!signInCommandResult.Succeeded)
             {
-                return RedirectToAction("Error", "Home",
-                    new RouteValueDictionary
-                    {
-                        {"message", signInCommandResult.FlashMessage},
-                        { "cid", signInCommandResult.MessageId.ToString().Substring(0,8)}
-                    });
+                return RedirectToErrorView(signInCommandResult);
             }
 
             var signInResult = (Microsoft.AspNetCore.Identity.SignInResult) signInCommandResult.Data;
