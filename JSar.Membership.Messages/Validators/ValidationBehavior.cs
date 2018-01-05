@@ -1,16 +1,11 @@
-﻿using FluentValidation;
-using MediatR;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentValidation.Results;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using FluentValidation;
+using MediatR;
 using Serilog;
-using Microsoft.WindowsAzure.Storage.Table;
 using static JSar.Membership.Messages.CommonResultExtensions;
 
 namespace JSar.Membership.Messages.Validators
@@ -30,12 +25,6 @@ namespace JSar.Membership.Messages.Validators
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            Debug.WriteLine("***** VALIDATION BEHAVIOR called *****");
-
-            var context = new ValidationContext(request);
-
-            var testv = _validators.Select(v => v.Validate(request));
-
             var failures = _validators
                 .Select(v => v.Validate(request))
                 .SelectMany(result => result.Errors)
@@ -51,9 +40,7 @@ namespace JSar.Membership.Messages.Validators
 
                 validationResult.LogErrors(typeof(TRequest), CorrelationId, _logger);
 
-                var task = Task.FromResult(validationResult as TResponse);
-                
-                return task;
+                return Task.FromResult(validationResult as TResponse);
             }
 
             return next();
