@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using JSar.Membership.AzureAdAdapter.Helpers;
 using System.Security.Claims;
+using JSar.Membership.Messages.Results;
 using JSar.Web.UI.Models;
 using Microsoft.AspNetCore.Routing;
 
@@ -68,7 +69,7 @@ namespace JSar.Web.Mvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl)
         {
-            _logger.Verbose("MVC request: HTTP-POST:/Account/Register");
+            _logger.Verbose("MVC request: HTTP-POST:/Account/Register"); // REPLACE WITH ACTION LOGGING DECORATOR
 
             if (!ModelState.IsValid) return View(model);
 

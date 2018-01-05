@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace JSar.Membership.Messages
+namespace JSar.Membership.Messages.Results
 {
     /// <inheritdoc />
     public class CommonResult : ICommonResult

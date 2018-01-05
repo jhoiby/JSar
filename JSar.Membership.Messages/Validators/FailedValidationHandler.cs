@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using JSar.Membership.Messages.Results;
 using MediatR;
 using Microsoft.WindowsAzure.Storage.Table.Protocol;
 

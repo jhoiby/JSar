@@ -15,8 +15,4 @@
     <ProjectReference Include="..\JSar.Membership.Messages\JSar.Membership.Messages.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
 </Project>

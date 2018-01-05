@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using JSar.Membership.Messages.Commands;
 using JSar.Membership.Messages.Queries;
+using JSar.Membership.Messages.Results;
 
 namespace JSar.Membership.Services.Query.QueryHandlers
 {

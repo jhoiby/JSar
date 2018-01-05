@@ -4,9 +4,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
+using JSar.Membership.Messages.Results;
 using MediatR;
 using Serilog;
-using static JSar.Membership.Messages.CommonResultExtensions;
+using static JSar.Membership.Messages.Results.CommonResultExtensions;
 
 namespace JSar.Membership.Messages.Validators
 {

@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace JSar.Membership.Messages
+namespace JSar.Membership.Messages.Results
 {
     public class ResultErrorCollection : NameValueCollection
     {

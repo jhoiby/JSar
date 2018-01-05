@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using FluentValidation.Results;
+using JSar.Membership.Messages.Results;
 
 namespace JSar.Membership.Messages.Validators
 {

@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 using System.Text;
 using Serilog;
 
-namespace JSar.Membership.Messages
+namespace JSar.Membership.Messages.Results
 {
     public static class CommonResultExtensions
     {

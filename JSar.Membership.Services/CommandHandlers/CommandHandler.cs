@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using JSar.Membership.Messages.Commands;
+using JSar.Membership.Messages.Results;
 
 namespace JSar.Membership.Services.CommandHandlers
 {

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using JSar.Membership.Messages.Results;
 
 namespace JSar.Membership.Messages.Commands.Identity
 {

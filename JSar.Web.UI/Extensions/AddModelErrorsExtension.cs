@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Specialized;
+using JSar.Membership.Messages.Results;
 
 namespace JSar.Web.UI.Extensions
 {

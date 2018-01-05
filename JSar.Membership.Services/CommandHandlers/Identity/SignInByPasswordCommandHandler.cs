@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using JSar.Membership.Messages.Results;
 
 namespace JSar.Membership.Services.CommandHandlers.Identity
 {

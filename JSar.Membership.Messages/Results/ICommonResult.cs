@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace JSar.Membership.Messages
+namespace JSar.Membership.Messages.Results
 {
     /// <summary>
     /// Provides a common method for returning results of commands and queries. Used to return
