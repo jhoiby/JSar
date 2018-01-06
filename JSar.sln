@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Features.txt = Features.txt
 		Master TODO List.txt = Master TODO List.txt
 		Potential code smells.txt = Potential code smells.txt
+		Technical Debt.txt = Technical Debt.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DE7D8280-3DE6-4423-B8AE-D178450EEB42}"

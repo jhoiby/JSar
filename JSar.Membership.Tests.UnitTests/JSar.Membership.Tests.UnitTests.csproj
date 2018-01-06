@@ -5,12 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Moq" Version="4.8.0" />
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\JSar.Membership.Domain\JSar.Membership.Domain.csproj" />
+    <ProjectReference Include="..\JSar.Membership.Messages\JSar.Membership.Messages.csproj" />
     <ProjectReference Include="..\JSar.Tools\JSar.Tools.csproj" />
   </ItemGroup>
 

@@ -1,0 +1,3 @@
+- Unit tests
+- Unbuild validators
+- Coupling of UI layer with rest of system

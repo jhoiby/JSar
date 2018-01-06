@@ -9,8 +9,10 @@ namespace JSar.Membership.Messages.Commands.Identity
 {
     public class AddExternalLoginToUser : Command<CommonResult>
     {
-        public AddExternalLoginToUser(AppUser user, ExternalLoginInfo info, Guid messageId = default(Guid)) : base(messageId)
+        public AddExternalLoginToUser(AppUser user, ExternalLoginInfo loginInfo, Guid messageId = default(Guid)) : base(messageId)
         {
+            User = user ?? throw new ArgumentNullException(nameof(user));
+            LoginInfo = loginInfo ?? throw new ArgumentNullException(nameof(LoginInfo));
         }
 
         public AppUser User { get; }

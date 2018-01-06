@@ -17,49 +17,21 @@ PRIORITY GUIDE:
 ------------
 TO-DO:
 
-Make a document called "Technical Debt".
-- Unit tests
-- Unbuild validators
-- Coupling of UI layer with rest of system
-
-
 Add .Guard(obj, message) extension. See FluentValidation.Internal.Extensions
 
 Consider adding "Internal" project for ... ?
-
-Move on beyond CommandPreProcessors for a while.
-
-Adding FluentValidation via pipeline
 
 Rename RegisterLocalUser command to CreateLocalUser.
 
 Rename CommonResult to CommonResponse?
 
-Group commands/handlers into folders
-
-Reformat complex return statements.
-
-Fix ArgumentNullExceptions with literal string parameters.
-
 Add Forgot Password page Action - ForgotPassword.cshtml
 
-Add Microsoft logger messages into Serilog context.
+Add Microsoft logger messages into Serilog context?
 
 Fix default string values in CommonResult to string.Empty
 
-Finish Registration/Login
-- NEED LOTS OF TESTING. I've somewhat lost track of where I was.
-- Need logout page.
-- Need to get default authorization login/out routes working, with proper parameters.
-
-Change "" in CommonResult constructors to string.Empty.
-
-Add Unit Tests as needed.
-
-Add Fluent Validation of commands/queries.
-
-Add validation to commonresult
-- Require error message of some sort if not Status = Success
+Change "" in CommonResult constructors to string.Empty
 
 - Fire "User logged in" event that contains the user?
 
@@ -69,23 +41,10 @@ Consider correlation IDs:
 		http://www.longest.io/2015/02/14/logging-correlation-ids-mvc.html
 - Code location IDs in exceptions.
 
-Fix string manipulations in Serilog calls.
-
-Next up: Accounts.
-- Local registration and login.
-- Azure AD OIDC registration and login.
-- Azure AD claims persistence.
-- MS Graph access test.
-
-Resume: Account controller lines 257 and 261, replace with commands.
-
 Obscure error handling:
 - Add support contact info in configuration file, error view model and error view.
-- Add message ID info in CommonResult and display as a correlation id with errors?
 
 SPLIT IDENTITY DATABASE FROM MEMBERSHIP CONTEXT
-
-Copy other documentation files from ObApp5.
 
 Update formfield tag helper to properly handle passing-in of invalid field names.
 
