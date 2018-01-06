@@ -35,7 +35,7 @@ Change "" in CommonResult constructors to string.Empty
 
 - Fire "User logged in" event that contains the user?
 
-Consider correlation IDs:
+Consider session IDs:
 - Session correlation IDs in logging messages.
 	- Inject with logger. Use session ID from cookie? See: 
 		http://www.longest.io/2015/02/14/logging-correlation-ids-mvc.html
