@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using JSar.Membership.Domain.Events;
 using MediatR;
@@ -9,6 +10,7 @@ namespace JSar.Membership.Domain.Aggregates
     public abstract class AggregateRoot: IAggregateRoot
     {
         private readonly Guid _id;
+        protected List<IDomainEvent> _domainEvents = new List<IDomainEvent>();
 
         internal AggregateRoot()
         {
@@ -22,13 +24,12 @@ namespace JSar.Membership.Domain.Aggregates
 
             _id = id;
         }
-
+        
         public Guid Id
         {
             get { return _id; }
         }
 
-        protected List<IDomainEvent> _domainEvents;
         public List<IDomainEvent> DomainEvents => _domainEvents;
 
         public void AddDomainEvent(IDomainEvent eventItem)
