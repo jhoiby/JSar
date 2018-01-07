@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Serilog;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using JSar.Web.UI.Models.AccountViewModels;
 using JSar.Membership.Messages;
 using JSar.Membership.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -18,11 +17,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using JSar.Membership.AzureAdAdapter.Helpers;
 using System.Security.Claims;
 using JSar.Membership.Messages.Results;
-using JSar.Web.UI.Controllers;
-using JSar.Web.UI.Models;
+using JSar.Web.UI.Features.Home;
+using JSar.Web.UI.Features.Shared;
 using Microsoft.AspNetCore.Routing;
 
-namespace JSar.Web.Mvc.Controllers
+namespace JSar.Web.UI.Features.Account
 {
     public class AccountController : AppControllerBase
     {

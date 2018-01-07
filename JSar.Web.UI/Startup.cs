@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -11,20 +9,14 @@ using Autofac.Extensions.DependencyInjection;
 using Serilog;
 using MediatR;
 using JSar.Membership.Services.CommandHandlers;
-using JSar.Membership.Messages.Commands;
-using JSar.Membership.Messages;
 using JSar.Membership.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using JSar.Membership.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
-using JSar.Membership.Services.Query.QueryHandlers;
-using JSar.Membership.Messages.Queries;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using JSar.Membership.AzureAdAdapter.Extensions;
 using JSar.Membership.AzureAdAdapter.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using JSar.Membership.Messages.Queries.Identity;
 using System.Reflection;
 using FluentValidation;
 using JSar.Membership.Services.Query.QueryHandlers.Identity;
@@ -81,7 +73,8 @@ namespace JSar.Web.Mvc
             //
             // MVC OPTIONS
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddFeatureFolders();
 
             services.AddMvc(options =>
             {

@@ -1,6 +1,6 @@
 using System;
 
-namespace JSar.Web.UI.Models
+namespace JSar.Web.UI.Features.Shared
 {
     public class ErrorViewModel
     {

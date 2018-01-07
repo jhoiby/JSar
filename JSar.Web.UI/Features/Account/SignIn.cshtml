@@ -1,8 +1,11 @@
 ﻿@using System.Collections.Generic
 @using System.Linq
+@using JSar.Membership.Domain.Identity
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Http.Authentication
-@model JSar.Web.UI.Models.AccountViewModels.SignInViewModel
+@using Microsoft.AspNetCore.Identity
+@using JSar.Web.UI.Features.Account
+@model SignInViewModel
 @inject SignInManager<AppUser> SignInManager
 
 @{

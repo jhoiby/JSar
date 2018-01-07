@@ -6,7 +6,7 @@ using JSar.Membership.Messages.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
-namespace JSar.Web.UI.Controllers
+namespace JSar.Web.UI.Features.Shared
 {
     public class AppControllerBase : Controller
     {
