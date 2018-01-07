@@ -25,6 +25,11 @@ RESUME:
    - Pass DomainErrorList up chain through common result
        - Add extension method for the conversion
 
+Reformat logs for pipeline to start with the command/query/event name
+- "ExternalLoginSignIn: Validating command..."
+- "ExternalLoginSignIn: Handling command..."
+- See: https://nblumhardt.com/2014/05/serilog-output-template-formatting-changes/ 
+    - Add a lowercase L as a formatting specifier. Example: {Term:l}
 
 Add .Guard(obj, message) extension. See FluentValidation.Internal.Extensions
 
