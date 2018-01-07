@@ -16,10 +16,10 @@ namespace JSar.Web.UI.Extensions
         public static void AddErrorsFromCommonResult(this ModelStateDictionary modelState, CommonResult result)
         {
             if (modelState == null)
-                throw new ArgumentNullException(nameof(modelState));
+                throw new ArgumentNullException(nameof(modelState), "ModelState construction parameter cannot be null. EID: FE092959");
 
             if (result == null)
-                throw new ArgumentNullException(nameof(modelState));
+                throw new ArgumentNullException(nameof(result), "Result constructor parameter cannot be null. EID: 9D787839");
 
             if (result.Outcome == Outcome.Succeeded)
                 return; // Nothing to see here, move along.

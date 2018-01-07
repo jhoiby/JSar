@@ -21,8 +21,8 @@ namespace JSar.Membership.Messages.Validators
 
         public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators, ILogger logger)
         {
-            _validators = validators ?? throw new ArgumentNullException(nameof(validators));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _validators = validators ?? throw new ArgumentNullException(nameof(validators), "Constructor parameter 'validators' cannot be null. EID: D7BE5A85");
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger), "Constructor parameter 'logger' cannot be null. EID: F0030CD9");
         }
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)

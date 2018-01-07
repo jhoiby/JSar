@@ -20,7 +20,7 @@ namespace JSar.Membership.Services.CommandHandlers.Identity
 
         public RegisterLocalUserCommandHandler(UserManager<AppUser> userManager, ILogger logger) : base (logger)
         {
-            _userManager = userManager ?? throw new ArgumentNullException("userManager");
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager), "Constructor parameter 'userManager' cannot be null. EID: 532F339A");
         }
         protected override async Task<CommonResult> HandleImplAsync(RegisterLocalUser command, CancellationToken cancellationToken)
         {

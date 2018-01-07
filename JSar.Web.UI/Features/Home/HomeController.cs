@@ -28,11 +28,11 @@ namespace JSar.Web.UI.Features.Home
 
         public HomeController(ILogger logger, IMediator mediator, SignInManager<AppUser> signInManager, IGraphSdkHelper graphSdkHelper, IClaimsCache claimsCache)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
-            _graphSdkHelper = graphSdkHelper ?? throw new ArgumentNullException("graphSdkHelper");
-            _claimsCache = claimsCache ?? throw new ArgumentNullException("claimsCache");
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger), "Constructor paramater 'logger' cannot be null. EID: 4EA3B1CB");
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator), "Constructor paramater 'mediator' cannot be null. EID: 2F98944F");
+            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager), "Constructor parameter 'signInManager' cannot be null. EID: CAB1C1B5");
+            _graphSdkHelper = graphSdkHelper ?? throw new ArgumentNullException(nameof(graphSdkHelper), "Constructor parameter 'graphSDKHelper' cannot be null. EID: F76DF56E");
+            _claimsCache = claimsCache ?? throw new ArgumentNullException(nameof(claimsCache), "Constructor parameter 'claimsCache' cannot be null. EID: 57F6DF27");
         }
 
         [HttpGet]

@@ -25,11 +25,11 @@ namespace JSar.Membership.Domain.Aggregates.Person
         public Person(string firstName, string lastName, string primaryEmail, string primaryPhone, Guid id) : base(id)
         {
             _firstName = firstName.IsNullOrWhiteSpace()
-                ? throw new ArgumentException("Person.FirstName cannot be null or white space. EID: CD250A91.", nameof(FirstName))
+                ? throw new ArgumentException("Person.FirstName cannot be null or white space. EID: CD250A91.", nameof(firstName))
                 : firstName.Trim();
 
             _lastName = lastName.IsNullOrWhiteSpace()
-                ? throw new ArgumentException("Person.LastName cannot be null or white space. EID: 514FF925", nameof(FirstName))
+                ? throw new ArgumentException("Person.LastName cannot be null or white space. EID: 514FF925", nameof(lastName))
                 : lastName.Trim();
 
             _primaryEmail = primaryEmail.Trim();

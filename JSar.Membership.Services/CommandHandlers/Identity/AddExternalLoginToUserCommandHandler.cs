@@ -18,7 +18,7 @@ namespace JSar.Membership.Services.CommandHandlers.Identity
 
         public AddExternalLoginToUserCommandHandler(UserManager<AppUser> userManager, ILogger logger) : base(logger)
         {
-            _userManager = userManager ?? throw new NotImplementedException(nameof(userManager));
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager), "Constructor parameter 'userManager' cannot be null. EID: 31391FDB");
         }
 
         protected override async Task<CommonResult> HandleImplAsync(AddExternalLoginToUser command, CancellationToken cancellationToken)

@@ -19,7 +19,7 @@ namespace JSar.Membership.Services.CommandHandlers.Identity
 
         public ExternalLoginSignInCommandHandler(SignInManager<AppUser> signInManager, ILogger logger) : base(logger)
         {
-            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
+            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager), "Constructor parameter 'signInManager' cannot be null. EID: FB97E0A7");
         }
 
         protected override async Task<CommonResult> HandleImplAsync(ExternalLoginSignIn command, CancellationToken cancellationToken)

@@ -36,11 +36,11 @@ namespace JSar.Web.UI.Features.Account
         public AccountController(ILogger logger, IMediator mediator, SignInManager<AppUser> signInManager,
             UserManager<AppUser> userManager, IClaimsCache claimsCache)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
-            _claimsCache = claimsCache ?? throw new ArgumentNullException(nameof(claimsCache));
-            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger), "Constructor parameter 'logger' cannot be null. EID: D0EA59DA");
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator), "Constructor parameter 'mediator' cannot be null. EID: 58222092");
+            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager), "Constructor parameter 'signInManager' cannot be null. EID: DF3BA4F1");
+            _claimsCache = claimsCache ?? throw new ArgumentNullException(nameof(claimsCache), "Constructor parameter 'claimsCache' cannot be null. EID: 6B9EBB00");
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager), "Constructor parameter 'userManager' cannot be null. EID: 2523EF5F");
         }
 
 
@@ -212,7 +212,7 @@ namespace JSar.Web.UI.Features.Account
             
             if (signInResult.IsLockedOut)
             {
-                throw new NotImplementedException("Account is locked. Handler for locked accounts not yet implemented.");
+                throw new NotImplementedException("Account is locked. Handler for locked accounts not yet implemented. Contact support or wait for the unlock timeout to expire. EID: 07153BD2");
                 // return RedirectToAction(nameof(Lockout));  // Uncomment after implementing view
             }
 
