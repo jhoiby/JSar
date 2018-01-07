@@ -1,0 +1,8 @@
+RECOMMENDED INFORMATIONAL RESOURCES FOR CQRS/DDD
+
+----------
+DDD AGGREGATES
+
+Invariant Validation Methods, 4 choices: 
+	- EXCELLENT summary, good first read.
+	- http://enterprisecraftsmanship.com/2016/09/13/validation-and-ddd/

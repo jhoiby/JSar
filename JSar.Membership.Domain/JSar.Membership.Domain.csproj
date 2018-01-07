@@ -14,4 +14,8 @@
     <ProjectReference Include="..\JSar.Tools\JSar.Tools.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+
 </Project>

@@ -1,7 +1,5 @@
-﻿using JSar.Membership.Domain.Aggregates;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using JSar.Membership.Domain.Aggregates.Person;
 using Xunit;
 
 namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
@@ -11,6 +9,7 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
         private readonly string _expectedFirstName = "Bob";
         private readonly string _expectedLastName = "Stevens";
         private readonly string _expectedFullName = "Bob Stevens";
+        private readonly string _expectedPrimaryEmail = "bob@stevens.com";
         private readonly Guid _expectedGuid = Guid.NewGuid();
 
         [Fact]
@@ -58,6 +57,70 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
         public void NewPerson_EmptyNameParameter_ThrowsException(string firstName, string lastName)
         {
             Assert.Throws<ArgumentException>(() => new Person(firstName,lastName, Guid.NewGuid()));
+        }
+
+        [Fact]
+        public void UpdateName_ValidName_CorrectPropertiesNoErrors()
+        {
+            // Arrange
+            Person person = new Person("George", "Stephanopoulos", Guid.NewGuid());
+
+            // Act
+            var errors = person.UpdateName(_expectedFirstName, _expectedLastName);
+
+            // Assert
+            Assert.Equal(_expectedFirstName, person.FirstName);
+            Assert.Equal(_expectedLastName, person.LastName);
+            Assert.False(errors);
+            Assert.True(errors.Count == 0);
+        }
+
+        [Theory]
+        [InlineData("Albert", "")]
+        [InlineData("  ", "Einstein")]
+        [InlineData("Darth", null)]
+        [InlineData(null, "Maul")]
+        public void UpdateName_EmptyParameter_ReturnsError(string firstName, string lastName)
+        {
+            // Arrange
+            Person person = new Person("George", "Stephanopoulos", Guid.NewGuid());
+
+            // Act
+            var errors = person.UpdateName(firstName, lastName);
+
+            // Assert
+            Assert.True(errors);
+            Assert.True(errors.Count == 1);
+        }
+
+        [Fact]
+        public void UpdateEmail_WithEmail_CorrectPropertyNoErrors()
+        {
+            // Arrange
+            var person = new Person("Bob", "Stevens", Guid.NewGuid());
+
+            // Act
+            var errors = person.UpdatePrimaryEmail(_expectedPrimaryEmail);
+
+            // Assert
+            Assert.False(errors);
+            Assert.Equal(_expectedPrimaryEmail, person.PrimaryEmail);
+        }
+
+        [Theory]
+        [InlineData("  ")]
+        [InlineData(null)]
+        public void UpdateEmail_EmptyEmail_ReturnsError(string email)
+        {
+            // Arrange
+            var person = new Person("Bob", "Stevens", Guid.NewGuid());
+
+            // Act
+            var errors = person.UpdatePrimaryEmail(email);
+
+            // Assert
+            Assert.True(errors);
+            Assert.True(errors.Count == 1);
         }
     }
 }
