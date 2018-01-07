@@ -6,3 +6,9 @@ DDD AGGREGATES
 Invariant Validation Methods, 4 choices: 
 	- EXCELLENT summary, good first read.
 	- http://enterprisecraftsmanship.com/2016/09/13/validation-and-ddd/
+
+----------
+PROJECT STRUCTURE
+
+Jimmy discusses using a flat structure, getting rid of the multiple projects:
+    - https://lostechies.com/jimmybogard/2012/08/30/evolutionary-project-structure/ 
