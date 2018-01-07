@@ -17,9 +17,16 @@ PRIORITY GUIDE:
 ------------
 TO-DO:
 
-Add .Guard(obj, message) extension. See FluentValidation.Internal.Extensions
+RESUME: 
+- Event unit tests
+- Repository
+- Unit of Work
+- Integrate Person creation with account registration
+   - Pass DomainErrorList up chain through common result
+       - Add extension method for the conversion
 
-Consider adding "Internal" project for ... ?
+
+Add .Guard(obj, message) extension. See FluentValidation.Internal.Extensions
 
 Rename RegisterLocalUser command to CreateLocalUser.
 
