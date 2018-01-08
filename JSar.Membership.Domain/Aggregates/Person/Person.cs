@@ -35,7 +35,7 @@ namespace JSar.Membership.Domain.Aggregates.Person
             _primaryEmail = primaryEmail.Trim();
             _primaryPhone = primaryPhone.Trim();
 
-            _domainEvents.Add(
+            _domainEventsQueue.Add(
                 new PersonCreatedDomainEvent(
                     Guid.NewGuid(),
                     this));
@@ -72,6 +72,11 @@ namespace JSar.Membership.Domain.Aggregates.Person
             get { return _primaryEmail; }
         }
 
+        public string PrimaryPhone
+        {
+            get { return _primaryPhone; }
+        }
+
         // Behaviors
 
         public DomainErrorList UpdateName(string firstName, string lastName)
@@ -96,7 +101,7 @@ namespace JSar.Membership.Domain.Aggregates.Person
             
             // Notify
 
-            _domainEvents.Add(
+            _domainEventsQueue.Add(
                 new PersonNameUpdatedDomainEvent(
                     Guid.NewGuid(),
                     Id,
@@ -124,7 +129,7 @@ namespace JSar.Membership.Domain.Aggregates.Person
 
             // Notify
 
-            _domainEvents.Add(
+            _domainEventsQueue.Add(
                 new PersonPrimaryEmailUpdatedDomainEvent(
                     Guid.NewGuid(),
                     Id,

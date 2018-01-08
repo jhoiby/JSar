@@ -12,3 +12,16 @@ PROJECT STRUCTURE
 
 Jimmy discusses using a flat structure, getting rid of the multiple projects:
     - https://lostechies.com/jimmybogard/2012/08/30/evolutionary-project-structure/ 
+
+----------
+DATA PERSISTENCE
+
+! Microsoft article on Implementing the Infrastructure Persistence Layer
+    - https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-implemenation-entity-framework-core
+
+Double-generic generic repository:
+	- http://www.tugberkugurlu.com/archive/generic-repository-pattern-entity-framework-asp-net-mvc-and-unit-testing-triangle
+	- Also see following article on unit testing it.
+
+Shadow properties for CreatedDate:
+    - http://www.talkingdotnet.com/use-shadow-properties-entity-framework-core/

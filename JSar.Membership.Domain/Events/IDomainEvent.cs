@@ -5,7 +5,7 @@ using MediatR;
 
 namespace JSar.Membership.Domain.Events
 {
-    public interface IDomainEvent : IRequest
+    public interface IDomainEvent : INotification
     {
         Guid EventId { get; }
     }

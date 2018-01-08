@@ -20,6 +20,26 @@ namespace JSar.Membership.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("JSar.Membership.Domain.Aggregates.Person.Person", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
+                    b.Property<string>("LastName")
+                        .IsRequired();
+
+                    b.Property<string>("PrimaryEmail");
+
+                    b.Property<string>("PrimaryPhone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Persons","membership");
+                });
+
             modelBuilder.Entity("JSar.Membership.Domain.Identity.AppRole", b =>
                 {
                     b.Property<Guid>("Id")

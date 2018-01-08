@@ -19,6 +19,7 @@ using JSar.Membership.AzureAdAdapter.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 using FluentValidation;
+using JSar.Membership.Domain.Abstractions;
 using JSar.Membership.Services.Query.QueryHandlers.Identity;
 using MediatR.Pipeline;
 using JSar.Membership.Messages.Validators;
@@ -100,9 +101,17 @@ namespace JSar.Web.Mvc
 
             var builder = new ContainerBuilder();
 
-            // Copies existing config from .Net Core IServiceCollection to Autofac
-            // Services are slowly being migrated to Autofac from above.
+            // Copy existing config from .Net Core IServiceCollection to Autofac
             builder.Populate(services);
+
+            // AUTOFAC DATA PERSISTENCE CONFIG
+
+            builder.RegisterType(typeof(UnitOfWork))
+                .As(typeof(IUnitOfWork))
+                .InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(GenericRepository<>))
+                .As(typeof(IRepository<>))
+                .InstancePerLifetimeScope();
 
             // AUTOFAC SERILOG CONFIG
 

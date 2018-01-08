@@ -21,7 +21,7 @@ namespace JSar.Membership.Domain.Aggregates.Organization
                 ? throw new ArgumentException("Organization.Name cannot be null or white space. EID: E55D185B.", nameof(name))
                 : name.Trim();
 
-            _domainEvents.Add(
+            _domainEventsQueue.Add(
                 new OrganizationCreatedDomainEvent(
                     Guid.NewGuid(),
                     this));

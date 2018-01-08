@@ -61,7 +61,7 @@ namespace JSar.Web.UI.Features.Account
 
         //
         // HTTP-POST: /Account/Register
-        // Post-back for LOCAL registration.
+        // Post-back for LOCAL user registration.
 
         [HttpPost]
         [AllowAnonymous]
@@ -81,7 +81,7 @@ namespace JSar.Web.UI.Features.Account
                     user,
                     model.Password));
 
-            if (! registerUserResult)
+            if (! registerUserResult.Succeeded)
             {
                 ModelState.AddErrorsFromCommonResult(registerUserResult);
                 return View(model);

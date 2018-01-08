@@ -9,8 +9,8 @@ namespace JSar.Membership.Domain.Aggregates
 {
     public abstract class AggregateRoot: IAggregateRoot
     {
-        private readonly Guid _id;
-        protected List<IDomainEvent> _domainEvents = new List<IDomainEvent>();
+        // Events to publish when DbContext.SaveChanges() is called
+        protected List<IDomainEvent> _domainEventsQueue = new List<IDomainEvent>();
 
         internal AggregateRoot()
         {
@@ -22,26 +22,23 @@ namespace JSar.Membership.Domain.Aggregates
             if (id == default(Guid))
                 throw new ArgumentOutOfRangeException(nameof(id), "AggregateRoot.Id cannot be a default guid. EID: F77C98E7.");
 
-            _id = id;
+            Id = id;
         }
         
-        public Guid Id
-        {
-            get { return _id; }
-        }
+        public Guid Id { get; private set; }
 
-        public List<IDomainEvent> DomainEvents => _domainEvents;
+        public List<IDomainEvent> DomainEvents => _domainEventsQueue;
 
         public void AddDomainEvent(IDomainEvent eventItem)
         {
-            _domainEvents = _domainEvents ?? new List<IDomainEvent>();
-            _domainEvents.Add(eventItem);
+            _domainEventsQueue = _domainEventsQueue ?? new List<IDomainEvent>();
+            _domainEventsQueue.Add(eventItem);
         }
 
         public void RemoveDomainEvent(IDomainEvent eventItem)
         {
-            if (_domainEvents is null) return;
-            _domainEvents.Remove(eventItem);
+            if (_domainEventsQueue is null) return;
+            _domainEventsQueue.Remove(eventItem);
         }
     }
 }
