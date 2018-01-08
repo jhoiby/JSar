@@ -1,7 +1,7 @@
 RECOMMENDED INFORMATIONAL RESOURCES FOR CQRS/DDD
 
 ----------
-DDD AGGREGATES
+DDD AGGREGATES AND VALIDATION
 
 Invariant Validation Methods, 4 choices: 
 	- EXCELLENT summary, good first read.
@@ -25,3 +25,16 @@ Double-generic generic repository:
 
 Shadow properties for CreatedDate:
     - http://www.talkingdotnet.com/use-shadow-properties-entity-framework-core/
+
+----------
+WYSIWYG EDITORS
+
+! Summernote comes with Metronic template I have. Probably best choice for that reason alone.
+
+General
+	- A 2016-01 survey
+		- https://visualstudiomagazine.com/articles/2016/01/01/8-rich-text-editors.aspx
+
+Summernote - Bootstrap editor
+	- A 2015 sample here
+		http://www.c-sharpcorner.com/UploadFile/3d39b4/bootstrap-wysiwyg-editor-in-Asp-Net-mvc/
