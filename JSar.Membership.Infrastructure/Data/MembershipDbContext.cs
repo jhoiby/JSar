@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using JSar.Membership.Domain.Aggregates;
 using JSar.Membership.Domain.Aggregates.Person;
 using JSar.Membership.Domain.Events;
@@ -12,7 +13,7 @@ namespace JSar.Membership.Infrastructure.Data
 {
     public class MembershipDbContext : IdentityDbContext<AppUser, AppRole, Guid>
     {
-        public readonly IMediator _mediator;
+        private readonly IMediator _mediator;
         public const string DEFAULT_SCHEMA = "membership";
 
 
@@ -26,25 +27,11 @@ namespace JSar.Membership.Infrastructure.Data
         // public DbSet<Organization> Organizations { get; set; } - Not yet configured for EF
 
         // When saving changes to the database, publish any events stored in the aggregate.
-        public override int SaveChanges()
+        public async Task<int> SaveChangesAsync()
         {
-            IAggregateRoot[] aggregatesWithEvents = ChangeTracker.Entries<IAggregateRoot>()
-                .Select(po => po.Entity)
-                .Where(po => po.DomainEvents.Any())
-                .ToArray();
+            await _mediator.DispatchDomainEventsAsync(this);
 
-            foreach (IAggregateRoot aggregate in aggregatesWithEvents)
-            {
-                IDomainEvent[] events = aggregate.DomainEvents.ToArray();
-                aggregate.DomainEvents.Clear();
-
-                foreach (IDomainEvent domainEvent in events)
-                {
-                    _mediator.Publish(domainEvent);
-                }
-            }
-
-            return base.SaveChanges();
+            return await base.SaveChangesAsync();
 
         }
 

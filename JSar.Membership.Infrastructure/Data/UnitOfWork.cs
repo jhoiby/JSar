@@ -22,7 +22,7 @@ namespace JSar.Membership.Infrastructure.Data
 
             // TODO!: Create transaction to include publishing events
             
-                _dbContext.SaveChanges();
+                _dbContext.SaveChangesAsync();
 
         }
     }

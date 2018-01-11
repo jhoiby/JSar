@@ -14,8 +14,6 @@ namespace JSar.Membership.Domain.Aggregates.Person
             PersonId = personId;
             Name = name;
         }
-
-        public Guid EventId { get; }
         public string PersonPrimaryEmail { get; }
         public Guid PersonId { get; }
         public string Name { get; }
