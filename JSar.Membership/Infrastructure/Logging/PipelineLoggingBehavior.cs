@@ -22,24 +22,8 @@ namespace JSar.Membership.Infrastructure.Logging
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            string messageType;
-
-            if (typeof(TRequest).ToString().Contains("Command"))
-            {
-                messageType = "COMMAND";
-            }
-            else if (typeof(TRequest).ToString().Contains("Quer"))
-            {
-                messageType = "QUERY";
-            }
-            else
-            {
-                messageType = "UNREGISTERED type";
-            }
-
             _logger.Debug(
-                "Handling {0:l}: {1:l}, MID: {2:l}, Type: {3:l} ", 
-                messageType,
+                "Handling REQUEST: {0:l}, MID: {1:l}, Type: {2:l} ",
                 request.GetType().Name, 
                 ((IMessage)request).MessageId.ToString(), 
                 request.GetType().FullName);
