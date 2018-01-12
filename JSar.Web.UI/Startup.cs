@@ -24,6 +24,7 @@ using JSar.Membership.Services;
 using JSar.Membership.Services.Account;
 using MediatR.Pipeline;
 using JSar.Membership.Services.Validation;
+using JSar.Web.UI.Logging;
 
 namespace JSar.Web.Mvc
 {
@@ -81,11 +82,8 @@ namespace JSar.Web.Mvc
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-            });
-
-            services.Configure<MvcOptions>(options =>
-            {
                 options.Filters.Add(new RequireHttpsAttribute());
+                options.Filters.Add<LogActionFilter>();
             });
 
             //

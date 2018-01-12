@@ -17,6 +17,7 @@ using JSar.Web.UI.Features.Home;
 using JSar.Web.UI.Features.Shared;
 using Microsoft.AspNetCore.Routing;
 using JSar.Membership.Services.CQRS;
+using JSar.Web.UI.Logging;
 
 namespace JSar.Web.UI.Features.Account
 {

@@ -29,7 +29,7 @@ Shadow properties for CreatedDate:
 ----------
 WYSIWYG EDITORS
 
-! Summernote comes with Metronic template I have. Probably best choice for that reason alone.
+! Summernote comes with Metronic template I have. Probably good choice for that reason alone.
 
 General
 	- A 2016-01 survey
@@ -38,3 +38,9 @@ General
 Summernote - Bootstrap editor
 	- A 2015 sample here
 		http://www.c-sharpcorner.com/UploadFile/3d39b4/bootstrap-wysiwyg-editor-in-Asp-Net-mvc/
+
+----------
+DEPENDENCY INJECTION
+
+Dependency injection in action filters, including custom filter factories and additional parameters.
+	- https://www.devtrends.co.uk/blog/dependency-injection-in-action-filters-in-asp.net-core 
