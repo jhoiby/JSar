@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JSar.Membership.Domain\JSar.Membership.Domain.csproj" />
+    <ProjectReference Include="..\JSar.Membership.Messages\JSar.Membership.Messages.csproj" />
   </ItemGroup>
 
 </Project>

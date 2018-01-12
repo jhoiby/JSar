@@ -20,7 +20,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 using FluentValidation;
 using JSar.Membership.Domain.Abstractions;
-using JSar.Membership.Messages.Logging;
+using JSar.Membership.Infrastructure.Logging;
 using JSar.Membership.Services.Query.QueryHandlers.Identity;
 using MediatR.Pipeline;
 using JSar.Membership.Messages.Validators;
@@ -170,7 +170,7 @@ namespace JSar.Web.Mvc
             builder.RegisterGeneric(typeof(RequestPostProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
             builder.RegisterGeneric(typeof(RequestPreProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
             builder.RegisterGeneric(typeof(ValidationBehavior<,>)).As(typeof(IPipelineBehavior<,>));
-            builder.RegisterGeneric(typeof(LoggingBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+            builder.RegisterGeneric(typeof(PipelineLoggingBehavior<,>)).As(typeof(IPipelineBehavior<,>));
 
             // More samples from MediatR
             // builder.RegisterGeneric(typeof(GenericRequestPreProcessor<>)).As(typeof(IRequestPreProcessor<>));

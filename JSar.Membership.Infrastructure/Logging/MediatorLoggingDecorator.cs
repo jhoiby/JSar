@@ -8,7 +8,7 @@ using JSar.Membership.Domain.Events;
 using MediatR;
 using Serilog;
 
-namespace JSar.Membership.Messages.Logging
+namespace JSar.Membership.Infrastructure.Logging
 {
     public class MediatrLoggingDecorator : IMediator
     {

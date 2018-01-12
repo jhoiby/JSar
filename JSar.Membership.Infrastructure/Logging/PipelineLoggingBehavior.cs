@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using JSar.Membership.Messages;
 using JSar.Membership.Messages.Commands.Identity;
 using JSar.Membership.Messages.Results;
 using MediatR;
 using Serilog;
 using static JSar.Membership.Messages.Results.CommonResultExtensions;
 
-namespace JSar.Membership.Messages.Validators
+namespace JSar.Membership.Infrastructure.Logging
 {
-    public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public class PipelineLoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
         where TResponse : CommonResult
     {
         private readonly ILogger _logger;
 
-        public LoggingBehavior(ILogger logger)
+        public PipelineLoggingBehavior(ILogger logger)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger), "Constructor parameter 'logger' cannot be null. EID: 656F442E");
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
