@@ -86,6 +86,8 @@ namespace JSar.Web.Mvc
                 options.Filters.Add<LogActionFilter>();
             });
 
+            services.AddSession();
+
             //
             // APPLICATION SERVICES
 
@@ -211,6 +213,8 @@ namespace JSar.Web.Mvc
             app.UseAuthentication();
 
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseMvc(routes =>
             {
