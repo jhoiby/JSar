@@ -50,6 +50,8 @@ Add CreatedDate and ModifiedDate in AggregateRoot class.
 
 Rename CommonResult to CommonResponse?
 
+Add validation failure debug logging.
+
 Add Forgot Password page Action - ForgotPassword.cshtml
 
 Add Microsoft logger messages into Serilog context?
