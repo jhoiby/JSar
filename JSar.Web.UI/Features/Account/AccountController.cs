@@ -85,6 +85,8 @@ namespace JSar.Web.UI.Features.Account
                 return View(model);
             }
 
+            _logger.Information("NEW USER: User {user} registered a new local account", model.Email);
+
             // Automatically log the user in by passing execution to the SignIn action.
 
             return await SignIn(new SignInViewModel()
@@ -137,6 +139,8 @@ namespace JSar.Web.UI.Features.Account
                 ModelState.AddErrorsFromCommonResult(signInResult);
                 return View(model);
             }
+
+            _logger.Information("LOGIN: User {Name} logged in with a local password.", model.UserName);
 
             // Send user to the page they were requesting when the SignIn was triggered, or home.
             return RedirectToLocal(returnUrl);
@@ -201,7 +205,7 @@ namespace JSar.Web.UI.Features.Account
             
             if (signInCommandResult.Succeeded)
             {
-                _logger.Information("User {Name} logged in with {Provider} provider.",
+                _logger.Information("LOGIN: User {Name} logged in with {Provider} provider.",
                     info.Principal.Claims.Where(c => c.Type == "preferred_username").Select(c => c.Value).SingleOrDefault(),
                     info.LoginProvider);
 
@@ -270,7 +274,7 @@ namespace JSar.Web.UI.Features.Account
                         // to the user's browser.
                         await _signInManager.SignInAsync(user, isPersistent: false);
 
-                        _logger.Information("User {0} created an account using {1} provider.", user.Email, info.LoginProvider);
+                        _logger.Information("NEW USER: User {0} created an account using {1} provider.", user.Email, info.LoginProvider);
 
                         return RedirectToLocal(returnUrl);
                     }
@@ -293,13 +297,11 @@ namespace JSar.Web.UI.Features.Account
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignOut()
         {
-            _logger.Verbose("MVC request: HTTP-POST:/Account/SignOut");
-
             string name = User.Identity.Name;
 
             await _signInManager.SignOutAsync();
 
-            _logger.Information("User {0} logged out.", name);
+            _logger.Information("LOGOUT: User {0} logged out.", name);
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }

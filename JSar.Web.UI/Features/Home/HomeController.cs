@@ -36,15 +36,11 @@ namespace JSar.Web.UI.Features.Home
         [AllowAnonymous]
         public IActionResult Index()
         {
-            _logger.Verbose("MVC request: HTTP-GET:/");
-
             return View();
         }
 
         public IActionResult About()
         {
-            _logger.Verbose("MVC request: HTTP-GET:/About");
-
             ViewData["Message"] = "Your application description page.";
 
             return View();
@@ -53,8 +49,6 @@ namespace JSar.Web.UI.Features.Home
         [Authorize]
         public IActionResult Contact()
         {
-            _logger.Verbose("MVC request: HTTP-GET:/Contact");
-
             ViewData["Message"] = "Your contact page.";
 
             return View();
@@ -63,9 +57,7 @@ namespace JSar.Web.UI.Features.Home
         [Authorize]
         public async Task<IActionResult> Graph(string email)
         {
-            // _logger.Debug("Action: HTTP-GET:/Graph");
-
-            WriteClaimsToDebug(User);
+            LogClaims(User);
 
             if (User.Identity.IsAuthenticated)
             {
@@ -90,8 +82,6 @@ namespace JSar.Web.UI.Features.Home
 
         public IActionResult Error(string message = "", string cid = "")
         {
-            _logger.Verbose("MVC request: HTTP-GET:/Error");
-
             return View(new ErrorViewModel
             {
                 // RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
@@ -103,17 +93,17 @@ namespace JSar.Web.UI.Features.Home
         //
         // HELPERS
 
-        private void WriteClaimsToDebug(ClaimsPrincipal user)
+        private void LogClaims(ClaimsPrincipal user)
         {
-            Debug.WriteLine("***************************");
-            Debug.WriteLine(string.Format("{0} claims recieved for user {1}", User.Claims.Count<Claim>().ToString(), User.Identity.Name));
+            _logger.Verbose("***************************");
+            _logger.Verbose(string.Format("{0} claims recieved for user {1}", User.Claims.Count<Claim>().ToString(), User.Identity.Name));
 
             foreach (Claim claim in User.Claims)
             {
-                Debug.WriteLine(string.Format("    - {0}: {1}", claim.Type, claim.Value));
+                _logger.Verbose(string.Format("    - {0}: {1}", claim.Type, claim.Value));
             }
 
-            Debug.WriteLine("***************************");
+            _logger.Verbose("***************************");
 
         }
         }
