@@ -11,8 +11,8 @@ namespace JSar.Membership.Services.CQRS
     {
         public static void LogErrors(this CommonResult result, Type requestType, ILogger logger)
         {
-            logger.Error("**** ERROR with message {0} ({1})", result.MessageId, requestType);
-            logger.Error("****     Error {0} detail: FlashMessage: {1}", result.MessageId, result.FlashMessage);
+            logger.Warning("**** Validation error, message {0:l} ({1:l})", result.MessageId, requestType);
+            logger.Warning("****     Error {0:l} detail: FlashMessage: {1:l}", result.MessageId, result.FlashMessage);
 
             LogResultErrorCollection(result, logger);
         }
@@ -21,8 +21,8 @@ namespace JSar.Membership.Services.CQRS
         {
             foreach (string key in result.Errors)
             {
-                logger.Error(
-                    "****     Error {0} detail: Parameter name: {1}, Message {2}", 
+                logger.Warning(
+                    "****     Error {0:l} detail: Parameter name: {1:l}, Message {2:l}", 
                     result.MessageId,
                     key,
                     result.Errors[key]);

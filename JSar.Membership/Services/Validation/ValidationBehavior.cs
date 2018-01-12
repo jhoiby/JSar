@@ -26,7 +26,7 @@ namespace JSar.Membership.Services.Validation
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             _logger.Verbose(
-                "Validation: {0:l}, validating MID: {1:l} , Type: {2:l}", 
+                "Validating: {0:l}, validating MID: {1:l} , Type: {2:l}", 
                 request.GetType().Name, 
                 ((IMessage)request).MessageId.ToString(), 
                 request.GetType().FullName);
