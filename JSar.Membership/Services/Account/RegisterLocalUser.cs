@@ -2,7 +2,7 @@
 using System;
 using JSar.Membership.Services.CQRS;
 
-namespace JSar.Membership.Services.Features.Account
+namespace JSar.Membership.Services.Account
 {
     /// <summary>
     /// Register a local user with the Identity system. If successful the returned CommonResult.Data 

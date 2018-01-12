@@ -1,7 +1,7 @@
 ﻿using System;
 using JSar.Membership.Services.CQRS;
 
-namespace JSar.Membership.Services.Features.Account
+namespace JSar.Membership.Services.Account
 {/// <summary>
 /// Gets an appliction user from the identity system.
 /// </summary>

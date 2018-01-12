@@ -5,7 +5,7 @@
 
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Identity.Client;
-//using Microsoft.IdentityModel.Clients.ActiveDirectory;
+//using Microsoft.IdentityModel.Clients.ActiveDirectory; - use Microsoft.Identity.Client instead for TokenCache!!!
 using System.Text;
 
 namespace JSar.Membership.AzureAdAdapter.Helpers

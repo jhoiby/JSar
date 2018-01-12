@@ -4,7 +4,7 @@ using JSar.Membership.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Xunit;
 using Moq;
-using JSar.Membership.Services.Features.Account;
+using JSar.Membership.Services.Account;
 
 namespace JSar.Membership.Tests.UnitTests.Messages
 {

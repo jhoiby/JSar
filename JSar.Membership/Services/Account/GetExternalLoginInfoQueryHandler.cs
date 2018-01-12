@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JSar.Membership.Services.CQRS;
 
-namespace JSar.Membership.Services.Features.Account
+namespace JSar.Membership.Services.Account
 {
     public class GetExternalLoginInfoQueryHandler : QueryHandler<GetExternalLoginInfo, CommonResult>
     {

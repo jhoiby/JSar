@@ -10,7 +10,7 @@ using JSar.Membership.Domain.Abstractions;
 using JSar.Membership.Domain.Aggregates.Person;
 using JSar.Membership.Services.CQRS;
 
-namespace JSar.Membership.Services.Features.Account
+namespace JSar.Membership.Services.Account
 {
     public class RegisterLocalUserCommandHandler : CommandHandler<RegisterLocalUser, CommonResult>
     {

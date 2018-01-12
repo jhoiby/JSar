@@ -2,7 +2,7 @@
 using System;
 using JSar.Membership.Services.CQRS;
 
-namespace JSar.Membership.Services.Features.Account
+namespace JSar.Membership.Services.Account
 {
     /// <summary>
     /// Sign in a local user by password. I.e. checks for a valid account by username and password.

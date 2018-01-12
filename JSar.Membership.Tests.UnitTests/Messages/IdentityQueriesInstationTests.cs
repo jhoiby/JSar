@@ -1,5 +1,5 @@
-﻿using System;
-using JSar.Membership.Services.Features.Account;
+﻿using JSar.Membership.Services.Account;
+using System;
 using Xunit;
 
 namespace JSar.Membership.Tests.UnitTests.Messages

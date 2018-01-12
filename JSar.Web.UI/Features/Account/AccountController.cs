@@ -12,11 +12,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using JSar.Membership.AzureAdAdapter.Helpers;
 using System.Security.Claims;
+using JSar.Membership.Services.Account;
 using JSar.Web.UI.Features.Home;
 using JSar.Web.UI.Features.Shared;
 using Microsoft.AspNetCore.Routing;
 using JSar.Membership.Services.CQRS;
-using JSar.Membership.Services.Features.Account;
 
 namespace JSar.Web.UI.Features.Account
 {
@@ -33,11 +33,11 @@ namespace JSar.Web.UI.Features.Account
         public AccountController(ILogger logger, IMediator mediator, SignInManager<AppUser> signInManager,
             UserManager<AppUser> userManager, IClaimsCache claimsCache)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger), "Constructor parameter 'logger' cannot be null. EID: D0EA59DA");
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator), "Constructor parameter 'mediator' cannot be null. EID: 58222092");
-            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager), "Constructor parameter 'signInManager' cannot be null. EID: DF3BA4F1");
-            _claimsCache = claimsCache ?? throw new ArgumentNullException(nameof(claimsCache), "Constructor parameter 'claimsCache' cannot be null. EID: 6B9EBB00");
-            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager), "Constructor parameter 'userManager' cannot be null. EID: 2523EF5F");
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager));
+            _claimsCache = claimsCache ?? throw new ArgumentNullException(nameof(claimsCache));
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         }
 
 

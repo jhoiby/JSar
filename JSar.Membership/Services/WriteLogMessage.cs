@@ -1,7 +1,7 @@
 ﻿using System;
 using JSar.Membership.Services.CQRS;
 
-namespace JSar.Membership.Services.Features
+namespace JSar.Membership.Services
 {
     /// <summary>
     /// Primarily for testing the command system, this will write a message to the current logger. 

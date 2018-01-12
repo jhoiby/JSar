@@ -20,11 +20,10 @@ using System.Reflection;
 using FluentValidation;
 using JSar.Membership.Domain.Abstractions;
 using JSar.Membership.Infrastructure.Logging;
+using JSar.Membership.Services;
+using JSar.Membership.Services.Account;
 using MediatR.Pipeline;
-using JSar.Membership.Services.Features;
-using JSar.Membership.Services.Features.Account;
 using JSar.Membership.Services.Validation;
-using Microsoft.EntityFrameworkCore.Query.Expressions;
 
 namespace JSar.Web.Mvc
 {

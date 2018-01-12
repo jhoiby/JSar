@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JSar.Membership.Services.CQRS;
 
-namespace JSar.Membership.Services.Features
+namespace JSar.Membership.Services
 {
     public class WriteLogMessageCommandHandler : CommandHandler<WriteLogMessage, CommonResult>
     {

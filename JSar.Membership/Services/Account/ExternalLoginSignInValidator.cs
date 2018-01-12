@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace JSar.Membership.Services.Features.Account
+namespace JSar.Membership.Services.Account
 {
     public class ExternalLoginSignInValidator : AbstractValidator<ExternalLoginSignIn>
     {
