@@ -28,7 +28,7 @@ namespace JSar.Web.UI.Logging
                 sessionId = "(No session)";
             }
 
-            _logger.Debug("User '{0:l}', SessionID: {1:l}, Executing ACTION: {2:l}",
+            _logger.Debug("ACTION: User '{0:l}', SessionID: {1:l}, Executing action: {2:l}",
                 filterContext.HttpContext.User?.Identity?.Name ?? "(anonymous)",
                 sessionId,
                 filterContext.ActionDescriptor.DisplayName

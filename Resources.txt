@@ -44,3 +44,9 @@ DEPENDENCY INJECTION
 
 Dependency injection in action filters, including custom filter factories and additional parameters.
 	- https://www.devtrends.co.uk/blog/dependency-injection-in-action-filters-in-asp.net-core 
+
+----------
+LOGGING
+
+Logging RequestID
+	- http://www.tugberkugurlu.com/archive/asp-net-5-and-log-correlation-by-request-id

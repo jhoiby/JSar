@@ -32,19 +32,15 @@ RESUME:
 *** Look into integrating unit of work into DB context?
 - See OrderingContext for eShopOnContainers, which I noticed implements IUnitOfWork
 - https://github.com/dotnet-architecture/eShopOnContainers/blob/d2f7d6a5d6d9cc90caf9f7c6503bec459115c7af/src/Services/Ordering/Ordering.Infrastructure/OrderingContext.cs
+- Maybe not good idea, violation of single responsibility? Or is it?
 
 Event unit tests
 
 Pass DomainErrorList up chain through common result
        - Add extension method for the conversion
 
-Reformat logs for pipeline to start with the command/query/event name
-- "ExternalLoginSignIn: Validating command..."
-- "ExternalLoginSignIn: Handling command..."
-- See: https://nblumhardt.com/2014/05/serilog-output-template-formatting-changes/ 
-    - Add a lowercase L as a formatting specifier. Example: {Term:l}
-
-Add .Guard(obj, message) extension. See FluentValidation.Internal.Extensions
+Add RequestId to appropriate log messages
+- See logging section in resources document
 
 Rename RegisterLocalUser command to CreateLocalUser.
 
