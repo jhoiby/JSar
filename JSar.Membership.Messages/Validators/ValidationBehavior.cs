@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using JSar.Membership.Messages.Results;
 using MediatR;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Twitter;
 using Serilog;
 using static JSar.Membership.Messages.Results.CommonResultExtensions;
@@ -27,8 +28,11 @@ namespace JSar.Membership.Messages.Validators
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-
-            _logger.Verbose("Validating message {0}, {1}", ((IMessage)request).MessageId, typeof(TRequest));
+            _logger.Verbose(
+                "Validating message: {0:l}, MID: {1:l} , Type: {2:l}", 
+                request.GetType().Name, 
+                ((IMessage)request).MessageId.ToString(), 
+                request.GetType().FullName);
 
             var failures = _validators
                 .Select(v => v.Validate(request))

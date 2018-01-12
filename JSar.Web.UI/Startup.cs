@@ -129,12 +129,14 @@ namespace JSar.Web.Mvc
             // Register MediatR as IMediator for injection
             //builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly).AsImplementedInterfaces();
             builder.RegisterType<Mediator>()
-                .Named<IMediator>("mediator");
+                .Named<IMediator>("mediator")
+                .SingleInstance();
 
-            // Mediator decorator for logging
+            // Mediator decorator for event/request logging
             builder.RegisterDecorator<IMediator>(
                 (c, inner) => new MediatrLoggingDecorator(inner, c.Resolve<ILogger>()),
-                fromKey: "mediator");
+                fromKey: "mediator")
+                .SingleInstance();
 
             // Register the main handlers
             var mediatrOpenTypes = new[]
@@ -146,7 +148,7 @@ namespace JSar.Web.Mvc
 
             foreach (var mediatrOpenType in mediatrOpenTypes)
             {
-                // Register all command handler in the same assembly as WriteLogMessageCommandHandler
+                // Register all command handlers in the same assembly as WriteLogMessageCommandHandler
                 builder
                     .RegisterAssemblyTypes(typeof(WriteLogMessageCommandHandler).GetTypeInfo().Assembly)
                     .AsClosedTypesOf(mediatrOpenType)
@@ -170,13 +172,13 @@ namespace JSar.Web.Mvc
             builder.RegisterGeneric(typeof(ValidationBehavior<,>)).As(typeof(IPipelineBehavior<,>));
             builder.RegisterGeneric(typeof(LoggingBehavior<,>)).As(typeof(IPipelineBehavior<,>));
 
-            // More samples
+            // More samples from MediatR
             // builder.RegisterGeneric(typeof(GenericRequestPreProcessor<>)).As(typeof(IRequestPreProcessor<>));
             // builder.RegisterGeneric(typeof(MyCommandPreProcessor<>)).As(typeof(IRequestPreProcessor<>));
             // // builder.RegisterGeneric(typeof(GenericRequestPostProcessor<,>)).As(typeof(IRequestPostProcessor<,>));
             // // builder.RegisterGeneric(typeof(GenericPipelineBehavior<,>)).As(typeof(IPipelineBehavior<,>));
-
-            // Mediator registrations
+            
+            // MediatR factories
             builder.Register<SingleInstanceFactory>(ctx =>
             {
                 var c = ctx.Resolve<IComponentContext>();

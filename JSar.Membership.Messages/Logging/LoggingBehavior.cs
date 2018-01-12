@@ -39,12 +39,12 @@ namespace JSar.Membership.Messages.Validators
                 messageType = "UNREGISTERED type";
             }
 
-            string typeName = request.GetType().Name;
-            string messageId = ((IMessage) request).MessageId.ToString();
-            string typeFullName = request.GetType().FullName;
-
-            _logger.Debug("Handling {0}: {1}, MID: {2}, Type: {3} ", messageType,
-                typeName, messageId, typeFullName);
+            _logger.Debug(
+                "Handling {0:l}: {1:l}, MID: {2:l}, Type: {3:l} ", 
+                messageType,
+                request.GetType().Name, 
+                ((IMessage)request).MessageId.ToString(), 
+                request.GetType().FullName);
 
             return next();
         }
