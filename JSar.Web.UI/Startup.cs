@@ -129,8 +129,7 @@ namespace JSar.Web.Mvc
             // Register MediatR as IMediator for injection
             //builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly).AsImplementedInterfaces();
             builder.RegisterType<Mediator>()
-                .Named<IMediator>("mediator")
-                .InstancePerLifetimeScope();
+                .Named<IMediator>("mediator");
 
             // Mediator decorator for logging
             builder.RegisterDecorator<IMediator>(

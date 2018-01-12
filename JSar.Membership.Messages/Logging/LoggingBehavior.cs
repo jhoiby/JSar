@@ -17,7 +17,7 @@ namespace JSar.Membership.Messages.Validators
     {
         private readonly ILogger _logger;
 
-        public LoggingBehavior( ILogger logger)
+        public LoggingBehavior(ILogger logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger), "Constructor parameter 'logger' cannot be null. EID: 656F442E");
         }
@@ -28,20 +28,23 @@ namespace JSar.Membership.Messages.Validators
 
             if (typeof(TRequest).ToString().Contains("Command"))
             {
-
-                messageType = "COMMAND message";
+                messageType = "COMMAND";
             }
             else if (typeof(TRequest).ToString().Contains("Quer"))
             {
-                messageType = "QUERY message";
+                messageType = "QUERY";
             }
             else
             {
-                messageType = "UNREGISTERED MESSAGE TYPE";
+                messageType = "UNREGISTERED type";
             }
 
+            string typeName = request.GetType().Name;
+            string messageId = ((IMessage) request).MessageId.ToString();
+            string typeFullName = request.GetType().FullName;
 
-            _logger.Debug("Handling {0}, MID: {1}, Type: {2}", messageType, ((IMessage)request).MessageId, typeof(TRequest));
+            _logger.Debug("Handling {0}: {1}, MID: {2}, Type: {3} ", messageType,
+                typeName, messageId, typeFullName);
 
             return next();
         }
