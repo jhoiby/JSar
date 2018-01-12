@@ -20,9 +20,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 using FluentValidation;
 using JSar.Membership.Domain.Abstractions;
+using JSar.Membership.Messages.Logging;
 using JSar.Membership.Services.Query.QueryHandlers.Identity;
 using MediatR.Pipeline;
 using JSar.Membership.Messages.Validators;
+using Microsoft.EntityFrameworkCore.Query.Expressions;
 
 namespace JSar.Web.Mvc
 {
@@ -125,7 +127,15 @@ namespace JSar.Web.Mvc
             // AUTOFAC MEDIATR CONFIG
 
             // Register MediatR as IMediator for injection
-            builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly).AsImplementedInterfaces();
+            //builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly).AsImplementedInterfaces();
+            builder.RegisterType<Mediator>()
+                .Named<IMediator>("mediator")
+                .InstancePerLifetimeScope();
+
+            // Mediator decorator for logging
+            builder.RegisterDecorator<IMediator>(
+                (c, inner) => new MediatrLoggingDecorator(inner, c.Resolve<ILogger>()),
+                fromKey: "mediator");
 
             // Register the main handlers
             var mediatrOpenTypes = new[]
@@ -167,6 +177,7 @@ namespace JSar.Web.Mvc
             // // builder.RegisterGeneric(typeof(GenericRequestPostProcessor<,>)).As(typeof(IRequestPostProcessor<,>));
             // // builder.RegisterGeneric(typeof(GenericPipelineBehavior<,>)).As(typeof(IPipelineBehavior<,>));
 
+            // Mediator registrations
             builder.Register<SingleInstanceFactory>(ctx =>
             {
                 var c = ctx.Resolve<IComponentContext>();
@@ -178,6 +189,7 @@ namespace JSar.Web.Mvc
                 var c = ctx.Resolve<IComponentContext>();
                 return t => (IEnumerable<object>)c.Resolve(typeof(IEnumerable<>).MakeGenericType(t));
             });
+
             // Finalize
             var container = builder.Build();
 
