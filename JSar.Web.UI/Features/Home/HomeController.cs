@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using MediatR;
-using JSar.Membership.Messages.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using JSar.Membership.Domain.Identity;
 using System.Security.Claims;
 using JSar.Membership.AzureAdAdapter.Helpers;
-using JSar.Membership.Messages;
 using JSar.Web.Mvc;
 using JSar.Web.UI.Features.Shared;
 

@@ -1,8 +1,5 @@
-﻿using JSar.Tools;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
+﻿using Xunit;
+using JSar.Tools;
 
 namespace JSar.Membership.Tests.UnitTests.Tools
 {

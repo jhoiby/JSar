@@ -1,25 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Serilog;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using JSar.Membership.Messages;
 using JSar.Membership.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
-using JSar.Membership.Messages.Commands.Identity;
-using JSar.Membership.Messages.Queries.Identity;
 using JSar.Web.UI.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using JSar.Membership.AzureAdAdapter.Helpers;
 using System.Security.Claims;
-using JSar.Membership.Messages.Results;
 using JSar.Web.UI.Features.Home;
 using JSar.Web.UI.Features.Shared;
 using Microsoft.AspNetCore.Routing;
+using JSar.Membership.Services.CQRS;
+using JSar.Membership.Services.Features.Account;
 
 namespace JSar.Web.UI.Features.Account
 {

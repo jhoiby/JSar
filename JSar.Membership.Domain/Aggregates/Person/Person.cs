@@ -1,7 +1,5 @@
-﻿using JSar.Tools;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using JSar.Tools;
 
 namespace JSar.Membership.Domain.Aggregates.Person
 {

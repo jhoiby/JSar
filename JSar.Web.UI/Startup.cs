@@ -8,7 +8,6 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Serilog;
 using MediatR;
-using JSar.Membership.Services.CommandHandlers;
 using JSar.Membership.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using JSar.Membership.Domain.Identity;
@@ -21,9 +20,10 @@ using System.Reflection;
 using FluentValidation;
 using JSar.Membership.Domain.Abstractions;
 using JSar.Membership.Infrastructure.Logging;
-using JSar.Membership.Services.Query.QueryHandlers.Identity;
 using MediatR.Pipeline;
-using JSar.Membership.Messages.Validators;
+using JSar.Membership.Services.Features;
+using JSar.Membership.Services.Features.Account;
+using JSar.Membership.Services.Validation;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
 
 namespace JSar.Web.Mvc

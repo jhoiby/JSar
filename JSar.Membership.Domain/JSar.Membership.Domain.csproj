@@ -11,11 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JSar.Tools\JSar.Tools.csproj" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Exceptions\" />
+    <ProjectReference Include="..\JSar.Tools\JSar.Tools.csproj" />
   </ItemGroup>
 
 </Project>

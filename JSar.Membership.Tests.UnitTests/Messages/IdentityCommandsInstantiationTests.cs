@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Security.Claims;
-using System.Text;
 using JSar.Membership.Domain.Identity;
-using JSar.Membership.Messages;
-using JSar.Membership.Messages.Commands.Identity;
 using Microsoft.AspNetCore.Identity;
 using Xunit;
 using Moq;
+using JSar.Membership.Services.Features.Account;
 
 namespace JSar.Membership.Tests.UnitTests.Messages
 {

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using JSar.Membership.Messages.Queries.Identity;
+using JSar.Membership.Services.Features.Account;
 using Xunit;
 
 namespace JSar.Membership.Tests.UnitTests.Messages

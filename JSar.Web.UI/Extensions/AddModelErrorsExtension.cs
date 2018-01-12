@@ -1,12 +1,6 @@
-﻿using JSar.Membership.Messages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using System;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Collections.Specialized;
-using JSar.Membership.Messages.Results;
+using JSar.Membership.Services.CQRS;
 
 namespace JSar.Web.UI.Extensions
 {

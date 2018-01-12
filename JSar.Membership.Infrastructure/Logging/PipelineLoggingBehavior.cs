@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using JSar.Membership.Messages;
-using JSar.Membership.Messages.Commands.Identity;
-using JSar.Membership.Messages.Results;
+using JSar.Membership.Services.CQRS;
 using MediatR;
 using Serilog;
-using static JSar.Membership.Messages.Results.CommonResultExtensions;
 
 namespace JSar.Membership.Infrastructure.Logging
 {

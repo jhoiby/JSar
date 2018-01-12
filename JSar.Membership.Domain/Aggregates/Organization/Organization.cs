@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Text;
 using JSar.Tools;
 
 namespace JSar.Membership.Domain.Aggregates.Organization
