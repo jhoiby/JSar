@@ -29,7 +29,7 @@ namespace JSar.Membership.Infrastructure.Logging
             _logger.Verbose("Calling Mediator.Publish {0:l} ", typename);
 
             _logger.Debug(
-                "EVENT: {0:l} publishing MID: {1:l}, Type: {2:l}", 
+                "EVENT: {0:l}, publishing MID: {1:l}, Type: {2:l}", 
                 notification.GetType().Name, 
                 notification.GetType().GetProperty("EventId").GetValue(notification).ToString(), 
                 notification.GetType().FullName);

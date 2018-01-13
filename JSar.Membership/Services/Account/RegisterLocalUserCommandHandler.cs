@@ -35,13 +35,18 @@ namespace JSar.Membership.Services.Account
                 {
                     // Register user...
                     var addUserResult = await CreateUser(command);
+
                     if (!addUserResult.Succeeded)
                         return AddUserErrorResult(addUserResult, command.MessageId);
-                    
+
                     // ...and add associated Person aggregate
                     await CreatePerson(command);
 
                     transaction.Commit();
+
+                    return new CommonResult(
+                        messageId: command.MessageId,
+                        outcome: Outcome.Succeeded);
                 }
                 catch (Exception ex)
                 {
@@ -50,10 +55,6 @@ namespace JSar.Membership.Services.Account
                     return errorResult;
                 }
             }
-
-            return new CommonResult(
-                messageId: command.MessageId,
-                outcome: Outcome.Succeeded);
         }
 
         private async Task<IdentityResult> CreateUser(RegisterLocalUser command)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using JSar.Membership.Domain.Abstractions;
 using JSar.Membership.Domain.Aggregates;
 using JSar.Membership.Domain.Aggregates.Person;
 using JSar.Membership.Domain.Events;
@@ -15,6 +16,7 @@ namespace JSar.Membership.Infrastructure.Data
     {
         private readonly IMediator _mediator;
         public const string DEFAULT_SCHEMA = "membership";
+        public IRepository<Person> _personRepository;
 
 
         public MembershipDbContext(DbContextOptions<MembershipDbContext> options, IMediator mediator)
@@ -28,22 +30,11 @@ namespace JSar.Membership.Infrastructure.Data
         
         public async Task<int> SaveChangesAsync()
         {
-            int result;
+            // This may generate additional aggregate changes, 
+            // to be saved in the same SaveChanges transaction
+            await _mediator.DispatchDomainEventsAsync(this);
 
-            // TODO: Look into isolation levels to avoid over-locking
-            // See comments at: https://coderwall.com/p/jnniww/why-you-shouldn-t-use-entity-framework-with-transactions
-            // See also: https://msdn.microsoft.com/en-us/library/system.transactions.isolationlevel(v=vs.110).aspx
-
-            using (var transaction = this.Database.BeginTransaction())
-            {
-                await _mediator.DispatchDomainEventsAsync(this);
-
-                result = await base.SaveChangesAsync();
-
-                transaction.Commit();
-            }
-
-            return result;
+            return await base.SaveChangesAsync();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
