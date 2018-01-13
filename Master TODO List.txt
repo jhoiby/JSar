@@ -32,10 +32,7 @@ Why is there both a "PipelineLoggingBehavior" and a "MediatorLoggingDecorator"?
 Add Forgot Password page Action - ForgotPassword.cshtml
 
 Add Microsoft logger messages into Serilog context?
-
-Fix default string values in CommonResult to string.Empty
-
-Change "" in CommonResult constructors to string.Empty
+- Get rid of any remaining MS Logger config
 
 - Fire "User logged in" event that contains the user?
 

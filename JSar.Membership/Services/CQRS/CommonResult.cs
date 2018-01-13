@@ -38,7 +38,7 @@ namespace JSar.Membership.Services.CQRS
         {
             MessageId = messageId;
             _outcome = outcome;
-            FlashMessage = "";
+            FlashMessage = string.Empty;
             TotalResults = 1;
             Data = data;
         }
@@ -56,7 +56,7 @@ namespace JSar.Membership.Services.CQRS
         {
             MessageId = messageId;
             _outcome = outcome;
-            FlashMessage = "";
+            FlashMessage = string.Empty;
             TotalResults = totalResults;
             Data = data;
         }
