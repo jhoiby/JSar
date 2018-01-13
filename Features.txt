@@ -4,5 +4,8 @@ CQRS structure.
 Command/Query results/errors returned by a CommonResult object.
 Messages (commands, queries, internal events) handled by MediatR.
 .Net Core Identity
+Mediator Pipeline behaviors for decoupled logging, validation, etc.
+Aggregate event queues.
+Domain events dispatched just prior to aggregate saves to contain local-context side-effects in single transaction.
 
 
