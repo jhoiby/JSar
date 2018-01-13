@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
 using System.Text;
+using JSar.Membership.Domain.Aggregates;
 using JSar.Tools;
 using MediatR;
 using Serilog;
@@ -22,6 +23,26 @@ namespace JSar.Membership.Services.CQRS
                     outcome: Outcome.ExceptionCaught,
                     flashMessage: "An exception occured handling request " + request.GetType() + ", CorrelationID: " + CorrelationId,
                     data: ex);
+        }
+
+        public static CommonResult CommonResultFromDomainErrorList(this DomainErrorList domainErrorList,
+            IRequest<CommonResult> request, ILogger logger)
+        {
+            ResultErrorCollection errorList = new ResultErrorCollection();
+
+            foreach (string error in domainErrorList)
+            {
+                errorList.Add("",error);
+            }
+
+            return
+                new CommonResult(
+                    messageId: ((IMessage) request).MessageId,
+                    outcome: Outcome.DomainValidationFailure,
+                    flashMessage: "A domain validation error occured handling request " + request.GetType() +
+                                  ", CorrelationID: " + CorrelationId,
+                    errors: errorList);
+
         }
     }
 }

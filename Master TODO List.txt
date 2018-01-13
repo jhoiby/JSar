@@ -15,8 +15,7 @@ PRIORITY GUIDE:
 ------------
 TO-DO:
 
-Pass DomainErrorList up chain through common result
-       - Add extension method for the conversion
+Add unit test for CommonResultFromDomainErrorList
 
 Add RequestId to appropriate log messages
 - See logging section in resources document
@@ -25,14 +24,10 @@ Add CreatedDate and ModifiedDate in AggregateRoot class.
 - See article on shadow properties: http://www.talkingdotnet.com/use-shadow-properties-entity-framework-core/
 - May not want to use those if users want to see the data.
 
-Add validation failure debug logging.
-Why is there both a "PipelineLoggingBehavior" and a "MediatorLoggingDecorator"?
-- It had something to do with logging the publish. Should I move it all into mediator logging decorator?
-
-Add Forgot Password page Action - ForgotPassword.cshtml
+Flesh out remaining Account controller actions.
 
 Add Microsoft logger messages into Serilog context?
-- Get rid of any remaining MS Logger config
+- Get rid of any remaining MS Logger config.
 
 - Fire "User logged in" event that contains the user?
 
@@ -48,7 +43,7 @@ Handling for obscure errors:
 Split identity database from membership context?
 
 Update formfield tag helper to properly handle passing-in of invalid field names.
-- Replace with Jimmy Bogard's solution from ContosoUniversityCore
+- Replace with Jimmy Bogard's solution from ContosoUniversityCore.
 
 SETUP HOSTNAME MY.SARCI.ORG!!!!
 
