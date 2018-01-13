@@ -10,13 +10,13 @@ using JSar.Membership.Domain.Abstractions;
 using JSar.Membership.Domain.Aggregates.Person;
 using JSar.Membership.Infrastructure.Data;
 using JSar.Membership.Services.CQRS;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace JSar.Membership.Services.Account
 {
     public class RegisterLocalUserCommandHandler : CommandHandler<RegisterLocalUser, CommonResult>
     {
         private readonly UserManager<AppUser> _userManager;
-        private IdentityResult _addUserResult;
         private readonly MembershipDbContext _dbContext;
         private readonly IRepository<Person> _personRepository;
 
@@ -30,48 +30,65 @@ namespace JSar.Membership.Services.Account
         {
             // Step one: Register user's local login
 
-            if (command.Password == null)
+            var addUserResult = await CreateUser(command);
+
+            if (!addUserResult.Succeeded)
+                return AddUserErrorResult(addUserResult, command.MessageId);
+
+            // Step two: Create the associated person object
+
+            try
             {
-                _addUserResult = await _userManager.CreateAsync(command.User);
-            }
-            else
+                await CreatePerson(command);
+            } 
+            catch(Exception ex)
             {
-                _addUserResult = await _userManager.CreateAsync(command.User, command.Password);
+                var errorResult = ex.RequestExceptionToCommonResult(command, _logger);
+                errorResult.LogErrorResult("Error saving person during user registration", command.GetType(), _logger);
+                return errorResult;
             }
-
-            if (!_addUserResult.Succeeded)
-                return AddUserErrorResult(_addUserResult, command.MessageId);
-
-            // Step two: Create the associated person object in the system
-
-            Person person = new Person(
-                command.User.FirstName, 
-                command.User.LastName, 
-                command.User.Email, 
-                command.User.PhoneNumber, 
-                Guid.NewGuid());
             
-                _personRepository.AddOrUpdate(person);
-
-            await _dbContext.SaveChangesAsync();
-
-            // TODO!: Consider adding code to roll back the user registration if the Person commit fails.
-
-
             return new CommonResult(
                 messageId: command.MessageId,
                 outcome: Outcome.Succeeded);
         }
 
+        private async Task<IdentityResult> CreateUser(RegisterLocalUser command)
+        {
+            IdentityResult addUserResult;
+
+            if (command.Password == null)
+            {
+                addUserResult = await _userManager.CreateAsync(command.User);
+            }
+            else
+            {
+                 addUserResult = await _userManager.CreateAsync(command.User, command.Password);
+            }
+
+            return addUserResult;
+        }
+
+        private async Task CreatePerson(RegisterLocalUser command)
+        {
+            Person person = new Person(
+                command.User.FirstName,
+                command.User.LastName,
+                command.User.Email,
+                command.User.PhoneNumber,
+                Guid.NewGuid());
+
+            _personRepository.AddOrUpdate(person);
+
+            await _dbContext.SaveChangesAsync();
+        }
+
         private CommonResult AddUserErrorResult(IdentityResult addUserResult, Guid messageId)
         {
-            _logger.Error("RegisterLocalUser command execution failed");
-
             var errors = new ResultErrorCollection();
 
             foreach (IdentityError error in addUserResult.Errors)
             {
-                _logger.Error("  - " + error.Code + " : " + error.Description);
                 errors.Add(error.Code, error.Description);
             }
 
@@ -81,6 +98,8 @@ namespace JSar.Membership.Services.Account
                 flashMessage: "RegisterLocalUser command execution failed.",
                 errors: errors
                 );
+
+            result.LogErrorResult("User registration error", this.GetType(), _logger);
 
             return result;
         }
