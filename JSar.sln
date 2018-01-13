@@ -20,9 +20,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DE7D8280
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSar.Membership.Tests.UnitTests", "JSar.Membership.Tests.UnitTests\JSar.Membership.Tests.UnitTests.csproj", "{8FF17633-6B9A-47F3-B273-345ACDE648E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSar.Tools", "JSar.Tools\JSar.Tools.csproj", "{E9777850-DC7F-4D9E-BD4D-5C215321E01E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSar.Tools", "JSar.Tools\JSar.Tools.csproj", "{E9777850-DC7F-4D9E-BD4D-5C215321E01E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSar.Membership", "JSar.Membership\JSar.Membership.csproj", "{2F6B15E6-EF67-4E0B-8F83-77E14F7D4B3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSar.Membership", "JSar.Membership\JSar.Membership.csproj", "{2F6B15E6-EF67-4E0B-8F83-77E14F7D4B3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

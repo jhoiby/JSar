@@ -40,6 +40,8 @@ namespace JSar.Membership.Services.Account
                     
                     // ...and add associated Person aggregate
                     await CreatePerson(command);
+
+                    transaction.Commit();
                 }
                 catch (Exception ex)
                 {
@@ -47,11 +49,11 @@ namespace JSar.Membership.Services.Account
                     errorResult.LogCommonResultError("Error saving person during user registration", command.GetType(), _logger);
                     return errorResult;
                 }
-                
-                return new CommonResult(
-                    messageId: command.MessageId,
-                    outcome: Outcome.Succeeded);
             }
+
+            return new CommonResult(
+                messageId: command.MessageId,
+                outcome: Outcome.Succeeded);
         }
 
         private async Task<IdentityResult> CreateUser(RegisterLocalUser command)
