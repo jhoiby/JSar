@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JSar.Membership.Domain.Abstractions;
 using JSar.Membership.Domain.Aggregates.Person;
+using JSar.Membership.Infrastructure.Data;
 using JSar.Membership.Services.CQRS;
 
 namespace JSar.Membership.Services.Account
@@ -16,13 +17,13 @@ namespace JSar.Membership.Services.Account
     {
         private readonly UserManager<AppUser> _userManager;
         private IdentityResult _addUserResult;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly MembershipDbContext _dbContext;
         private readonly IRepository<Person> _personRepository;
 
-        public RegisterLocalUserCommandHandler(UserManager<AppUser> userManager, IUnitOfWork unitOfWork, IRepository<Person> personRepository, ILogger logger) : base (logger)
+        public RegisterLocalUserCommandHandler(UserManager<AppUser> userManager, MembershipDbContext dbContext, IRepository<Person> personRepository, ILogger logger) : base (logger)
         {
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager), "Constructor parameter 'userManager' cannot be null. EID: 532F339A");
-            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(userManager), "Constructor parameter 'unitOfWork' cannot be null. EID: D481A958");
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(userManager), "Constructor parameter 'unitOfWork' cannot be null. EID: D481A958");
             _personRepository = personRepository ?? throw new ArgumentNullException(nameof(userManager), "Constructor parameter 'personRepository' cannot be null. EID: 741B7D6D");
         }
         protected override async Task<CommonResult> HandleImplAsync(RegisterLocalUser command, CancellationToken cancellationToken)
@@ -52,7 +53,7 @@ namespace JSar.Membership.Services.Account
             
                 _personRepository.AddOrUpdate(person);
 
-                _unitOfWork.Commit();
+            await _dbContext.SaveChangesAsync();
 
             // TODO!: Consider adding code to roll back the user registration if the Person commit fails.
 

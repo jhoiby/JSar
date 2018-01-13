@@ -28,6 +28,8 @@ RESUME:
 		- UnitOfWork
 	- Add Person.UpdatePrimaryPhone behavior.
 	- Review that each behavior in Person and Organization publishes an event.
+	- Add event dispatcher
+	    - Inject it into the unit of work, persist the events, save the aggregates, on transaction finish dispatch the events.
 
 *** Look into integrating unit of work into DB context?
 - See OrderingContext for eShopOnContainers, which I noticed implements IUnitOfWork

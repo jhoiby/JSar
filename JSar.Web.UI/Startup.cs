@@ -106,10 +106,7 @@ namespace JSar.Web.Mvc
             builder.Populate(services);
 
             // AUTOFAC DATA PERSISTENCE CONFIG
-
-            builder.RegisterType(typeof(UnitOfWork))
-                .As(typeof(IUnitOfWork))
-                .InstancePerLifetimeScope();
+            
             builder.RegisterGeneric(typeof(GenericRepository<>))
                 .As(typeof(IRepository<>))
                 .InstancePerLifetimeScope();
