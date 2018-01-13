@@ -11,14 +11,18 @@ namespace JSar.Membership.Services.CQRS
 {
     public static class CommonResultExtensions
     {
-        public static void LogErrorResult(this CommonResult result, string descriptionPreface, Type requestType, ILogger logger)
+        public static void LogCommonResultError(this CommonResult result, string descriptionPreface, Type requestType, ILogger logger)
         {
-            logger.Verbose("Executing LogErrorResult extension");
-
             if (descriptionPreface.IsNullOrWhiteSpace())
                 descriptionPreface = "Returning error from request";
+
             logger.Error("**** {0:l}: MessageId: {1:l}, Type: {2:l})", descriptionPreface, result.MessageId.ToString(), requestType);
-            logger.Error("****     - Detail {0:l}: FlashMessage: {1:l}", result.MessageId.ToString().Substring(0,8), result.FlashMessage);
+
+            if (! result.FlashMessage.IsNullOrWhiteSpace())
+                logger.Error("****     - Detail {0:l}: FlashMessage: {1:l}", result.MessageId.ToString().Substring(0,8), result.FlashMessage);
+
+            if (result.Outcome == Outcome.ExceptionCaught && result.Data != null)
+                logger.Error("****     - Detail {0:l}: Exception.Message: {1:l}", result.MessageId.ToString().Substring(0, 8), ((Exception)result.Data).Message);
 
             LogResultErrorCollection(result, logger);
         }

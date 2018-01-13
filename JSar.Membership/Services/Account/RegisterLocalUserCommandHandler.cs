@@ -28,29 +28,29 @@ namespace JSar.Membership.Services.Account
         }
         protected override async Task<CommonResult> HandleImplAsync(RegisterLocalUser command, CancellationToken cancellationToken)
         {
-            // Step one: Register user's local login
-
-            var addUserResult = await CreateUser(command);
-
-            if (!addUserResult.Succeeded)
-                return AddUserErrorResult(addUserResult, command.MessageId);
-
-            // Step two: Create the associated person object
-
-            try
+            using (var transaction = _dbContext.Database.BeginTransaction())
             {
-                await CreatePerson(command);
-            } 
-            catch(Exception ex)
-            {
-                var errorResult = ex.RequestExceptionToCommonResult(command, _logger);
-                errorResult.LogErrorResult("Error saving person during user registration", command.GetType(), _logger);
-                return errorResult;
+                try
+                {
+                    // Register user...
+                    var addUserResult = await CreateUser(command);
+                    if (!addUserResult.Succeeded)
+                        return AddUserErrorResult(addUserResult, command.MessageId);
+                    
+                    // ...and add associated Person aggregate
+                    await CreatePerson(command);
+                }
+                catch (Exception ex)
+                {
+                    var errorResult = ex.RequestExceptionToCommonResult(command, _logger);
+                    errorResult.LogCommonResultError("Error saving person during user registration", command.GetType(), _logger);
+                    return errorResult;
+                }
+                
+                return new CommonResult(
+                    messageId: command.MessageId,
+                    outcome: Outcome.Succeeded);
             }
-            
-            return new CommonResult(
-                messageId: command.MessageId,
-                outcome: Outcome.Succeeded);
         }
 
         private async Task<IdentityResult> CreateUser(RegisterLocalUser command)
@@ -99,7 +99,7 @@ namespace JSar.Membership.Services.Account
                 errors: errors
                 );
 
-            result.LogErrorResult("User registration error", this.GetType(), _logger);
+            result.LogCommonResultError("User registration error", this.GetType(), _logger);
 
             return result;
         }

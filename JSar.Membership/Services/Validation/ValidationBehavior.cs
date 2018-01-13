@@ -45,7 +45,7 @@ namespace JSar.Membership.Services.Validation
                     flashMessage: "A validation error occured in request " + typeof(TRequest),
                     errors: failures.ToResultErrorCollection() );
 
-                validationResult.LogErrorResult("Validation error", typeof(TRequest), _logger);
+                validationResult.LogCommonResultError("Validation error", typeof(TRequest), _logger);
 
                 return Task.FromResult(validationResult as TResponse);
             }
