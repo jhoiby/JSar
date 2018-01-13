@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using JSar.Membership.Domain.Abstractions;
 using JSar.Membership.Domain.Aggregates.Person;
 using JSar.Membership.Infrastructure.Data;
+using JSar.Membership.Infrastructure.Logging;
 using JSar.Membership.Services.CQRS;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 

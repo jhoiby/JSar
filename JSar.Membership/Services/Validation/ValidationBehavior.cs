@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
+using JSar.Membership.Infrastructure.Logging;
 using JSar.Membership.Services.CQRS;
 using MediatR;
 using Serilog;
