@@ -50,7 +50,7 @@ namespace JSar.Membership.Services.Account
                 }
                 catch (Exception ex)
                 {
-                    var errorResult = ex.RequestExceptionToCommonResult(command, _logger);
+                    var errorResult = ex.CommonResultFromRequestException(command, _logger);
                     errorResult.LogCommonResultError("Error saving person during user registration", command.GetType(), _logger);
                     return errorResult;
                 }

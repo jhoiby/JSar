@@ -12,7 +12,7 @@ namespace JSar.Membership.Services.CQRS
 {
     public static class CommonResultExtensions
     {
-        public static CommonResult RequestExceptionToCommonResult(this Exception ex, IRequest<CommonResult> request, ILogger logger)
+        public static CommonResult CommonResultFromRequestException(this Exception ex, IRequest<CommonResult> request, ILogger logger)
         {
             // WARNING: The flashMessage MUST NOT contain sensitive exception details as it may be displayed to the user.
 
