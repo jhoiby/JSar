@@ -11,13 +11,18 @@ using Serilog;
 
 namespace JSar.Membership.Infrastructure.Logging
 {
-    public class PipelineLoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    /// <summary>
+    /// Does logging for the "Handle message" side of the mediator.
+    /// </summary>
+    /// <typeparam name="TRequest"></typeparam>
+    /// <typeparam name="TResponse"></typeparam>
+    public class RequestHandlerPipelineLoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
         where TResponse : CommonResult
     {
         private readonly ILogger _logger;
 
-        public PipelineLoggingBehavior(ILogger logger)
+        public RequestHandlerPipelineLoggingBehavior(ILogger logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }

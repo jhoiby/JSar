@@ -10,6 +10,10 @@ using Serilog;
 
 namespace JSar.Membership.Infrastructure.Logging
 {
+    /// <summary>
+    /// Does logging for the "Send Message" side of the mediator.
+    /// </summary>
+
     public class MediatrLoggingDecorator : IMediator
     {
         private readonly IMediator _inner;
