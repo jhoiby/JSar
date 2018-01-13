@@ -47,33 +47,15 @@ namespace JSar.Membership.Domain.Aggregates.Person
             get { return _firstName; }
         }
 
-        public string LastName
-        {
-            get { return _lastName; }
-        }
+        public string LastName => _lastName;
 
-        public string Name
-        {
-            get
-            {
-                return _firstName + " " + _lastName;
-            }
-        }
+        public string Name => FullName;
 
-        public string FullName
-        {
-            get { return Name; }
-        }
+        public string FullName => _firstName + " " + _lastName;
 
-        public string PrimaryEmail
-        {
-            get { return _primaryEmail; }
-        }
+        public string PrimaryEmail => _primaryEmail;
 
-        public string PrimaryPhone
-        {
-            get { return _primaryPhone; }
-        }
+        public string PrimaryPhone => _primaryPhone;
 
         // Behaviors
 
@@ -123,7 +105,7 @@ namespace JSar.Membership.Domain.Aggregates.Person
 
             // Execute
 
-            _primaryEmail = email;
+            _primaryEmail = email.Trim();
 
             // Notify
 
@@ -135,6 +117,22 @@ namespace JSar.Membership.Domain.Aggregates.Person
                     _primaryEmail));
 
             return errors;
+        }
+
+        public void UpdatePrimaryPhone(string phone)
+        {
+            // Execute
+
+            _primaryPhone = phone.Trim();
+
+            // Notify
+
+            _domainEventsQueue.Add(
+                new PersonPrimaryPhoneUpdatedDomainEvent(
+                    Guid.NewGuid(),
+                    Id,
+                    Name,
+                    _primaryPhone));
         }
     }
 }

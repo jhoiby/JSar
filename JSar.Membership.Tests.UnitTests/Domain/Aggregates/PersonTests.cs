@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using JSar.Membership.Domain.Aggregates.Person;
+using JSar.Membership.Domain.Events;
 using Xunit;
 
 namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
@@ -10,6 +13,7 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
         private readonly string _expectedLastName = "Stevens";
         private readonly string _expectedFullName = "Bob Stevens";
         private readonly string _expectedPrimaryEmail = "bob@stevens.com";
+        private readonly string _expectedPrimaryPhone = "800-555-1212";
         private readonly Guid _expectedGuid = Guid.NewGuid();
 
         [Fact]
@@ -18,6 +22,7 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
             Person person = new Person("Bob", "Steven", _expectedGuid);
 
             Assert.Equal(_expectedGuid, person.Id);
+            Assert.Equal(1, person.DomainEvents.Select(e => e.GetType()).Where(t => t == typeof(PersonCreatedDomainEvent)).Count());
         }
 
         [Fact]
@@ -35,6 +40,7 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
             Assert.Equal(_expectedFirstName, person.FirstName);
             Assert.Equal(_expectedLastName, person.LastName);
             Assert.Equal(_expectedFullName, person.FullName);
+            Assert.Equal(1, person.DomainEvents.Select(e => e.GetType()).Where(t => t == typeof(PersonCreatedDomainEvent)).Count());
         }
         
         [Theory]
@@ -47,6 +53,7 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
             Assert.Equal(_expectedFirstName, person.FirstName);
             Assert.Equal(_expectedLastName, person.LastName);
             Assert.Equal(_expectedFullName, person.FullName);
+            Assert.Equal(1, person.DomainEvents.Select(e => e.GetType()).Where(t => t == typeof(PersonCreatedDomainEvent)).Count());
         }
 
         [Theory]
@@ -60,7 +67,7 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
         }
 
         [Fact]
-        public void UpdateName_ValidName_CorrectPropertiesNoErrors()
+        public void UpdateName_ValidName_CorrectPropertiesAndEvent()
         {
             // Arrange
             Person person = new Person("George", "Stephanopoulos", Guid.NewGuid());
@@ -73,6 +80,7 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
             Assert.Equal(_expectedLastName, person.LastName);
             Assert.False(errors);
             Assert.True(errors.Count == 0);
+            Assert.Equal(1, person.DomainEvents.Select(e => e.GetType()).Where(t => t == typeof(PersonNameUpdatedDomainEvent)).Count());
         }
 
         [Theory]
@@ -91,10 +99,11 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
             // Assert
             Assert.True(errors);
             Assert.True(errors.Count == 1);
+            Assert.Equal(0, person.DomainEvents.Select(e => e.GetType()).Where(t => t == typeof(PersonNameUpdatedDomainEvent)).Count());
         }
 
         [Fact]
-        public void UpdateEmail_WithEmail_CorrectPropertyNoErrors()
+        public void UpdateEmail_WithEmail_CorrectPropertyAndEvent()
         {
             // Arrange
             var person = new Person("Bob", "Stevens", Guid.NewGuid());
@@ -105,12 +114,13 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
             // Assert
             Assert.False(errors);
             Assert.Equal(_expectedPrimaryEmail, person.PrimaryEmail);
+            Assert.Equal(1, person.DomainEvents.Select(e => e.GetType()).Where(t => t == typeof(PersonPrimaryEmailUpdatedDomainEvent)).Count());
         }
 
         [Theory]
         [InlineData("  ")]
         [InlineData(null)]
-        public void UpdateEmail_EmptyEmail_ReturnsError(string email)
+        public void UpdateEmail_EmptyEmail_ReturnsErrorNoEvent(string email)
         {
             // Arrange
             var person = new Person("Bob", "Stevens", Guid.NewGuid());
@@ -121,6 +131,22 @@ namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates
             // Assert
             Assert.True(errors);
             Assert.True(errors.Count == 1);
+            Assert.Equal(0, person.DomainEvents.Select(e => e.GetType()).Where(t => t == typeof(PersonPrimaryEmailUpdatedDomainEvent)).Count());
+        }
+
+        [Fact]
+        public void UpdatePhone_WithPhone_CorrectPropertyAndEvent()
+        {
+            // Arrange
+            var person = new Person("Bob", "Stevens", Guid.NewGuid());
+
+            // Act
+            person.UpdatePrimaryPhone(_expectedPrimaryPhone);
+
+            // Assert
+            Assert.Equal(_expectedPrimaryPhone, person.PrimaryPhone);
+            Assert.Equal(1, person.DomainEvents.Select(e => e.GetType()).Where(t => t == typeof(PersonPrimaryPhoneUpdatedDomainEvent)).Count());
+
         }
     }
 }
