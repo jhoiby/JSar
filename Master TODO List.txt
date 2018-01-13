@@ -20,8 +20,8 @@ TO-DO:
 RESUME:
 
 - A large deal of code was just done. Thing appear working but need to finish it off by:
-    - Wrapping the RegisterLocalUser handler action in a transaction
-	- Learn about disposal. Necessary?
+    - Wrap items in MembershipDbContext.SaveChangesAsync in transaction?
+	- Block (non-async) SaveChanges method?
     - Add unit tests
 	    - Person.PrimaryPhone tests
 		- Repository

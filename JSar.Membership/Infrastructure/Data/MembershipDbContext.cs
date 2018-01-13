@@ -25,14 +25,21 @@ namespace JSar.Membership.Infrastructure.Data
 
         public DbSet<Person> Persons { get; set; }
         // public DbSet<Organization> Organizations { get; set; } - Not yet configured for EF
-
-        // When saving changes to the database, publish any events stored in the aggregate.
+        
         public async Task<int> SaveChangesAsync()
         {
-            await _mediator.DispatchDomainEventsAsync(this);
+            int result;
 
-            return await base.SaveChangesAsync();
+            using (var transaction = this.Database.BeginTransaction())
+            {
+                await _mediator.DispatchDomainEventsAsync(this);
 
+                result = await base.SaveChangesAsync();
+
+                transaction.Commit();
+            }
+
+            return result;
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -40,8 +47,6 @@ namespace JSar.Membership.Infrastructure.Data
             base.OnModelCreating(builder);
 
             builder.ApplyConfiguration(new PersonAggregateTypeConfiguration(this));
-
-            
         }
     }
 }
