@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
+using FluentValidation.Results;
 using JSar.Membership.Infrastructure.Logging;
 using JSar.Membership.Services.CQRS;
 using MediatR;
@@ -26,25 +27,13 @@ namespace JSar.Membership.Services.Validation
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            _logger.Verbose(
-                "Validating: {0:l}, validating MID: {1:l} , Type: {2:l}", 
-                request.GetType().Name, 
-                ((IMessage)request).MessageId.ToString(), 
-                request.GetType().FullName);
+            LogValidation(request);
 
-            var failures = _validators
-                .Select(v => v.Validate(request))
-                .SelectMany(result => result.Errors)
-                .Where(f => f != null)
-                .ToList();
+            var failures = Validate(request, _validators);
 
             if (failures.Count != 0)
             {
-                CommonResult validationResult = new CommonResult(
-                    messageId: ((IMessage)request).MessageId,
-                    outcome: Outcome.MessageValidationFailure,
-                    flashMessage: "A validation error occured in request " + typeof(TRequest),
-                    errors: failures.ToResultErrorCollection() );
+                var validationResult = CommonResultFromValidationErrors(request, failures);
 
                 validationResult.LogCommonResultError("Validation error", typeof(TRequest), _logger);
 
@@ -52,6 +41,35 @@ namespace JSar.Membership.Services.Validation
             }
 
             return next();
+        }
+
+        private void LogValidation(TRequest request)
+        {
+            _logger.Verbose(
+                "Validating: {0:l}, validating MID: {1:l} , Type: {2:l}",
+                request.GetType().Name,
+                ((IMessage)request).MessageId.ToString(),
+                request.GetType().FullName);
+        }
+
+        private List<ValidationFailure> Validate(TRequest request, IEnumerable<IValidator<TRequest>> validators)
+        {
+            return 
+                _validators
+                    .Select(v => v.Validate(request))
+                    .SelectMany(result => result.Errors)
+                    .Where(f => f != null)
+                    .ToList();
+        }
+
+        private CommonResult CommonResultFromValidationErrors(TRequest request, List<ValidationFailure> failures)
+        {
+            return 
+                new CommonResult(
+                    messageId: ((IMessage)request).MessageId,
+                    outcome: Outcome.MessageValidationFailure,
+                    flashMessage: "A validation error occured in request " + typeof(TRequest),
+                    errors: failures.ToResultErrorCollection());
         }
     }
 }
