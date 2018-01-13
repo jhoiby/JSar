@@ -30,6 +30,10 @@ namespace JSar.Membership.Infrastructure.Data
         {
             int result;
 
+            // TODO: Look into isolation levels to avoid over-locking
+            // See comments at: https://coderwall.com/p/jnniww/why-you-shouldn-t-use-entity-framework-with-transactions
+            // See also: https://msdn.microsoft.com/en-us/library/system.transactions.isolationlevel(v=vs.110).aspx
+
             using (var transaction = this.Database.BeginTransaction())
             {
                 await _mediator.DispatchDomainEventsAsync(this);
