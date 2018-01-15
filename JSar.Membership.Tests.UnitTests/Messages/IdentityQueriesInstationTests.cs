@@ -1,4 +1,4 @@
-﻿using JSar.Membership.Services.Account;
+﻿using JSar.Web.UI.Services.Account;
 using System;
 using Xunit;
 

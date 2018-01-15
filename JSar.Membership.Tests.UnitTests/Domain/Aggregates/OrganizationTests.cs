@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using JSar.Membership.Domain.Aggregates;
-using JSar.Membership.Domain.Aggregates.Organization;
+using JSar.Web.UI.Domain.Aggregates.Organization;
 using Xunit;
 
 namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates

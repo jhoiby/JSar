@@ -7,9 +7,9 @@ using Serilog;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using JSar.Membership.Domain.Identity;
+using JSar.Web.UI.Domain.Identity;
 using System.Security.Claims;
-using JSar.Membership.AzureAdAdapter.Helpers;
+using JSar.Web.UI.AzureAdAdapter.Helpers;
 using JSar.Web.Mvc;
 using JSar.Web.UI.Features.Shared;
 

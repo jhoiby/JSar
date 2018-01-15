@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using JSar.Membership.Services.CQRS;
+using JSar.Web.UI.Services.CQRS;
 
 namespace JSar.Web.UI.Extensions
 {

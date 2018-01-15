@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Security.Claims;
-using JSar.Membership.Domain.Identity;
+using JSar.Web.UI.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Xunit;
 using Moq;
-using JSar.Membership.Services.Account;
+using JSar.Web.UI.Services.Account;
 
 namespace JSar.Membership.Tests.UnitTests.Messages
 {

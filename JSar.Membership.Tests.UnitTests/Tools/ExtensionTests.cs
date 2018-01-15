@@ -1,5 +1,6 @@
 ﻿using Xunit;
-using JSar.Tools;
+using JSar.Web.UI;
+using JSar.Web.UI.Extensions;
 
 namespace JSar.Membership.Tests.UnitTests.Tools
 {

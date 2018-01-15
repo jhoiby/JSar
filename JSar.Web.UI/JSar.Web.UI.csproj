@@ -9,15 +9,18 @@
     <PackageReference Include="Autofac" Version="4.6.2" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
     <PackageReference Include="AutoMapper" Version="6.2.2" />
-    <PackageReference Include="AutoMapper.EF6" Version="1.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
+    <PackageReference Include="FluentValidation" Version="7.3.4" />
     <PackageReference Include="HtmlTags.AspNetCore" Version="6.0.0" />
     <PackageReference Include="MediatR" Version="4.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="4.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" />
     <PackageReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
     <PackageReference Include="Microsoft.Graph" Version="1.7.0" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="1.1.1-preview0040" />
     <PackageReference Include="OdeToCode.AddFeatureFolders" Version="1.0.8" />
     <PackageReference Include="Serilog" Version="2.6.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="2.1.0" />
@@ -35,11 +38,6 @@
 
   <ItemGroup>
     <Folder Include="Logs\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\JSar.Membership\JSar.Membership.csproj" />
-    <ProjectReference Include="..\JSar.Tools\JSar.Tools.csproj" />
   </ItemGroup>
 
 </Project>

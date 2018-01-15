@@ -19,8 +19,4 @@
     <Folder Include="Domain\Exceptions\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\JSar.Tools\JSar.Tools.csproj" />
-  </ItemGroup>
-
 </Project>

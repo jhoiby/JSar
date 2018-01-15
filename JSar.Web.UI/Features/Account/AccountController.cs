@@ -5,17 +5,17 @@ using System.Threading.Tasks;
 using Serilog;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using JSar.Membership.Domain.Identity;
+using JSar.Web.UI.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using JSar.Web.UI.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using JSar.Membership.AzureAdAdapter.Helpers;
+using JSar.Web.UI.AzureAdAdapter.Helpers;
 using System.Security.Claims;
-using JSar.Membership.Services.Account;
+using JSar.Web.UI.Services.Account;
 using JSar.Web.UI.Features.Home;
 using JSar.Web.UI.Features.Shared;
-using JSar.Membership.Services.CQRS;
+using JSar.Web.UI.Services.CQRS;
 
 namespace JSar.Web.UI.Features.Account
 {

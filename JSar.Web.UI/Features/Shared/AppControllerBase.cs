@@ -1,4 +1,4 @@
-﻿using JSar.Membership.Services.CQRS;
+﻿using JSar.Web.UI.Services.CQRS;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 

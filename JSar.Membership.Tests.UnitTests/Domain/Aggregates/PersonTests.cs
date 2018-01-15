@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using JSar.Membership.Domain.Aggregates.Person;
-using JSar.Membership.Domain.Events;
+using JSar.Web.UI.Domain.Aggregates.Person;
 using Xunit;
 
 namespace JSar.Membership.Tests.UnitTests.Domain.Aggregates

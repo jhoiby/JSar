@@ -11,12 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JSar.Membership\JSar.Membership.csproj" />
-    <ProjectReference Include="..\JSar.Tools\JSar.Tools.csproj" />
+    <Folder Include="Services\CQRS\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\CQRS\" />
+    <ProjectReference Include="..\JSar.Web.UI\JSar.Web.UI.csproj" />
   </ItemGroup>
 
 </Project>
