@@ -1,4 +1,5 @@
-﻿@using JSar.Web.UI.Features.Account
+﻿@using Jsar.Web.UI.Features
+@using JSar.Web.UI.Features.Account
 @model RegisterViewModel
 @{
     ViewData["Title"] = "Register";
@@ -8,20 +9,20 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-controller="Account" asp-action="Register"  asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+        <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
 
             <h4>Create a new account.</h4>
             <br />
 
             <div asp-validation-summary="All"></div>
-            
-            <formfield asp-for="FirstName"></formfield>
-            <formfield asp-for="LastName"></formfield>
-            <formfield asp-for="PrimaryPhone"></formfield>
-            <formfield asp-for="Email"></formfield>
-            <formfield asp-for="Password"></formfield>
-            <formfield asp-for="ConfirmPassword"></formfield>
-            <formfield asp-for="RememberMe"></formfield>
+
+            @Html.FormBlock(m => m.FirstName)
+            @Html.FormBlock(m => m.LastName)
+            @Html.FormBlock(m => m.PrimaryPhone)
+            @Html.FormBlock(m => m.Email)
+            @Html.FormBlock(m => m.Password)
+            @Html.FormBlock(m => m.ConfirmPassword).Data("type","password");
+            @Html.FormBlock(m => m.RememberMe)
 
             <button type="submit" class="btn btn-default">Register</button>
 

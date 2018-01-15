@@ -1,4 +1,4 @@
-﻿namespace ContosoUniversityCore.Features
+﻿namespace Jsar.Web.UI.Features
 {
     using System;
     using System.Collections.Generic;
@@ -10,7 +10,7 @@
 
     public static class HtmlHelperExtensions
     {
-        public static HtmlTag DisplayLabel<T>(this IHtmlHelper<T> helper, Expression<Func<T, object>> expression) 
+        public static HtmlTag DisplayLabel<T>(this IHtmlHelper<T> helper, Expression<Func<T, object>> expression)
             where T : class
         {
             return helper.Tag(expression, "DisplayLabels");
