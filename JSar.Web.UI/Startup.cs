@@ -17,6 +17,7 @@ using JSar.Membership.AzureAdAdapter.Extensions;
 using JSar.Membership.AzureAdAdapter.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
+using AutoMapper;
 using FluentValidation;
 using JSar.Membership.Domain.Abstractions;
 using JSar.Membership.Infrastructure.Logging;
@@ -25,6 +26,7 @@ using JSar.Membership.Services.Account;
 using MediatR.Pipeline;
 using JSar.Membership.Services.Validation;
 using JSar.Web.UI.Logging;
+using HtmlTags;
 
 namespace JSar.Web.Mvc
 {
@@ -74,7 +76,7 @@ namespace JSar.Web.Mvc
             });
 
             //
-            // MVC OPTIONS
+            // MVC OPTIONS AND HTML
 
             services.AddMvc()
                 .AddFeatureFolders();
@@ -86,6 +88,10 @@ namespace JSar.Web.Mvc
                 options.Filters.Add<LogActionFilter>();
             });
 
+            services.AddHtmlTags(reg =>
+                reg.Labels.IfPropertyIs<bool>()
+                    .ModifyWith(er => er.CurrentTag.Text(er.CurrentTag.Text() + "?")));
+
             services.AddSession();
 
             //
@@ -95,6 +101,7 @@ namespace JSar.Web.Mvc
             services.AddSingleton<IClaimsCache, ClaimsCache>();
             services.AddSingleton<IGraphAuthProvider, GraphAuthProvider>();
             services.AddTransient<IGraphSdkHelper, GraphSdkHelper>();
+            services.AddAutoMapper();
 
             //
             // AUTOFAC DI/IOC CONFIGURATION
