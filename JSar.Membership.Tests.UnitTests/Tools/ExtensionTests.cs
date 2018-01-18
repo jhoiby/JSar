@@ -20,7 +20,8 @@ namespace JSar.Membership.Tests.UnitTests.Tools
         [InlineData("     ")]
         [InlineData(" ")]
         [InlineData("\n")]
-        public void IsNullOrWhiteSpace_GivenWhiteSpace_ReturnsTrue(string str)
+        [InlineData("")]
+        public void IsNullOrWhiteSpace_GivenWhiteSpaceOrEmpty_ReturnsTrue(string str)
         {
             Assert.True(str.IsNullOrWhiteSpace());
         }
