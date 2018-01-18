@@ -5,7 +5,7 @@ using JSar.Web.UI.Services.CQRS;
 
 namespace JSar.Web.UI.Services.Account
 {
-    public class AddExternalLoginToUser : Command<CommonResult>
+    public class AddExternalLoginToUser : CommandBase<CommonResult>
     {
         public AddExternalLoginToUser(AppUser user, ExternalLoginInfo loginInfo, Guid messageId = default(Guid)) : base(messageId)
         {

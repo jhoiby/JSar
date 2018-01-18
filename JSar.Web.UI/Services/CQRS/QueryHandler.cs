@@ -17,12 +17,12 @@ namespace JSar.Web.UI.Services.CQRS
   
         public async Task<TResponse> Handle(TQuery query, CancellationToken cancellationToken)
         {
-            TResponse result = await HandleImplAsync(query, cancellationToken);
+            TResponse result = await HandleCore(query, cancellationToken);
 
             return result;
         }
 
-        protected abstract Task<TResponse> HandleImplAsync(TQuery query, CancellationToken cancellationToken);
+        protected abstract Task<TResponse> HandleCore(TQuery query, CancellationToken cancellationToken);
 
     }
 

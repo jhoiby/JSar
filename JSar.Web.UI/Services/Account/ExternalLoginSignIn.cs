@@ -3,7 +3,7 @@ using JSar.Web.UI.Services.CQRS;
 
 namespace JSar.Web.UI.Services.Account
 {
-    public class ExternalLoginSignIn : Command<CommonResult>
+    public class ExternalLoginSignIn : CommandBase<CommonResult>
     {
         public ExternalLoginSignIn(string loginProvider, string providerKey, bool isPersistent, bool bypassTwoFactor, Guid messageId = default(Guid)) : base(messageId)
         {

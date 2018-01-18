@@ -1,0 +1,56 @@
+﻿@using Jsar.Web.UI.Features
+@using JSar.Web.UI.Features
+@using JSar.Web.UI.Features.ClientApplication
+@using JSar.Web.UI.Features.Home
+@model Index.Command
+
+@{
+    ViewBag.Title = "Apply";
+}
+
+
+<h3>Client Application</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Company Info</h4>
+    <hr />
+    
+    <strong>Company Info</strong>
+
+    @Html.FormBlock(m => m.CompanyName)
+    @Html.FormBlock(m => m.Address)
+    @Html.FormBlock(m => m.Address2)
+    @Html.FormBlock(m => m.City)
+    @Html.FormBlock(m => m.State)
+    @Html.FormBlock(m => m.Zip)
+    @Html.FormBlock(m => m.MainPhone)
+    
+    <strong>Your Personal Info</strong>
+    
+    <p>You will be setup as the primary manager for your company. Once your application is complete
+        and the account is created you may add other employees to your account and set their roles
+        such as Manager or Entry Person.</p>
+
+    @Html.FormBlock(m => m.FirstName)
+    @Html.FormBlock(m => m.LastName)
+    @Html.FormBlock(m => m.Email)
+    @Html.FormBlock(m => m.Password)
+    @Html.FormBlock(m => m.ConfirmPassword)
+    @Html.FormBlock(m => m.YourPhone)
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Apply" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to Home", nameof(HomeController.Index), "Home");
+</div>
+

@@ -17,7 +17,7 @@ namespace JSar.Web.UI.Services.Account
             _signInManager = signInManager ?? throw new ArgumentNullException(nameof(signInManager), "Constructor parameter 'signInManager' cannot be null. EID: F1D53D9D");
         }
 
-        protected override async Task<CommonResult> HandleImplAsync(GetExternalLoginInfo query, CancellationToken cancellationToken)
+        protected override async Task<CommonResult> HandleCore(GetExternalLoginInfo query, CancellationToken cancellationToken)
         {
             ExternalLoginInfo info = await _signInManager.GetExternalLoginInfoAsync();
 

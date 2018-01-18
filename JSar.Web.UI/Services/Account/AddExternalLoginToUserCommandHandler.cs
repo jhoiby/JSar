@@ -19,7 +19,7 @@ namespace JSar.Web.UI.Services.Account
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager), "Constructor parameter 'userManager' cannot be null. EID: 31391FDB");
         }
 
-        protected override async Task<CommonResult> HandleImplAsync(AddExternalLoginToUser command, CancellationToken cancellationToken)
+        protected override async Task<CommonResult> HandleCore(AddExternalLoginToUser command, CancellationToken cancellationToken)
         {
             IdentityResult result = await _userManager.AddLoginAsync(command.User, command.LoginInfo);
 

@@ -19,11 +19,11 @@ namespace JSar.Web.UI.Services.CQRS
 
         public async Task<TResponse> Handle(TCommand command, CancellationToken cancellationToken)
         {
-            TResponse result = await HandleImplAsync(command, cancellationToken);
+            TResponse result = await HandleCore(command, cancellationToken);
 
             return result;
         }
 
-        protected abstract Task<TResponse> HandleImplAsync(TCommand command, CancellationToken cancellationToken);
+        protected abstract Task<TResponse> HandleCore(TCommand command, CancellationToken cancellationToken);
     }
 }

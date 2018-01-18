@@ -10,7 +10,7 @@ namespace JSar.Web.UI.Services.Account
     /// contains a single SignInResult object. On failure CommonResult.Data contains an
     /// error message string and FlashMessage contains a general error notice string.
     /// </summary>
-    public class SignInByPassword : Command<CommonResult>
+    public class SignInByPassword : CommandBase<CommonResult>
     {
         public SignInByPassword(AppUser user, string password, bool isPersistent, bool lockoutOnFailure, Guid messageId = default(Guid)) : base(messageId)
         {

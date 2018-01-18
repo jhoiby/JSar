@@ -16,6 +16,7 @@ using JSar.Web.UI.Services.Account;
 using JSar.Web.UI.Features.Home;
 using JSar.Web.UI.Features.Shared;
 using JSar.Web.UI.Services.CQRS;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace JSar.Web.UI.Features.Account
 {
@@ -38,7 +39,6 @@ namespace JSar.Web.UI.Features.Account
             _claimsCache = claimsCache ?? throw new ArgumentNullException(nameof(claimsCache));
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         }
-
 
         [TempData]
         public string ErrorMessage { get; set; }   // TODO: Remove this as appropriate after updating external login callback.

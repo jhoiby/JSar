@@ -27,7 +27,7 @@ namespace JSar.Web.UI.Services.Account
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(userManager), "Constructor parameter 'unitOfWork' cannot be null. EID: D481A958");
             _personRepository = personRepository ?? throw new ArgumentNullException(nameof(userManager), "Constructor parameter 'personRepository' cannot be null. EID: 741B7D6D");
         }
-        protected override async Task<CommonResult> HandleImplAsync(RegisterLocalUser command, CancellationToken cancellationToken)
+        protected override async Task<CommonResult> HandleCore(RegisterLocalUser command, CancellationToken cancellationToken)
         {
             using (var transaction = _dbContext.Database.BeginTransaction())
             {

@@ -9,7 +9,7 @@ namespace JSar.Web.UI.Services.Account
     /// contains a single AppUser object. On failure CommonResult.Data contains a List<string> 
     /// of error messages and FlashMessage contains a general error notice string.
     /// </summary>
-    public class RegisterLocalUser : Command<CommonResult>
+    public class RegisterLocalUser : CommandBase<CommonResult>
     {
         public RegisterLocalUser(AppUser user, Guid messageId = default(Guid)) 
             : base(messageId)

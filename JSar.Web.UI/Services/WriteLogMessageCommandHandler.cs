@@ -12,7 +12,7 @@ namespace JSar.Web.UI.Services
         {
         }
 
-        protected override async Task<CommonResult> HandleImplAsync(WriteLogMessage command, CancellationToken cancellationToken)
+        protected override async Task<CommonResult> HandleCore(WriteLogMessage command, CancellationToken cancellationToken)
         {
             try
             {

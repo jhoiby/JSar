@@ -19,7 +19,7 @@ namespace JSar.Web.UI.Services.Account
             _signInManager = signInManager;
         }
 
-        protected async override Task<CommonResult> HandleImplAsync(SignInByPassword command, CancellationToken cancellationToken)
+        protected async override Task<CommonResult> HandleCore(SignInByPassword command, CancellationToken cancellationToken)
         {
             var result = await _signInManager.PasswordSignInAsync(
                 command.User, 

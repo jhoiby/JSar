@@ -19,7 +19,7 @@ namespace JSar.Web.UI.Services.Account
             _userManager = userManager;
         }
 
-        protected override async Task<CommonResult> HandleImplAsync(GetUserByEmail query, CancellationToken cancellationToken)
+        protected override async Task<CommonResult> HandleCore(GetUserByEmail query, CancellationToken cancellationToken)
         {
             AppUser user = await _userManager.FindByEmailAsync(query.Email);
 

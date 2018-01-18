@@ -9,7 +9,7 @@ namespace JSar.Web.UI.Services
     /// is caught CommonResult.Flash message contains the exception description and CommonResult.Data
     /// contains the exception object.
     /// </summary>
-    public class WriteLogMessage : Command<CommonResult>
+    public class WriteLogMessage : CommandBase<CommonResult>
     {
         public WriteLogMessage(string message, Guid commandId = default(Guid)) : base(commandId)
         {
