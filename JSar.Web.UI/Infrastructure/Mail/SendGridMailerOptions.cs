@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace JSar.Web.UI.Infrastructure.Mail
 {
-    public class SendGridClientOptions
+    public class SendGridMailerOptions
     {
-        public SendGridClientOptions(string apiKey = "")
+        public SendGridMailerOptions(string apiKey = "")
         {
             ApiKey = apiKey;
         }

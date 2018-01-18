@@ -7,6 +7,11 @@ namespace JSar.Web.UI.Infrastructure.Mail
 {
     public interface IMailer<TMessage>
     {
-        bool TrySend(TMessage message, out string[] errorList);
+        /// <summary>
+        /// Attempts to asynchronously send the message to each recipient listed in the message.
+        /// </summary>
+        /// <param name="message">Message to be sent.</param>
+        /// <returns>Result of attempted mail send.</returns>
+        MailSendResult Send(TMessage message);
     }
 }
