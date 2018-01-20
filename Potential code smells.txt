@@ -18,4 +18,3 @@ Commands in the UI.AccountController are prolific and very EF Identity centric.
 	service layer, keeping with the idea of thin controllers.
 
 
-

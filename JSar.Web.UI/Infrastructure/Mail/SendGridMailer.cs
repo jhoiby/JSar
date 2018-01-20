@@ -20,12 +20,21 @@ namespace JSar.Web.UI.Infrastructure.Mail
 
         public ISendGridMailerOptions Options => _options;
 
-        public MailSendResult Send(ISmtpMessage message)
+        public async Task<MailSendResult> Send(ISmtpMessage message)
         {
 
             // TODO: Create Autofac injector for SendGrid.SendGridClient
+            
+            var sendGridMessage = MailHelper.CreateSingleEmail(
+                from: new SendGrid.Helpers.Mail.EmailAddress(message.From.Address, message.From.Name),
+                to: new SendGrid.Helpers.Mail.EmailAddress(message.To.First().Address, message.To.First().Name),
+                subject: message.Subject,
+                plainTextContent: message.Body,
+                htmlContent: message.Body);
 
-            throw new NotImplementedException();
+            SendGrid.Response response = await _sendGridClient.SendEmailAsync(sendGridMessage);
+
+            return new MailSendResult();
         }
 
 

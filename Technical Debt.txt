@@ -1,3 +1,5 @@
 - Unit tests
-- Unbuild validators
+- Unbuilt validators
 - Coupling of UI layer with rest of system
+- Interface Mailer<TMessage> is tied to a SendGrid result type. This will need to be fixed before
+    adding additional message types such as SMS. See the comments in the interface for more details.

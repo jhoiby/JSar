@@ -15,13 +15,14 @@ PRIORITY GUIDE:
 ------------
 TO-DO:
 
-CONTINUE: 
-- Finish and test SendGridMailer Send() method.
+CONTINUE:
 
 Add unit test for CommonResultFromDomainErrorList
 
 Add RequestId to appropriate log messages
 - See logging section in resources document
+
+Write integration tests that inspect the response from the SendGrid API client
 
 Add CreatedDate and ModifiedDate in AggregateRoot class.
 - See article on shadow properties: http://www.talkingdotnet.com/use-shadow-properties-entity-framework-core/
