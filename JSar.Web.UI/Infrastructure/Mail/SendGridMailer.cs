@@ -7,24 +7,28 @@ using SendGrid.Helpers.Mail;
 
 namespace JSar.Web.UI.Infrastructure.Mail
 {
-    public class SendGridMailer : IMailer<SmtpMessage>
+    public class SendGridMailer : IMailer<ISmtpMessage>
     {
         private readonly ISendGridClient _sendGridClient;
+        private ISendGridMailerOptions _options;
 
-        public SendGridMailer(ISendGridClient sendGridClient, SendGridMailerOptions options)
+        public SendGridMailer(ISendGridClient client, ISendGridMailerOptions options)
         {
-            _sendGridClient = sendGridClient ?? throw new ArgumentNullException(nameof(sendGridClient));
+            _sendGridClient = client ?? throw new ArgumentNullException(nameof(client));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
-        public MailSendResult Send(SmtpMessage message)
-        {
+        public ISendGridMailerOptions Options => _options;
 
-            // TODO: Start on unit test for this before going any farther with this
+        public MailSendResult Send(ISmtpMessage message)
+        {
 
             // TODO: Create Autofac injector for SendGrid.SendGridClient
 
             throw new NotImplementedException();
         }
+
+
     }
 
 

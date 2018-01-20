@@ -26,6 +26,8 @@ namespace JSar.Membership.Tests.UnitTests.Infrastructure.Mail
             mockConfiguration.Setup(x => x["SmtpMailer:TestRedirectEnabled"]).Returns(_testRedirectEnabled.ToString());
             mockConfiguration.Setup(x => x["SmtpMailer:TestRedirectRecipient"]).Returns(_testRedirectRecipient);
             _configuration = mockConfiguration.Object;
+
+
         }
 
         [Fact]

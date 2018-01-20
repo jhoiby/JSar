@@ -19,15 +19,14 @@ namespace JSar.Membership.Tests.UnitTests.Infrastructure.Mail
             string from3, string name3, string subject, string body)
         {
             // Arrange
-            var to = new List<Web.UI.Domain.ValueTypes.EmailAddress>
+            var to = new List<Web.UI.Domain.ValueTypes.IEmailAddress>
             {
                 new Web.UI.Domain.ValueTypes.EmailAddress(to1, name1),
                 new Web.UI.Domain.ValueTypes.EmailAddress(to2, name2)
             };
 
             var from = new EmailAddress(from3, name3);
-
-
+            
             // Act
             var message = new SmtpMessage(to, from, subject, body);
 

@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal;
 
 namespace JSar.Web.UI.Infrastructure.Mail
 {
-    public class SmtpMessage : IMailMessage
-    {
-        public SmtpMessage(List<EmailAddress> to, EmailAddress from, string subject, string body)
+    public class SmtpMessage : ISmtpMessage
+    { 
+        public SmtpMessage(List<IEmailAddress> to, IEmailAddress from, string subject, string body)
         {
             To = HasNoAddresses(to)
                 ? throw new ArgumentException("To field of email must contain at least one email address")
@@ -24,19 +24,19 @@ namespace JSar.Web.UI.Infrastructure.Mail
             Body = body;
         }
 
-        public SmtpMessage(EmailAddress to, EmailAddress from, string subject, string body)
-            : this (new List<EmailAddress> {to}, from, subject, body )
+        public SmtpMessage(IEmailAddress to, IEmailAddress from, string subject, string body)
+            : this (new List<IEmailAddress> {to}, from, subject, body )
         {
         }
 
-        public List<EmailAddress> To { get; }
-        public EmailAddress From { get; }
+        public List<IEmailAddress> To { get; }
+        public IEmailAddress From { get; }
         public string Subject { get; }
         public string Body { get; }
         
-        private bool HasNoAddresses(List<EmailAddress> addresses)
+        private bool HasNoAddresses(List<IEmailAddress> addresses)
         {
-            foreach (EmailAddress address in addresses)
+            foreach (IEmailAddress address in addresses)
             {
                 if (!address.Address.IsNullOrWhiteSpace())
                     return false;

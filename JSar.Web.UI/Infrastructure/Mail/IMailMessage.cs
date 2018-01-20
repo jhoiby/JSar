@@ -8,8 +8,8 @@ namespace JSar.Web.UI.Infrastructure.Mail
 {
     public interface IMailMessage
     {
-        List<EmailAddress> To { get; }
-        EmailAddress From{ get; }
+        List<IEmailAddress> To { get; }
+        IEmailAddress From { get; }
         string Body { get; }
     }
 }

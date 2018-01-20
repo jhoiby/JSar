@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace JSar.Web.UI.Infrastructure.Mail
 {
-    public class SendGridMailerOptions
+    public class SendGridMailerOptions : ISendGridMailerOptions
     {
         public SendGridMailerOptions(IConfiguration configuration)
         {
@@ -20,6 +20,6 @@ namespace JSar.Web.UI.Infrastructure.Mail
         public string ApiKey { get; set; }
         public bool Enabled { get; set; }
         public bool TestRedirectEnabled { get; set; }
-        public EmailAddress TestRedirectRecipient { get; set; }
+        public IEmailAddress TestRedirectRecipient { get; set; }
     }
 }

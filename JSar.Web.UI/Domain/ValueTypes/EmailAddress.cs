@@ -6,7 +6,7 @@ using JSar.Web.UI.Extensions;
 
 namespace JSar.Web.UI.Domain.ValueTypes
 {
-    public class EmailAddress
+    public class EmailAddress : IEmailAddress
     {
         public EmailAddress(string address, string name = "")
         {

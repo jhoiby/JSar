@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace JSar.Web.UI.Infrastructure.Mail
 {
-    public interface IMailer<TMessage>
+    public interface IMailer<TMessage> where TMessage : IMailMessage
     {
         /// <summary>
         /// Attempts to asynchronously send the message to each recipient listed in the message.
