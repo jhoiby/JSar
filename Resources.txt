@@ -50,3 +50,15 @@ LOGGING
 
 Logging RequestID
 	- http://www.tugberkugurlu.com/archive/asp-net-5-and-log-correlation-by-request-id
+
+----------
+UNIT TESTING
+
+Shared context between tests (setup and teardown)
+	- https://xunit.github.io/docs/shared-context.html
+
+Mocking with HttpContext
+	- https://github.com/richardszalay/mockhttp
+
+Mocking a task return method
+	- http://www.ronaldrosier.net/Blog/2013/07/23/mocking_a_task_return_method

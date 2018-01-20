@@ -9,18 +9,15 @@ namespace JSar.Web.UI.Infrastructure.Mail
 {
     public class SendGridMailer : IMailer<SmtpMessage>
     {
-        private readonly SendGridClient _sendGridClient;
+        private readonly ISendGridClient _sendGridClient;
 
-        public SendGridMailer(SendGridClient sendGridClient)
+        public SendGridMailer(ISendGridClient sendGridClient, SendGridMailerOptions options)
         {
             _sendGridClient = sendGridClient ?? throw new ArgumentNullException(nameof(sendGridClient));
         }
 
         public MailSendResult Send(SmtpMessage message)
         {
-            // TODO: Create a EmailAddress.ToSendGridAddress() extension
-
-            // TODO: Change email "to" list from string[] to List<EmailAddress>
 
             // TODO: Start on unit test for this before going any farther with this
 

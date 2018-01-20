@@ -15,6 +15,9 @@ PRIORITY GUIDE:
 ------------
 TO-DO:
 
+CONTINUE: 
+- Finish and test SendGridMailer Send() method.
+
 Add unit test for CommonResultFromDomainErrorList
 
 Add RequestId to appropriate log messages
