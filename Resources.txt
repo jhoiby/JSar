@@ -62,3 +62,14 @@ Mocking with HttpContext
 
 Mocking a task return method
 	- http://www.ronaldrosier.net/Blog/2013/07/23/mocking_a_task_return_method
+
+------------
+VALIDATION
+
+Simplify Client-Side Validation...By Adding a Server
+	- Covers validation via MVC ActionFilter.
+    - Geared toward an API, returns a JSON Model.
+	- Should be adaptable to single-layer solution.
+	- Also see Jimmy Bogard's ContosoUniversityCore example, it uses this method, but
+	    I have yet to figure out what he is doing with the JSON object.
+	- http://timgthomas.com/2013/09/simplify-client-side-validation-by-adding-a-server/ 
