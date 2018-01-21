@@ -6,6 +6,10 @@ namespace JSar.Web.UI.Services.CQRS
 {
     public class Message : IMessage
     {
+        public Message()
+        {
+        }
+
         public Message(Guid messageId)
         {
             // Clients are allowed to construct a message without passing 

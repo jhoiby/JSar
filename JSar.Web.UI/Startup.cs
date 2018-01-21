@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 using AutoMapper;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using JSar.Web.UI.Domain.Abstractions;
 using JSar.Web.UI.Infrastructure.Logging;
 using JSar.Web.UI.Services;
@@ -27,6 +28,7 @@ using MediatR.Pipeline;
 using JSar.Web.UI.Services.Validation;
 using JSar.Web.UI.Logging;
 using HtmlTags;
+using JSar.Web.UI.Infrastructure.Validation;
 
 namespace JSar.Web.Mvc
 {
@@ -79,13 +81,15 @@ namespace JSar.Web.Mvc
             // MVC OPTIONS AND HTML
 
             services.AddMvc()
-                .AddFeatureFolders();
+                .AddFeatureFolders()
+                .AddFluentValidation();
 
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                 options.Filters.Add(new RequireHttpsAttribute());
                 options.Filters.Add<LogActionFilter>();
+                options.Filters.Add<ValidatorActionFilter>();
             });
 
             services.AddHtmlTags(reg =>

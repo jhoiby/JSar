@@ -36,13 +36,13 @@ namespace JSar.Web.UI.Features.ClientApplication
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        public ActionResult Index()
+        public ActionResult Apply()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(Index.Command command)
+        public async Task<IActionResult> Apply(Apply.Command command)
         {
             // Commented out until command ready
             // await _mediator.Send(command);

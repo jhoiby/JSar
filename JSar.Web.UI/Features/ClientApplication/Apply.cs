@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
 using JSar.Web.UI.Infrastructure.Data;
 using JSar.Web.UI.Services.CQRS;
 using Microsoft.Extensions.SecretManager.Tools.Internal;
@@ -10,11 +11,15 @@ using Serilog;
 
 namespace JSar.Web.UI.Features.ClientApplication
 {
-    public class Index
+    public class Apply
     {
 
         public class Command : CommandBase<CommonResult>
         {
+            public Command() : base()
+            {
+            }
+
             public Command(Guid commandId = default(Guid)) : base(commandId)
             {
             }
@@ -47,6 +52,14 @@ namespace JSar.Web.UI.Features.ClientApplication
             protected override Task<CommonResult> HandleCore(Command command, CancellationToken cancellationToken)
             {
                 throw new NotImplementedException();
+            }
+        }
+
+        public class ApplyValidator : AbstractValidator<Apply.Command>
+        {
+            public ApplyValidator()
+            {
+                RuleFor(x => x.CompanyName).NotEmpty().WithMessage("Company name is required");
             }
         }
     }

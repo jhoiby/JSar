@@ -6,6 +6,10 @@ namespace JSar.Web.UI.Services.CQRS
 {
     public abstract class CommandBase<TResponse> : Message, ICommand<TResponse>
     {
+        public CommandBase() : base()
+        {
+        }
+
         public CommandBase(Guid messageId) : base(messageId)
         {
         }
