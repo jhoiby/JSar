@@ -80,17 +80,15 @@ namespace JSar.Web.Mvc
             //
             // MVC OPTIONS AND HTML
 
-            services.AddMvc()
-                .AddFeatureFolders()
-                .AddFluentValidation();
-
             services.AddMvc(options =>
-            {
-                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-                options.Filters.Add(new RequireHttpsAttribute());
-                options.Filters.Add<LogActionFilter>();
-                options.Filters.Add<ValidatorActionFilter>();
-            });
+                {
+                    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                    options.Filters.Add(new RequireHttpsAttribute());
+                    options.Filters.Add<LogActionFilter>();
+                    options.Filters.Add<ValidatorActionFilter>();
+                })
+                .AddFeatureFolders()
+                .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup>(); });
 
             services.AddHtmlTags(reg =>
                 reg.Labels.IfPropertyIs<bool>()
