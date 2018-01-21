@@ -47,7 +47,7 @@ namespace JSar.Web.UI.Features.ClientApplication
             // Commented out until command ready
             // await _mediator.Send(command);
             
-            return RedirectToAction(nameof(AppReceived));
+            return this.RedirectToActionJson(nameof(AppReceived));
         }
 
         public ActionResult AppReceived()
