@@ -28,7 +28,9 @@ using MediatR.Pipeline;
 using JSar.Web.UI.Services.Validation;
 using JSar.Web.UI.Logging;
 using HtmlTags;
+using JSar.Web.UI.Infrastructure;
 using JSar.Web.UI.Infrastructure.Validation;
+using JSar.Web.UI.Infrastructure.Tags;
 
 namespace JSar.Web.Mvc
 {
@@ -86,13 +88,12 @@ namespace JSar.Web.Mvc
                     options.Filters.Add(new RequireHttpsAttribute());
                     options.Filters.Add<LogActionFilter>();
                     options.Filters.Add<ValidatorActionFilter>();
+                    // From Bogard/Contoso - options.ModelBinderProviders.Insert(0, new EntityModelBinderProvider());
                 })
                 .AddFeatureFolders()
                 .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup>(); });
 
-            services.AddHtmlTags(reg =>
-                reg.Labels.IfPropertyIs<bool>()
-                    .ModifyWith(er => er.CurrentTag.Text(er.CurrentTag.Text() + "?")));
+            services.AddHtmlTags(new TagConventions());
 
             services.AddSession();
 

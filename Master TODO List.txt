@@ -16,6 +16,11 @@ PRIORITY GUIDE:
 TO-DO:
 
 CONTINUE:
+- Look at the form-submission via Ajax
+    - https://github.com/jbogard/ContosoUniversityCore/blob/4a5b220fd6f7e0428bdf1b1974ecc91af645a808/src/ContosoUniversityCore/wwwroot/js/site.js#L62 
+
+
+
 
 Add unit test for CommonResultFromDomainErrorList
 
